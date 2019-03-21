@@ -3,20 +3,23 @@
 #include <vector>
 #include <iostream>
 #include <set>
+#include <map>
 using namespace std;
 
 class User{
 	public:
 		string name;
 		int id;
+		char pos; //can be changed but im thinking along the lines of m:manager, e:employee, c:client..
 };
 
 class Bug{
 	public:
-		int lineNum; //the line number that the bug is on
-		string file;//the file that the bug is located in
+		int lineNum;  //the line number that the bug is on
+		string file; //the file that the bug is located in
 		string disc;//a short discription of the bug
-		//could add more but im not sure what kind of information we should have
+		           //could add more but im not sure what kind of information we should have
+		
 		string asString();
 };
 class Task{
@@ -33,7 +36,7 @@ class Task{
 
 class Project{
 	public:
-		vector<Task> tasks;
+		map<string,Task> tasks; //a map of task title to task (makes my life easier)
 		//this would not nessaserally be displayed as its just for figuring out who would be able to see this
 		string manager; //this could be an int/id
 		string title;  //the name of the project
