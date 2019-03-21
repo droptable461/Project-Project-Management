@@ -10,7 +10,6 @@ class User{
 	public:
 		string name;
 		int id;
-		char pos; //can be changed but im thinking along the lines of m:manager, e:employee, c:client..
 };
 
 class Bug{
@@ -45,8 +44,23 @@ class Project{
 		string listTasks();
 		string listUsers();
 		string asString();
+		bool canSee(User u);
 };
 
+bool Project canSee(User u);
+{
+	for(Task t : tasks)
+	{
+		for(User us : t.users)
+		{
+			if(u.id == us.id && u.name == us.name)
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
 string Project::listTasks()
 {
 	string rv = "";
