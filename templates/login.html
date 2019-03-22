@@ -1,0 +1,55 @@
+{% block body %}
+{% if session['logged_in'] %}
+
+You're logged in already! 
+
+{% else %}
+<form action="/login" method="POST">
+	<input type="username" name="username" placeholder="Username">
+	<input type="password" name="password" placeholder="Password">
+	<input type="submit" value="Log In">
+
+</form>{% endif %}
+{% endblock %}
+
+<!-- {% extends 'base.html' %} 
+
+{% block header %}
+	<h1>{% block title %}Log In{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+	<form method="post">
+	   <label for="username">Username</label>
+	   <input name="username" id="username" required>
+	   <label for="password">Password</label>
+	   <input type="password" name="password" id="password" required>
+	   <input type="submit" value="Log In">
+	</form>
+{% endblock %}
+-->
+
+<!--
+<html>
+	<head>
+		<title>DROPTABLE461 - Log In</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="static/style.css" rel="stylesheet" media="screen">
+	</head>
+
+	<body>
+	  <div class="container">
+		<h1> Please login </h1>
+		<br>
+		<form action="" method="post">
+		  <input type="text" placeholder="Username" name="username" value="{{request.form.username }}">
+		  <input type="text" placeholder="Password" name="password" value="{{request.form.password }}">
+		  <input class="btn btn-default" type="submit" value="Login">
+	    </form>
+	    {% if error %}
+	   	  <p class="error"><strong>Error:</strong> {{ error }}
+	    {% endif %}
+	 </div>
+  </body>
+</html>
+-->    
