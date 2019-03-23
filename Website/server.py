@@ -7,5 +7,11 @@ app.debug = True
 def main():
     return render_template('index.html')
 
-if __name__ == '__main__':
+@app.route('/login')
+def login(): 
+    return render_template('login.html')
+
+
+
+if __name__ == '__main__': 
     app.run()
