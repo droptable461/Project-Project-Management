@@ -2,27 +2,30 @@
 #include "data.h"
 #include "CmdArgs.h"
 #include <stdio.h>
+#include <string.h>
 using namespace std;
 
 map<string, Project> projects;
 User user;
+int loc = 0;
 
 void listProjects()
 {
-	for(Project p : projects)
+	for(auto curr : projects)
 	{
+		Project p = curr.second;
 		if(p.canSee(user))
 			cout << p.title << endl;
 	}	
 }
-Project selectProject()
+string selectProject()
 {
 	while(true)
 	{
 		string rv = "";
 		cin >> rv;
-		if((projects.find(rv) != projects.end() || rv == "quit") && projects[rv].canSee(user))
-			return projects[rv];
+		if((projects.find(rv) != projects.end() || rv == "quit" || rv == "Quit") && projects[rv].canSee(user))
+			return projects[rv].title;
 		cout << "Not a Project\n Type [quit] or a valid Project: ";
 	}
 }
@@ -33,22 +36,22 @@ string selectTask(Project p)
 	{
 		string rv = "";
 		cin >> rv;
-		if(p.tasks.find(rv) != p.tasks.end() || rv == "quit")
-			return p.tasks[rv];
+		if(p.tasks.find(rv) != p.tasks.end() || rv == "quit" || rv == "Quit")
+			return p.tasks[rv].title;
 		cout << "Not a Task\n Type [quit] or a valid task: ";
 	}
 }
 
 string projMenu(Project p)
 {
-	vector<string> toCheck = {"Select","select","Back","back","Quit","quit"};
+	vector<string> toCheck = {"Select","Back","Quit"};
 	while(true)
 	{
 		cout << "Would you like to:" << endl;
 		cout << "[Select] a task" << endl;
 		if(p.manager == user.name)
 		{
-			toCheck = {"Select","select","Add","add","Back","back","Remove","remove","Quit","quit"}
+			toCheck = {"Select","Add","Back","Remove","Quit"};
 			cout << "[Add] a task" << endl;
 			cout << "[Remove] a task" << endl;
 		}
@@ -57,50 +60,154 @@ string projMenu(Project p)
 		cout << "Type an Option[]: ";
 		string rv = "";
 		cin >> rv;
-		if(toCheck.find(rv) != toCheck.end())
-			return rv;
+		for(string s : toCheck){
+			toupper(rv[0]);
+			if(s == rv)
+				return rv;
+		}
 
 	}
 	return "";
 }
 string taskMenu(Project p, Task t)
 {
-	vector<string> toCheck = {"Select","select","Back","back","Quit","quit"};
+	vector<string> toCheck = {"Back","Quit"};
 	while(true)
 	{
 		cout << "Would you like to:" << endl;
-		cout << "[Select] a task" << endl;
 		if(p.manager == user.name)
 		{
-			toCheck = {"Select","select","Add","add","Back","back","Edit","edit","Change","change","Assign","assign","UnAssign","unassign","Remove","remove","Quit","quit"}
+			toCheck = {"Add","Back","Edit","Change","Assign","Remove","Remove","Quit"};
 			cout << "[Edit] the discription" << endl;
 			cout << "[Change] the name" << endl;
 			cout << "[Assign] an Employee" << endl;
-			cout << "[UnAssign] an Employee" << endl;
+			cout << "[Remove] an Employee" << endl;
 			cout << "[Add] a Bug" << endl;
-			cout << "[Remove] a Bug" << endl;
+			cout << "[Complete] a Bug" << endl;
 		}
 		if(t.canEdit(user))
 		{
-			//more options
+			toCheck = {"Add","Back","Complete","Quit"};
+			cout << "[Add] a Bug" << endl;
+			cout << "[Complete] a Bug" << endl;
 		}
 		cout << "[Back] up" << endl;
 		cout << "[Quit]" << endl;
 		cout << "Type an Option[]: ";
 		string rv = "";
 		cin >> rv;
-		if(toCheck.find(rv) != toCheck.end())
-			return rv;
+		for(string s : toCheck){
+			toupper(rv[0]);
+			if(s == rv)
+				return rv;
+		}
 
 	}
 	return "";
+}
+
+string mainMenu()
+{
+	bool manager = false;
+	for(auto curr : projects)
+	{
+		Project p = curr.second;
+		if(user.name == p.manager)
+			manager = true;
+	}
+	vector<string> toCheck = {"Select","Quit"};
+	while(true)
+	{
+		cout << "Would you like to:" << endl;
+		cout << "[Select] a project" << endl;
+		if(manager)
+		{
+			toCheck = {"Select","Add","Back","Remove","Quit"};
+			cout << "[Add] a project" << endl;
+			cout << "[Remove] a project" << endl;
+		}
+		cout << "[Quit]" << endl;
+		cout << "Type an Option[]: ";
+		string rv = "";
+		cin >> rv;
+		for(string s : toCheck){
+			toupper(rv[0]);
+			if(s == rv)
+				return rv;
+		}
+
+	}
+	return "";
+}
+
+string parseChoice(string choice, Project curr)
+{
+	string rv = "Continue";
+	if(choice == "Select")
+	{
+		switch(loc)
+		{
+			case 0:
+				rv = selectProject();
+				break;
+			case 1:
+				rv = selectTask(curr);	
+				break;
+		}
+		loc += 1;
+	}
+	else if(choice == "Add")
+	{
+		switch(loc)
+		{
+			case 0:
+				break;
+			case 1:
+				break;
+			case 2:
+				break;
+		}
+	}
+	else if(choice == "Remove")
+	{
+		switch(loc)
+		{
+			case 0:
+				break;
+			case 1:
+				break;
+			case 2:
+				break;
+		}
+	}
+	else if(choice == "Edit")
+	{
+	}
+	else if(choice == "Change")
+	{
+	}
+	else if(choice == "Assign")
+	{
+	}
+	else if(choice == "Complete")
+	{
+	}
+	else if(choice == "Back")
+	{
+		loc -= 1;
+	}
+	else if(choice == "Quit")
+	{
+		return "Quit";
+	}
+	return rv;
 }
 
 void parseArgs(CmdArgs cmd)
 {
 }
 
-vector<Project> getData()
+map<string,Project> getData()
 {
 	//get data from controller to fill projects data
 	//ie.. this function updates the data (atm is only called at begining of program)
@@ -111,11 +218,55 @@ int main(int argc, char** argv)
 	projects = getData();
 	if(argc > 1)
 	{
-		CmdArgs cmd(argv);
+		CmdArgs cmd(argc, argv);
 		parseArgs(cmd);
 	}
 	else
 	{
+		bool quit = false;
+		while(!quit)
+		{
+			//LOGIN STUFFS
+			cout << "Login: ";
+			string uname = "";
+			cin >> uname;
+			//there is a global variable "user" (fill it in)
+			//LOGIN STUFFS
+			string str = "Continue";
+			Project pCurr;
+			Task tCurr;
+			while(str != "Quit")
+			{
+				string choice = "";
+				switch(loc)
+				{
+					case 0:
+						listProjects();
+						choice = mainMenu();
+						str = parseChoice(choice,pCurr);
+						if(str != "Continue")
+						{
+							pCurr = projects[str];
+						}
+						break;
+					case 1:
+						cout << pCurr.listTasks();
+						choice = projMenu(pCurr);
+						str = parseChoice(choice,pCurr);
+						if(str != "Continue")
+						{
+							tCurr = pCurr.tasks[str];
+						}
+						break;
+					case 2:
+						cout << tCurr.asString();
+						choice = taskMenu(pCurr, tCurr);
+						str = parseChoice(choice,pCurr);
+						break;
+				}
+			}
+			
+		}
 	}
 
 }
