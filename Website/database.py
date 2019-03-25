@@ -25,7 +25,7 @@ def createDatabase():
 def main():
 	clearDatabase()
 	createDatabase()
-	
+
 
 if __name__ == "__main__":
 	main()
