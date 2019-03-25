@@ -1,55 +1,86 @@
-{% block body %}
-{% if session['logged_in'] %}
+<!-- USED W3SCHOOLS.COM -->
 
-You're logged in already! 
-
-{% else %}
-<form action="/login" method="POST">
-	<input type="username" name="username" placeholder="Username">
-	<input type="password" name="password" placeholder="Password">
-	<input type="submit" value="Log In">
-
-</form>{% endif %}
-{% endblock %}
-
-<!-- {% extends 'base.html' %} 
-
-{% block header %}
-	<h1>{% block title %}Log In{% endblock %}</h1>
-{% endblock %}
-
-{% block content %}
-	<form method="post">
-	   <label for="username">Username</label>
-	   <input name="username" id="username" required>
-	   <label for="password">Password</label>
-	   <input type="password" name="password" id="password" required>
-	   <input type="submit" value="Log In">
-	</form>
-{% endblock %}
--->
-
-<!--
+<!DOCTYPE html>
 <html>
-	<head>
-		<title>DROPTABLE461 - Log In</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link href="static/style.css" rel="stylesheet" media="screen">
-	</head>
+<head>
+<meta name="viewport"content="width=device-width, initial-scale=1">
+<style>
 
-	<body>
-	  <div class="container">
-		<h1> Please login </h1>
-		<br>
-		<form action="" method="post">
-		  <input type="text" placeholder="Username" name="username" value="{{request.form.username }}">
-		  <input type="text" placeholder="Password" name="password" value="{{request.form.password }}">
-		  <input class="btn btn-default" type="submit" value="Login">
-	    </form>
-	    {% if error %}
-	   	  <p class="error"><strong>Error:</strong> {{ error }}
-	    {% endif %}
-	 </div>
-  </body>
+body{
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+form{
+	border: 3px solid #f1f1f1;
+}
+
+h1{
+	text-align: center;
+}
+
+input[type=text], input[type=password] {
+	width:100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+}
+
+button{
+
+	background-color: #513;
+	color: white;
+	padding: 14px 20px;
+	margin: 8px 0;
+	border: none;
+	cursor: pointer;
+	width: 100%;
+} 
+
+button:hover {
+	opacity: 0.8;
+}
+
+.imgcontainer {
+	text-align: center;
+	margin: 24px 0 12px 0;
+}
+
+img.avatar {
+	width: 40%;
+	border-radius: 50%;
+}
+
+.container {
+	padding: 16px;
+}
+
+</style>
+</head>
+
+<body>
+<h1>PPM Login Page</h1>
+
+<form action="action_page.php">
+	<div class="imgcontainer">
+	  <img src="/templates/avatar.jpg" alt="Avatar" class="avatar"/>
+	</div>
+
+	<div class="container">
+		<label for="uname"><b>Username</b></label>
+		<input type="text" placeholder="Enter Username"name="uname" required>
+	
+		<!-- might take psw out later -->
+
+		<label for="psw"><b>Password</b></label>
+		<input type="text" placeholder="Enter Password"name="psw" required>
+	
+		<button type="submit">Login</button>
+		<label>
+			<input type="checkbox" checked="checked" name="remember">Remember me
+		</label>
+	</div>
+</form>
+</body>
 </html>
--->    
