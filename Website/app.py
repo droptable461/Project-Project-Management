@@ -19,16 +19,23 @@ def hello():
 #else:
 #    print False
 
-@app.route('/login_q')#,methods=["POST"])
+@app.route('/',methods=["POST"])
 def login():
     with sqlite3.connect('database.db') as db:
         db.cursor()
-        username = escape(request.form['Username'])
-        db.execute("SELECT uname FROM user WHERE uname = '%s'" % (username))
-        if db.fetchall() is true:
-                return render_template("index.html", name = username)
-        else:
-                return render_template("login.html")
+        if "uname" in request.form:
+            username = escape(request.form["uname"])
+            db.execute("SELECT uname FROM user WHERE uname = '%s'"% (username))
+            check = db.fetchone() #tejas, the error im getting is here: 
+                                  #AttributeError: 'sqlite3.Connection' object has no attribute 'fetchone'
+                                  # -thomas
+            if check is true:
+                    return render_template("index.html", name = username)
+        return render_template("login.html")
+
+@app.route('/index')
+def main():
+    return render_template('index.html')
         
 if __name__ == '__main__':
     app.run(debug=True)
