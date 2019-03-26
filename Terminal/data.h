@@ -31,6 +31,7 @@ class Task{
 		string asString();
 		string listUsers();
 		string listBugs();
+		bool canEdit(User u);
 };
 
 class Project{
@@ -97,6 +98,16 @@ string Project::asString()
 	rv += "Number of Tasks: " + to_string(tasks.size()) + "\n";
 	rv += disc + "\n";
 	return rv;
+}
+
+bool Task::canEdit(User u)
+{
+	for(User us : users)
+	{
+		if(us.id == u.id && us.name == u.id)
+			return true;
+	}
+	return false;
 }
 
 string Task::asString()

@@ -1,4 +1,4 @@
-from flask import Flask, g, render_template 
+from flask import Flask, g, render_template
 
 app = Flask(__name__)
 app.debug = True
@@ -10,6 +10,10 @@ def login():
 @app.route('/index')
 def main():
     return render_template('index.html')
+
+#@app.route('/login')
+#def login():
+   # return render_template('login.html')
 
 @app.route('/myproj')
 def myproj():
@@ -23,5 +27,5 @@ def inbox():
 def howto():
     return render_template('howto.html')
 
-if __name__ == '__main__': 
+if __name__ == '__main__':
     app.run()
