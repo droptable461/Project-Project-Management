@@ -62,21 +62,15 @@ img.avatar {
 <body>
 <h1>PPM Login Page</h1>
 
-<form action="action_page.php">
+<form action="/index" method="POST"> 
 	<div class="imgcontainer">
-	  <img src="/templates/avatar.jpg" alt="Avatar" class="avatar"/>
+	  <img src="avatar.jpg" alt="Avatar" class="avatar"/>
 	</div>
 
 	<div class="container">
 		<label for="uname"><b>Username</b></label>
-		<input type="text" placeholder="Enter Username"name="uname" required>
-	
-		<!-- might take psw out later -->
-
-		<label for="psw"><b>Password</b></label>
-		<input type="text" placeholder="Enter Password"name="psw" required>
-	
-		<button type="submit">Login</button>
+		<input type="text" placeholder="Enter Username" name="uname" value=" "required>	
+		<button type="submit" value="Log In">Log In</button>
 		<label>
 			<input type="checkbox" checked="checked" name="remember">Remember me
 		</label>

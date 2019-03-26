@@ -34,18 +34,113 @@ body{
 	background-color: #846;
 	color: #fff;
 }
+
+.accordion {
+	background-color: #846;
+	color: white;
+	cursor: pointer;
+	padding: 5px 10px;
+	width: 500%;
+	border: black;
+	border-width: medium;
+	text-align: left;
+	outline: none;
+	font-size: 15px;
+	transition: 0.4s;
+}
+
+.active, .accordion:hover{
+	background-color: #513;
+}
+
+.panel{
+	padding: 0 18px;
+	display: none;
+	background-color: white;
+	overflow: hidden;
+}
+
+.button{
+	padding: 5px 5px;
+	text-align: left;
+	color: white;
+}
+
 	
 </style>
 <header>
 <div class="topnav">
-	<a href="#home">Home</a>
-	<a class="active"href="#myproj">My Projects</a>
-	<a href="#inbox">Inbox</a>
-	<a href="#howto">How to Use</a>
+	<a href="index">Home</a>
+	<a class="active"href="myproj">My Projects</a>
+	<a href="inbox">Inbox</a>
+	<a href="howto">How to Use</a>
 </div>
 </header>
 
 <body>
+
+<h2>Projects</h2>
+
+<button type="button">++Add Project++</button>
+
+<button class="accordion">Project One</button>
+<div class="panel">
+	<p>Tasks</p>
+</div>
+<button class="accordion">Project Two</button>
+<div class="panel">
+	<p>Tasks</p>
+</div>
+<button class="accordion">Project Three</button>
+<div class="panel">
+	<p>Tasks</p>
+</div>
+<button class="accordion">Project Four</button>
+<div class="panel">
+	<p>Tasks</p>
+</div>
+<button class="accordion">Project Five</button>
+<div class="panel">
+	<p>Tasks</p>
+</div>
+<button class="accordion">Project Six</button>
+<div class="panel">
+	<p>Tasks</p>
+</div>
+<button class="accordion">Project Seven</button>
+<div class="panel">
+	<p>Tasks</p>
+</div>
+<button class="accordion">Project Eight</button>
+<div class="panel">
+	<p>Tasks</p>
+</div>
+<button class="accordion">Project Nine</button>
+<div class="panel">
+	<p>Tasks</p>
+</div>
+<button class="accordion">Project Ten</button>
+<div class="panel">
+	<p>Tasks</p>
+</div>
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for(i =0; i < acc.length; i++){
+	acc[i].addEventListener("click", function() {
+		this.classList.toggle("active");
+		var panel = this.nextElementSibling;
+		if(panel.style.display === "block") {	
+			panel.style.display = "none";
+		}else{
+			panel.style.display = "block";
+		}
+	});
+}
+		
+</script>
 
 </body>
 </html>
