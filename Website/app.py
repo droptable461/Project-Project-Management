@@ -9,29 +9,21 @@ app = Flask(__name__)
 def hello():
     return render_template("login.html")
 
-#def login():
-#c = conn.cursor()
-#username = input('username')
-#c.execute("SELECT uname FROM user WHERE uname = '%s'" % (username))
-#one = c.fetchall()
-#if one is True:
-#    print True 
-#else:
-#    print False
-
 @app.route('/',methods=["POST"])
 def login():
     with sqlite3.connect('database.db') as db:
-        db.cursor()
+        c = db.cursor()
         if "uname" in request.form:
             username = escape(request.form["uname"])
-            db.execute("SELECT uname FROM user WHERE uname = '%s'"% (username))
-            check = db.fetchone() #tejas, the error im getting is here: 
-                                  #AttributeError: 'sqlite3.Connection' object has no attribute 'fetchone'
-                                  # -thomas
-            if check is true:
+            print (username)
+            c.execute("SELECT uname FROM user WHERE uname=?",  (username,))
+            check = c.fetchone()
+            print (check)
+            if check == username:
                     return render_template("index.html", name = username)
-        return render_template("login.html")
+            else:
+                    print ("failed")
+                    return render_template("login.html")
 
 @app.route('/index')
 def main():
@@ -39,4 +31,3 @@ def main():
         
 if __name__ == '__main__':
     app.run(debug=True)
-    #login()s

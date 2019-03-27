@@ -1,4 +1,6 @@
 <!-- USED W3SCHOOLS.COM -->
+<!-- use when username isn't in database / error flash--> 
+<!-- http://flask.pocoo.org/docs/1.0/patterns/flashing/-->
 
 <!DOCTYPE html>
 <html>
@@ -62,20 +64,17 @@ img.avatar {
 <body>
 <h1>PPM Login Page</h1>
 
-<form action="/index" method="GET"> 
->>>>>>> cbbc6a9ff30ba06bb3f150692961f9710be86b0d
->>>>>>> d8723e6a3a129946f2c4b592b387f18361573f52
+<form action="/" method="POST"> 
 	<div class="imgcontainer">
 	  <img src="/static/avatar.jpg" alt="Avatar" class="avatar"/>
 	</div>
 
 	<div class="container">
 		<label for="uname"><b>Username</b></label>
-		<input type="text" placeholder="Enter Username" name="uname" value="" required>	
+		<input type="text" placeholder="Enter Username" name="uname" value=" "required>	
 		<button type="submit" value="Log In">Log In</button>
 		<label>
 			<input type="checkbox" checked="checked" name="remember">Remember me
-			</input>
 		</label>
 	</div>
 </form>

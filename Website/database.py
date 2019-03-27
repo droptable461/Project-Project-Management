@@ -26,6 +26,7 @@ def populateDatabase():
         c.execute('''INSERT INTO user (uname) VALUES ('dakota')''')
         c.execute('''INSERT INTO user (uname) VALUES ('brandon')''')
         c.execute('''INSERT INTO user (uname) VALUES ('dymacek')''')
+        conn.commit()
 
 def main():
 	clearDatabase()
