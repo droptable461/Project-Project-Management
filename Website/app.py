@@ -1,15 +1,42 @@
-from flask import Flask, request
-import socket
+from flask import Flask, request, g, render_template, redirect, url_for, escape
+import sqlite3
+
+#conn = sqlite3.connect('database.db')
 
 app = Flask(__name__)
 
 @app.route('/')
 def hello():
-    return 'Hello, world! running on %s' % request.host
+    return render_template("login.html")
 
+#def login():
+#c = conn.cursor()
+#username = input('username')
+#c.execute("SELECT uname FROM user WHERE uname = '%s'" % (username))
+#one = c.fetchall()
+#if one is True:
+#    print True 
+#else:
+#    print False
+
+@app.route('/',methods=["POST"])
+def login():
+    with sqlite3.connect('database.db') as db:
+        db.cursor()
+        if "uname" in request.form:
+            username = escape(request.form["uname"])
+            db.execute("SELECT uname FROM user WHERE uname = '%s'"% (username))
+            check = db.fetchone() #tejas, the error im getting is here: 
+                                  #AttributeError: 'sqlite3.Connection' object has no attribute 'fetchone'
+                                  # -thomas
+            if check is true:
+                    return render_template("index.html", name = username)
+        return render_template("login.html")
+
+@app.route('/index')
+def main():
+    return render_template('index.html')
+        
 if __name__ == '__main__':
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.bind(('localhost', 5501))
-    port = sock.getsockname()[1]
-    sock.close()
-    app.run(port=port)
+    app.run(debug=True)
+    #login()s
