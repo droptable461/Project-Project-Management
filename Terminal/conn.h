@@ -5,20 +5,33 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <vector>
+#include "data.h"
 using namespace std;
 
 class Conn {
 	private:
 		int m_sockfd;
 		bool m_is_connected;
-		struct sockaddr_in m_server_addr;
+		char* m_host;
 		int m_port;
-		struct hostent *m_server;
+		struct sockaddr_in m_server_addr;
 	public:
 		Conn();
-		void get_server_info();
-		bool connect_server(const char* hname, const int port);
-		bool upload(const char* info);
-		bool download(char *info);
-		bool disconnect_server();
+		Conn(const char* host, const int port);
+
+		//Getters
+		const int get_port();
+		const char* get_host();	
+		const void get_server_info();
+
+		//Setter
+		void set_host(const char* host);
+		void set_port(const int port);
+		
+		//Other
+		bool ping_server();
+	//	bool connect_server(const char* hname, const int port);
+		bool post_request(const char* request);
+		vector<Project> get_request(char* request);
 };
