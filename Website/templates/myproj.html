@@ -8,7 +8,7 @@
 <style>
 body{
 	margin: 0;
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: "Lato", sans-serif;
 }
 
 .topnav {
@@ -33,6 +33,43 @@ body{
 .topnav a.active {
 	background-color: #846;
 	color: #fff;
+}
+
+.sidenav {
+	height: 100%;
+	width: 160px;
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	background-color: #111;
+	overflow-x: hidden;
+	padding-top: 20px;
+}
+
+.sidenav a{
+	padding: 6px 8px 6px 16px;
+	font-size: 24px;
+	color: #846;
+	display: block;
+}
+
+.sidenav a:hover {
+	color: #846;
+}
+
+.main {
+	margin-left: 160px;
+	font-size: 24px;
+	padding: 0px 10px;
+}
+
+@media screen and(max-height: 400px) {
+.sidenav {
+	padding-top: 15px;
+}
+.sidenav a {
+	font-size: 18px;
 }
 
 .accordion {
@@ -70,7 +107,41 @@ body{
 	border-width: medium;
 	
 }
+
+*{
+	box-sizing: border-box;
+}
 	
+.accordion.column {
+	float: left;
+	width: 50%;
+	flex: 50%;
+	padding: 10px;
+	height: 250px;
+}
+
+.accordion.row:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.accordion.row {
+	padding: 250px;
+	display: flex;
+}
+
+h3, h4, h5 {
+	display: bold;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+p {
+	font-size: 14px;
+	font-weight: bold;
+}
+
 </style>
 <header>
 <div class="topnav">
@@ -87,10 +158,26 @@ body{
 
 <button class="button">++Add Project++</button>
 
+<div class="main">
 <button class="accordion">Project One</button>
 <div class="panel">
 	<p>Tasks</p>
+		<div class="row">
+			<div class="column" style="background-color: #846;"></div>
+				<h3>To Do:</h3>
+				<p>List tasks you need to do here</p>
+			</div>
+			<div class="column" style="background-color: #846;"></div>
+				<h4>Doing:</h4>
+				<p>List the tasks you are doing here</p>
+			</div>
+			<div class="column" style="background-color: #846;"></div>
+				<h5>Done:</h5>
+				<p>List the done tasks here</p>
+			</div>
+		</div>
 </div>
+
 <button class="accordion">Project Two</button>
 <div class="panel">
 	<p>Tasks</p>
@@ -128,6 +215,19 @@ body{
 	<p>Tasks</p>
 </div>
 
+<div class="sidenav">
+	<a href="#Project1">Project 1</a>
+	<a href="#Project2">Project 2</a>
+	<a href="#Project3">Project 3</a>
+	<a href="#Project4">Project 4</a>
+	<a href="#Project5">Project 5</a>
+	<a href="#Project6">Project 6</a>
+	<a href="#Project7">Project 7</a>
+	<a href="#Project8">Project 8</a>
+	<a href="#Project9">Project 9</a>
+	<a href="#Project10">Project 10</a>
+</div>
+</div>
 <script>
 var acc = document.getElementsByClassName("accordion");
 var i;
@@ -145,7 +245,6 @@ for(i =0; i < acc.length; i++){
 }
 		
 </script>
-
 </body>
 </html>
 
