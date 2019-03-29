@@ -62,14 +62,14 @@ img.avatar {
 <body>
 <h1>PPM Login Page</h1>
 
-<form action="/index" method="GET"> 
+<form action="/login" method="POST"> 
 	<div class="imgcontainer">
 	  <img src="/static/avatar.jpg" alt="Avatar" class="avatar"/>
 	</div>
 
 	<div class="container">
 		<label for="uname"><b>Username</b></label>
-		<input type="text" placeholder="Enter Username" name="uname" value="" required>	
+		<input type="text" placeholder="Enter Username" name="username" required>	
 		<button type="submit" value="Log In">Log In</button>
 		<label>
 			<input type="checkbox" checked="checked" name="remember">Remember me
