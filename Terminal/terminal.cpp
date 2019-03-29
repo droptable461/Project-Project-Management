@@ -30,14 +30,17 @@ string selectProject()
 	}
 }
 
-string selectTask(Project p)
+string selectTask(Project pr)
 {
 	while(true)
 	{
 		string rv = "";
 		cin >> rv;
-		if(p.tasks.find(rv) != p.tasks.end() || rv == "quit" || rv == "Quit")
+		for(Phase p : pr.phases)
+		{
+			if(p.tasks.find(rv) != p.tasks.end() || rv == "quit" || rv == "Quit")
 			return p.tasks[rv].title;
+		}
 		cout << "Not a Task\n Type [quit] or a valid task: ";
 	}
 }
@@ -209,6 +212,15 @@ void parseArgs(CmdArgs cmd)
 
 map<string,Project> getData()
 {
+	Project p;
+	p.title = "One";
+	p.disc = "the first Project";
+	Task t;
+	t.title = "Task";
+	t.disc = "the first task";
+	Bug b;
+	b.file = "firstfile.cpp";
+	b.lineNum = 1;
 	//get data from controller to fill projects data
 	//ie.. this function updates the data (atm is only called at begining of program)
 }
@@ -227,9 +239,9 @@ int main(int argc, char** argv)
 		while(!quit)
 		{
 			//LOGIN STUFFS
-			cout << "Login: ";
-			string uname = "";
-			cin >> uname;
+			//cout << "Login: ";
+			//string uname = "";
+			//cin >> uname;
 			//there is a global variable "user" (fill it in)
 			//LOGIN STUFFS
 			string str = "Continue";
@@ -255,7 +267,12 @@ int main(int argc, char** argv)
 						str = parseChoice(choice,pCurr);
 						if(str != "Continue")
 						{
-							tCurr = pCurr.tasks[str];
+							for(Phase p : pCurr.phases)
+							{
+								//THIS MIGHT ERROR OUT PLEASE DEBUG
+								if(p.tasks.find(str) != p.tasks.end())
+									tCurr = p.tasks.at(str);
+							}
 						}
 						break;
 					case 2:
