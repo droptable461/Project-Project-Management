@@ -212,6 +212,10 @@ map<string,Project> getData()
 	//get data from controller to fill projects data
 	//ie.. this function updates the data (atm is only called at begining of program)
 }
+bool putData(vector<Project> data){
+	
+
+}
 
 int main(int argc, char** argv)
 {

@@ -16,7 +16,6 @@ def createDatabase():
 	c.execute('''CREATE TABLE user(uname text PRIMARY KEY, u_id)''')
 	c.execute('''CREATE TABLE uttable(u_id, t_id)''')
 	conn.commit()
-
 def populateDatabase():
         c = conn.cursor()
         c.execute('''INSERT INTO user (uname) VALUES ('thomas')''')
