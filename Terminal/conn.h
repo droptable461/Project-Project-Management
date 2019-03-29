@@ -13,7 +13,7 @@ class Conn {
 	private:
 		int m_sockfd;
 		bool m_is_connected;
-		char* m_host;
+		const char* m_host;
 		int m_port;
 		struct sockaddr_in m_server_addr;
 	public:

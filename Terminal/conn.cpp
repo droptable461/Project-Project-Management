@@ -76,12 +76,12 @@ bool Conn::ping_server(){
 		return true;
 	}
 	else{
-		m_socketfd = socket(AF_INET, SOCK_STREAM, 0);
+		m_sockfd = socket(AF_INET, SOCK_STREAM, 0);
 		if(m_sockfd<0){
 			return false;
 		}
 		bzero((char* ) &m_server_addr, sizeof(m_server_addr));
-		bcopy(m_host, (char*)&m_server_addr.sin_addr.s_addr, sizeof(hname));
+		bcopy(m_host, (char*)&m_server_addr.sin_addr.s_addr, sizeof(m_host));
 		m_server_addr.sin_port = htons(m_port);
 		if(connect(m_sockfd, (struct sockaddr*)&m_server_addr, sizeof(m_server_addr)) < 0)
 			m_is_connected = false;
@@ -90,7 +90,7 @@ bool Conn::ping_server(){
 	}
 	return m_is_connected;
 }
-}
+
 bool Conn::post_request(const Task t)
 {
 	if(m_is_connected){
