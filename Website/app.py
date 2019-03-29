@@ -6,15 +6,6 @@ import sqlite3
 app = Flask(__name__)
 app.secret_key = 'one'
 
-def connectDB():
-	rv = sqlite3.connect('database.db')
-	return rv
-
-def getDB():
-	if not hasattr(g, 'sqlite_db'):
-		g.sqlite_db = connectDB()
-        return g.sqlite_db
-
 @app.route('/')
 def hello():
     return render_template("login.html")
@@ -40,8 +31,7 @@ def hello():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 	if request.method == 'POST':
-		db = getDB()
-		error = None
+	    with sqlite3.connect('database.db') as db:
 		validlogin = False
 
 		validlogin = db.execute('SELECT * FROM user WHERE uname = ?', (request.form['username'],)).fetchall()
@@ -49,7 +39,21 @@ def login():
 		if validlogin:
 			session['username'] = request.form['username']
 			return render_template("index.html")
-	return render_template('login.html')
+	        else:
+                        return render_template('login.html')
+
+@app.route('/myproj')
+def myproj():
+    return render_template('myproj.html')
+
+@app.route('/inbox')
+def inbox():
+    return render_template('inbox.html')
+
+@app.route('/howto')
+def howto():
+    return render_template('howto.html')
+
 
 #@app.route('/myproj', methods=['GET', 'POST'])
 #def myproj():
@@ -68,11 +72,6 @@ def login():
 @app.route('/index')
 def index():
     return render_template('index.html')
-
-@app.teardown_appcontext
-def closeDB(error):
-	if hasattr(g, 'sqlite_db'):
-            g.sqlite_db.close()
 
 if __name__ == '__main__':
     app.run(debug=True)
