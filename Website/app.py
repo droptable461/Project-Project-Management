@@ -58,7 +58,7 @@ def howto():
 def index():
     return render_template('index.html')
 
-@app.route("/test")
+@app.route("/test", methods=['GET', 'POST'])
 def test():
     #request
      return 'Test ..'
