@@ -54,24 +54,15 @@ def inbox():
 def howto():
     return render_template('howto.html')
 
-
-#@app.route('/myproj', methods=['GET', 'POST'])
-#def myproj():
-	#if request.method == 'POST':
-		#db = getDB()
-		#error = None
-		#info = False
-
-		#info = db.execute('SELECT * FROM task WHERE uname = ?', (request.form['username'],)).fetchall()
-
-		#if validlogin:
-			#session['username'] = request.form['username']
-			#return redirect(url_for('index'))
-	#return render_template('login.html')
-
 @app.route('/index')
 def index():
     return render_template('index.html')
+
+@app.route("/test")
+def test():
+    request
+	return 'Test ..'
+
 
 if __name__ == '__main__':
     app.run(debug=True)
