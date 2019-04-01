@@ -60,8 +60,8 @@ def index():
 
 @app.route("/test")
 def test():
-    request
-	return 'Test ..'
+    #request
+     return 'Test ..'
 
 
 if __name__ == '__main__':
