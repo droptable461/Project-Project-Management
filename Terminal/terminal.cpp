@@ -14,10 +14,11 @@ void listProjects()
 	for(auto curr : projects)
 	{
 		Project p = curr.second;
-		if(p.canSee(user))
+		if(p.canSee(user) || user.id == -1)
 			cout << p.title << endl;
 	}	
 }
+
 string selectProject()
 {
 	while(true)
@@ -52,7 +53,7 @@ string projMenu(Project p)
 	{
 		cout << "Would you like to:" << endl;
 		cout << "[Select] a task" << endl;
-		if(p.manager == user.name)
+		if(p.manager == user.name || user.id == -1)
 		{
 			toCheck = {"Select","Add","Back","Remove","Quit"};
 			cout << "[Add] a task" << endl;
@@ -78,20 +79,20 @@ string taskMenu(Project p, Task t)
 	while(true)
 	{
 		cout << "Would you like to:" << endl;
-		if(p.manager == user.name)
+		if(p.manager == user.name || user.id == -1)
 		{
-			toCheck = {"Add","Back","Edit","Change","Assign","Remove","Remove","Quit"};
+			toCheck = {"Back","Edit","Change","Assign","Remove","Report","Quit"};
 			cout << "[Edit] the discription" << endl;
 			cout << "[Change] the name" << endl;
 			cout << "[Assign] an Employee" << endl;
 			cout << "[Remove] an Employee" << endl;
-			cout << "[Add] a Bug" << endl;
+			cout << "[Report] a Bug" << endl;
 			cout << "[Complete] a Bug" << endl;
 		}
 		if(t.canEdit(user))
 		{
-			toCheck = {"Add","Back","Complete","Quit"};
-			cout << "[Add] a Bug" << endl;
+			toCheck = {"Report","Back","Complete","Quit"};
+			cout << "[Report] a Bug" << endl;
 			cout << "[Complete] a Bug" << endl;
 		}
 		cout << "[Back] up" << endl;
@@ -161,21 +162,39 @@ string parseChoice(string choice, Project curr)
 	}
 	else if(choice == "Add")
 	{
+		cout << "Title: ";
+		string title "";
+		cin >> toChange;
+		cout << "Description: " << endl;
+		string disc = "";
+		cin >> toChange;
 		switch(loc)
 		{
 			case 0:
+				Project p(user.name, title, disc);
+				projects.push_back(p);
 				break;
 			case 1:
-				break;
-			case 2:
+				Task t(title, disc);
 				break;
 		}
 	}
 	else if(choice == "Remove")
 	{
+		cout << "Title: ";
+		string title = "";
+		cin >> title;
+
 		switch(loc)
 		{
 			case 0:
+				for(int i=0;i<projects.size();i++)
+				{
+					if(projects[i].title == title)
+					{
+						projects.erase(title);
+					}
+				}
 				break;
 			case 1:
 				break;
@@ -234,7 +253,7 @@ int main(int argc, char** argv)
 	projects = getData();
 	if(argc > 1)
 	{
-		CmdArgs cmd(argc, argv);
+		CmdArgs cmd(argc,argv);
 		parseArgs(cmd);
 	}
 	else
@@ -244,8 +263,16 @@ int main(int argc, char** argv)
 		{
 			//LOGIN STUFFS
 			//cout << "Login: ";
-			//string uname = "";
-			//cin >> uname;
+			string uname = "";
+			cin >> uname;
+			if(uname == "admin")
+			{
+				User u;
+				u.name = uname;
+				u.id = -1;
+				user = u;
+				
+			}
 			//there is a global variable "user" (fill it in)
 			//LOGIN STUFFS
 			string str = "Continue";
