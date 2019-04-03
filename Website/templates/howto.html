@@ -40,7 +40,62 @@ body.p{
 	background-color: #846;
 	color: #fff;
 }
-	
+
+.accordion {
+	background-color: #846;
+	color: white;
+	cursor: pointer;
+	padding: 5px 10px;
+	width: 500%;
+	border: black;
+	border-width: medium;
+	text-align: left;
+	outline: none;
+	font-size: 15px;
+	transition: 0.4s;
+}
+
+.active, .accordion:hover{
+	background-color: #513;
+}
+
+.panel{
+	padding: 0 18px;
+	display: none;
+	background-color: white;
+	overflow: hidden;
+}
+
+
+.accordion.column {
+	float: left;
+	width: 50%;
+	flex: 50%;
+	padding: 10px;
+	height: 250px;
+}
+
+.accordion.row:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.accordion.row {
+	padding: 250px;
+	display: flex;
+}
+
+h3, h4, h5 {
+	display: bold;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+p {
+	font-size: 14px;
+	font-weight: bold;
+}
 </style>
 <header>
 <div class="topnav">
@@ -54,6 +109,62 @@ body.p{
 <body>
 
 <p>PPM How to Use Page</p>
+
+<button class="accordion">Project Two</button>
+<div class="panel">
+	<p>Tasks</p>
+</div>
+<button class="accordion">Project Three</button>
+<div class="panel">
+	<p>Tasks</p>
+</div>
+<button class="accordion">Project Four</button>
+<div class="panel">
+	<p>Tasks</p>
+</div>
+<button class="accordion">Project Five</button>
+<div class="panel">
+	<p>Tasks</p>
+</div>
+<button class="accordion">Project Six</button>
+<div class="panel">
+	<p>Tasks</p>
+</div>
+<button class="accordion">Project Seven</button>
+<div class="panel">
+	<p>Tasks</p>
+</div>
+<button class="accordion">Project Eight</button>
+<div class="panel">
+	<p>Tasks</p>
+</div>
+<button class="accordion">Project Nine</button>
+<div class="panel">
+	<p>Tasks</p>
+</div>
+<button class="accordion">Project Ten</button>
+<div class="panel">
+	<p>Tasks</p>
+</div>
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for(i =0; i < acc.length; i++){
+	acc[i].addEventListener("click", function() {
+		this.classList.toggle("active");
+		var panel = this.nextElementSibling;
+		if(panel.style.display === "block") {	
+			panel.style.display = "none";
+		}else{
+			panel.style.display = "block";
+		}
+	});
+}
+		
+</script>
+
 
 </body>
 </html>
