@@ -163,20 +163,20 @@ string parseChoice(string choice, Project curr)
 	else if(choice == "Add")
 	{
 		cout << "Title: ";
-		string title "";
-		cin >> toChange;
+		string title = "";
+		cin >> title;
 		cout << "Description: " << endl;
 		string disc = "";
-		cin >> toChange;
+		cin >> disc;
 		switch(loc)
 		{
 			case 0:
 				Project p(user.name, title, disc);
-				projects.push_back(p);
+				projects[p.title] = p;
 				break;
-			case 1:
-				Task t(title, disc);
-				break;
+		//	case 1:
+		//		Task t(title, disc);
+		//		break;
 		}
 	}
 	else if(choice == "Remove")
@@ -188,9 +188,9 @@ string parseChoice(string choice, Project curr)
 		switch(loc)
 		{
 			case 0:
-				for(int i=0;i<projects.size();i++)
+				for(auto p : projects)
 				{
-					if(projects[i].title == title)
+					if(p.second.title == title)
 					{
 						projects.erase(title);
 					}

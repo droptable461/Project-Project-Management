@@ -10,6 +10,9 @@ class User{
 	public:
 		string name;
 		int id;
+
+		User(){};
+		User(string n, int i);
 };
 
 class Bug{
@@ -19,6 +22,8 @@ class Bug{
 		string disc;//a short discription of the bug
 		bool completed;           //could add more but im not sure what kind of information we should have
 		
+		Bug(){};
+		Bug(int ln, string f, string d);
 		string asString();
 };
 class Task{
@@ -27,7 +32,9 @@ class Task{
 		set<User> users;    //Users assigned to the task
 		string title;      //the name of the task
 		string disc;      //general discription of the task
-
+		
+		Task();
+		Task(string t, string d);
 		string asString();
 		string listUsers();
 		string listBugs();
@@ -52,6 +59,8 @@ class Project{
 		string title;  //the name of the project
 		string disc;  //the discription of the project
 
+		Project(){};
+		Project(string u, string t, string d);
 		void assignPhase(Task t,Phase p);
 		string listTasks();
 		string listUsers();
@@ -117,6 +126,11 @@ string Project::listUsers()
 	return rv;
 }
 
+Project::Project(string u, string t, string d)
+{
+	title = t;
+	disc = d;
+}
 string Project::asString()
 {
 	string rv = "";
@@ -160,6 +174,11 @@ string Task::listUsers()
 	return rv;
 }
 
+Task::Task(string t, string d)
+{
+	title = t;
+	disc = d;
+}
 string Task::listBugs()
 {
 	string rv = "";
@@ -170,6 +189,13 @@ string Task::listBugs()
 	return rv;
 }
 
+Bug::Bug(int ln, string f, string d)
+{
+	lineNum = ln;
+	completed = false;
+	file = f;
+	disc = d;
+}
 string Bug::asString()
 {
 	string rv = "";
@@ -187,4 +213,10 @@ string Phase::listTasks()
 			rv += t.second.title + "\n";
 	}
 	return rv;
+}
+
+User::User(string n, int i)
+{
+	name = n;
+	id = i;
 }
