@@ -1,3 +1,5 @@
+#ifndef CONN_H
+#define CONN_H
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -13,7 +15,7 @@ class Conn {
 	private:
 		int m_sockfd;
 		bool m_is_connected;
-		char* m_host;
+		const char* m_host;
 		int m_port;
 		struct sockaddr_in m_server_addr;
 	public:
@@ -31,7 +33,9 @@ class Conn {
 		
 		//Other
 		bool ping_server();
+		bool disconnect_server();
 	//	bool connect_server(const char* hname, const int port);
-		bool post_request(const char* request);
+		bool post_request(const Task t);
 		vector<Project> get_request(char* request);
 };
+#endif

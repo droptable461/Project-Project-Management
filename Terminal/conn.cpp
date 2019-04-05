@@ -76,21 +76,28 @@ bool Conn::ping_server(){
 		return true;
 	}
 	else{
-		m_socketfd = socket(AF_INET, SOCK_STREAM, 0);
+		m_sockfd = socket(AF_INET, SOCK_STREAM, 0);
 		if(m_sockfd<0){
+			cout<<"Socket Error"<< endl;
 			return false;
 		}
 		bzero((char* ) &m_server_addr, sizeof(m_server_addr));
-		bcopy(m_host, (char*)&m_server_addr.sin_addr.s_addr, sizeof(hname));
+		int32_t host;
+		inet_pton(AF_INET, m_host, host);
+		bcopy(m_host, (char*)&m_server_addr.sin_addr.s_addr, sizeof(m_host)+1);
+		m_server_addr.sin_family = AF_INET;
+		cout<<(char*)&m_server_addr.sin_addr << endl;
 		m_server_addr.sin_port = htons(m_port);
-		if(connect(m_sockfd, (struct sockaddr*)&m_server_addr, sizeof(m_server_addr)) < 0)
+		if(connect(m_sockfd, (struct sockaddr*)&m_server_addr, sizeof(m_server_addr)) < 0){
+			perror("Connect");
 			m_is_connected = false;
+		}
 		else
 			m_is_connected = true;
 	}
 	return m_is_connected;
 }
-}
+
 bool Conn::post_request(const Task t)
 {
 	if(m_is_connected){
@@ -98,22 +105,24 @@ bool Conn::post_request(const Task t)
 	if(!t.bugs.empty())
 		for(int i = 0; i < t.bugs.size(); ++i)
 		{
-			string x = "bug" + i + "_linenum=" + t.bugs[i].linenum 
-				+ "&bug" + i + "_file=" + t.bugs[i].file 
-				+ "&bug" + i + "_descr=" + t.bugs[i].disc + "&";
+			string x = (string)"bug" + to_string(i) + (string)"_linenum=" + to_string(t.bugs[i].lineNum) 
+				+ (string)"&bug" + to_string(i) + (string)"_file=" + t.bugs[i].file 
+				+ (string)"&bug" + to_string(i) + (string)"_descr=" + t.bugs[i].disc + (string)"&";
 			values.append(x);
 		}
-	if(!t.users.empty())
+	if(!t.users.empty()){
 		int count = 0;
 		for(User i : t.users){
-			string x = "user" + count + "_name=" + i.name
-				+ "&user" + count + "_id=" + i.id + "&";
+			string x = (string)"user" + to_string(count) + "_name=" + i.name
+				+ "&user" + to_string(count) + (string)"_id=" + to_string(i.id) + (string)"&";
 		
 			values.append(x);
+			count++;
 		}
-	values.append("t_description=" + t.disc + "&t_title=" + t.title;
+	}
+	values.append((string)"t_description=" + t.disc + (string)"&t_title=" + t.title);
 	
-	string request = "POST /task HTTP/1.1\nHost: " + m_host + "\n Content-Type: application/x-www-form-urlencoded\nContent-Length: " + values.length() +"\n"+ values;
+	string request = (string)"POST /task HTTP/1.1\nHost: " + m_host + (string)"\n Content-Type: application/x-www-form-urlencoded\nContent-Length: " + to_string(values.length()) +(string)"\n"+ values;
 	const char* info = request.c_str();
 	int check = write(m_sockfd, info, sizeof(info));
 	if(check < 0)
@@ -126,8 +135,9 @@ bool Conn::post_request(const Task t)
 		return false; 
 	}
 }
-vector<Project> Conn::get_request(char* request)
-{
+/*vector<Project> Conn::get_request(char* request)
+{	
+	char* info;
 	if(!m_is_connected)
 		return false;
 
@@ -137,7 +147,7 @@ vector<Project> Conn::get_request(char* request)
 		return false;
 	else
 		return true;
-}
+}*/
 bool Conn::disconnect_server(){
 	close(m_sockfd);
 	m_is_connected = false;

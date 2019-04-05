@@ -1,4 +1,5 @@
 //Created by Dakota Martin
+#include <sqlite3.h>
 #include "data.h"
 #include "CmdArgs.h"
 #include <stdio.h>
@@ -231,15 +232,12 @@ void parseArgs(CmdArgs cmd)
 
 map<string,Project> getData()
 {
-	Project p;
-	p.title = "One";
-	p.disc = "the first Project";
-	Task t;
-	t.title = "Task";
-	t.disc = "the first task";
-	Bug b;
-	b.file = "firstfile.cpp";
-	b.lineNum = 1;
+	sqlite3 * db;
+	int rc;
+	rc = sqlite3_open("../Website/database.db", &db);
+	
+	
+		
 	//get data from controller to fill projects data
 	//ie.. this function updates the data (atm is only called at begining of program)
 }

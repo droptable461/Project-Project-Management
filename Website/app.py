@@ -61,8 +61,8 @@ def index():
 @app.route("/test", methods=['GET', 'POST'])
 def test():
     #request
-     return 'Test ..'
+     return make_response('Test ..')
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0",debug=True)
