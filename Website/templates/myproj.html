@@ -15,6 +15,10 @@ h2{
 	text-align: center;
 }
 
+h3 {
+	text-align: center;
+}
+
 .topnav {
 	overflow: hidden;	
 	background-color: #513;
@@ -68,16 +72,12 @@ h2{
 	font-size: 18px;
 }
 
-.button-container{
-	float: right;
-}
-.button-container:after{
-	content: "";
-	clear: both;
-	display: table;
+
+.container {
+	display: flex; justify-content: center;
 }
 
-.button{
+.button1{
 	margin: 4px 2px;
 	border: none;
 	padding: 15px 32px;
@@ -87,7 +87,6 @@ h2{
 	display: inline-block; 
 	cursor: pointer;
 	text-decoration: none;
-	position: absolute;
 }
 
 .row{
@@ -96,8 +95,18 @@ h2{
 	display: table;
 }	
 .column {
-	padding: 10px;
+	padding: 100px;
 	display: table-cell;
+}
+
+div.a {
+	position: relative;
+	top: auto;
+}
+
+p {
+	top: auto;
+	position: relative;
 }
 
 .left {
@@ -108,10 +117,16 @@ h2{
 	width: 30%;
 
 }
-
 .right {
 	width: 30%;
 
+}
+
+.card {
+	box-shadow: 0 4px 8px 0;
+	padding: 16px;
+	text-align: center;
+	background-color: #513;
 }
 
 </style>
@@ -143,27 +158,62 @@ h2{
 
 <h2>Projects</h2>
 
-<div class="button-container">
-<button class="button">++Add Project++</button>
-<button class="button">Project One</button>
+<div class ="container">
+<button class ="button1">Add Project</button>
 </div>
 
 	<h3>Tasks<h3>
-		<div class="row">
+		<div class = "row">
+			<div class = "column">
+				<div class = "card">
+					<h4>Card 1</h4>
+						<p>Some text</p>
+					</div>
+				</div>
+			</div>
+
+
+
+<!--		<div class="row">
 			<div class="column left" style="background-color: #513;">
-				<h4>To Do:</h4>
-				<p>List tasks you need to do here</p>
+					<h4>To Do:</h4>	
+					<button onclick="myFunction()">Submit</button>
+					<textarea rows="4" cols="50"> List tasks you need to do here...</textarea>
+					<script>
+						function myFunction() {
+							var x = document.createElement("INPUT");
+							x.setAttribute("type", "text");
+							x.setAttribute("value", "list tasks here");
+							document.body.appendChild(x);
+						}
+					</script>
 			</div>
 			<div class="column middle" style="background-color: #846;">
-				<h4>Doing:</h4>
-				<p>List the tasks you are doing here</p>
+				<div class = "b">
+					<h4>Doing:</h4>
+				</div>
+					<textarea rows="4" cols="50"> List tasks you need to do here...</textarea>
 			</div>
 			<div class="column right" style="background-color: #aaa;">
-				<h4>Done:</h4>
-				<p>List the done tasks here</p>
+				<div class = "c">
+					<h4>Done:</h4>
+				</div>
+					<textarea rows="4" cols="50"> List tasks you need to do here...</textarea>
+				</div>
 			</div>
-		</div>
+		</div>-->
+
 		
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>
 
