@@ -3,12 +3,20 @@
 <head>
 	<meta name="viewport"content="width=device-width, initial-scale=1">
 	<title>DROPTABLE 461</title>
-</head>
 
 <style>
+
 body{
 	margin: 0;
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: "Lato", sans-serif;
+}
+
+h2{
+	text-align: center;
+}
+
+h3 {
+	text-align: center;
 }
 
 .topnav {
@@ -35,43 +43,94 @@ body{
 	color: #fff;
 }
 
-.accordion {
-	background-color: #846;
-	color: white;
-	cursor: pointer;
-	padding: 5px 10px;
-	width: 500%;
-	border: black;
-	border-width: medium;
-	text-align: left;
-	outline: none;
-	font-size: 15px;
-	transition: 0.4s;
+.sidenav {
+	width: 145px;
+	position: fixed;
+	z-index: 1;
+	top: 49px;
+	left: 0px;
+	background-color: #111;
+	overflow-x: hidden;
+	padding-top: 8px 0;
 }
 
-.active, .accordion:hover{
+.sidenav a{
+	padding: 6px 8px 6px 16px;
+	font-size: 24px;
+	color: #846;
+	display: block;
+}
+
+.sidenav a:hover {
+	color: #846;
+}
+
+@media screen and (max-height: 400px) .sidenav {
+	padding-top: 15px;
+}
+@media screen and (max-height: 400px) .sidenav a {
+	font-size: 18px;
+}
+
+
+.container {
+	display: flex; justify-content: center;
+}
+
+.button1{
+	margin: 4px 2px;
+	border: none;
+	padding: 15px 32px;
+	text-align: center;
+	background-color: #846;
+	color: white;
+	display: inline-block; 
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.row{
+	width: 70%;
+	margin: 0 auto;
+	display: table;
+}	
+.column {
+	padding: 100px;
+	display: table-cell;
+}
+
+div.a {
+	position: relative;
+	top: auto;
+}
+
+p {
+	top: auto;
+	position: relative;
+}
+
+.left {
+	width: 30%;
+}
+
+.middle {
+	width: 30%;
+
+}
+.right {
+	width: 30%;
+
+}
+
+.card {
+	box-shadow: 0 4px 8px 0;
+	padding: 16px;
+	text-align: center;
 	background-color: #513;
 }
 
-.panel{
-	padding: 0 18px;
-	display: none;
-	background-color: white;
-	overflow: hidden;
-}
-
-.button{
-	padding: 7px 7px;
-	text-align: left;
-	background-color: #846;
-	font-size: 15px;
-	color: white; 
-	border: white;
-	border-width: medium;
-	
-}
-	
 </style>
+</head>
 <header>
 <div class="topnav">
 	<a href="index">Home</a>
@@ -79,72 +138,81 @@ body{
 	<a href="inbox">Inbox</a>
 	<a href="howto">How to Use</a>
 </div>
+
+<div class="sidenav">
+	<a href="#Project1">Project 1</a>
+	<a href="#Project2">Project 2</a>
+	<a href="#Project3">Project 3</a>
+	<a href="#Project4">Project 4</a>
+	<a href="#Project5">Project 5</a>
+	<a href="#Project6">Project 6</a>
+	<a href="#Project7">Project 7</a>
+	<a href="#Project8">Project 8</a>
+	<a href="#Project9">Project 9</a>
+	<a href="#Project10">Project 10</a>
+</div>
+
 </header>
 
 <body>
 
 <h2>Projects</h2>
 
-<button class="button">++Add Project++</button>
-
-<button class="accordion">Project One</button>
-<div class="panel">
-	<p>Tasks</p>
-</div>
-<button class="accordion">Project Two</button>
-<div class="panel">
-	<p>Tasks</p>
-</div>
-<button class="accordion">Project Three</button>
-<div class="panel">
-	<p>Tasks</p>
-</div>
-<button class="accordion">Project Four</button>
-<div class="panel">
-	<p>Tasks</p>
-</div>
-<button class="accordion">Project Five</button>
-<div class="panel">
-	<p>Tasks</p>
-</div>
-<button class="accordion">Project Six</button>
-<div class="panel">
-	<p>Tasks</p>
-</div>
-<button class="accordion">Project Seven</button>
-<div class="panel">
-	<p>Tasks</p>
-</div>
-<button class="accordion">Project Eight</button>
-<div class="panel">
-	<p>Tasks</p>
-</div>
-<button class="accordion">Project Nine</button>
-<div class="panel">
-	<p>Tasks</p>
-</div>
-<button class="accordion">Project Ten</button>
-<div class="panel">
-	<p>Tasks</p>
+<div class ="container">
+<button class ="button1">Add Project</button>
 </div>
 
-<script>
-var acc = document.getElementsByClassName("accordion");
-var i;
+	<h3>Tasks<h3>
+		<div class = "row">
+			<div class = "column">
+				<div class = "card">
+					<h4>Card 1</h4>
+						<p>Some text</p>
+					</div>
+				</div>
+			</div>
 
-for(i =0; i < acc.length; i++){
-	acc[i].addEventListener("click", function() {
-		this.classList.toggle("active");
-		var panel = this.nextElementSibling;
-		if(panel.style.display === "block") {	
-			panel.style.display = "none";
-		}else{
-			panel.style.display = "block";
-		}
-	});
-}
+
+
+<!--		<div class="row">
+			<div class="column left" style="background-color: #513;">
+					<h4>To Do:</h4>	
+					<button onclick="myFunction()">Submit</button>
+					<textarea rows="4" cols="50"> List tasks you need to do here...</textarea>
+					<script>
+						function myFunction() {
+							var x = document.createElement("INPUT");
+							x.setAttribute("type", "text");
+							x.setAttribute("value", "list tasks here");
+							document.body.appendChild(x);
+						}
+					</script>
+			</div>
+			<div class="column middle" style="background-color: #846;">
+				<div class = "b">
+					<h4>Doing:</h4>
+				</div>
+					<textarea rows="4" cols="50"> List tasks you need to do here...</textarea>
+			</div>
+			<div class="column right" style="background-color: #aaa;">
+				<div class = "c">
+					<h4>Done:</h4>
+				</div>
+					<textarea rows="4" cols="50"> List tasks you need to do here...</textarea>
+				</div>
+			</div>
+		</div>-->
+
 		
-</script>
+
+
+
+
+
+
+
+
+
 
 </body>
 </html>
