@@ -1,7 +1,7 @@
 //Created by Dakota Martin
-#include <sqlite3.h>
+//#include <sqlite3.h>
 #include "data.h"
-#include "CmdArgs.h"
+#include "lib/CmdArgs.h"
 #include <stdio.h>
 #include <string.h>
 using namespace std;
@@ -10,8 +10,17 @@ map<string, Project> projects;
 User user;
 int loc = 0;
 
+void check(int i)
+{
+	cout << "Check["<<i<<"]"<<endl;
+}
 void listProjects()
 {
+	if(projects.size() <= 0)
+	{
+		cout << "No projects are set up." << endl;
+		return;
+	}
 	for(auto curr : projects)
 	{
 		Project p = curr.second;
@@ -114,12 +123,19 @@ string taskMenu(Project p, Task t)
 string mainMenu()
 {
 	bool manager = false;
-	for(auto curr : projects)
+	if(projects.size() > 0)
 	{
-		Project p = curr.second;
-		if(user.name == p.manager)
-			manager = true;
+		for(auto curr : projects)
+		{
+			Project p = curr.second;
+			if(user.name == p.manager)
+				manager = true;
+		}
 	}
+	else if(user.name == "admin")
+		manager = true;
+	else
+		manager = false;
 	vector<string> toCheck = {"Select","Quit"};
 	while(true)
 	{
@@ -232,10 +248,10 @@ void parseArgs(CmdArgs cmd)
 
 map<string,Project> getData()
 {
-	sqlite3 * db;
+/*	sqlite3 * db;
 	int rc;
 	rc = sqlite3_open("../Website/database.db", &db);
-	
+*/	
 	
 		
 	//get data from controller to fill projects data
@@ -251,66 +267,68 @@ int main(int argc, char** argv)
 	projects = getData();
 	if(argc > 1)
 	{
-		CmdArgs cmd(argc,argv);
-		parseArgs(cmd);
+	//	CmdArgs cmd(argc,argv);
+	//	parseArgs(cmd);
 	}
 	else
 	{
-		bool quit = false;
-		while(!quit)
+		//LOGIN STUFFS
+		cout << "Login: ";
+		string uname = "";
+		cin >> uname;
+		if(uname == "admin")
 		{
-			//LOGIN STUFFS
-			//cout << "Login: ";
-			string uname = "";
-			cin >> uname;
-			if(uname == "admin")
+			User u;
+			u.name = uname;
+			u.id = -1;
+			user = u;
+			
+		}
+		else
+		{
+			cout << "Not a user" << endl;
+		return 0;
+		}
+		//there is a global variable "user" (fill it in)
+		//LOGIN STUFFS
+		string str = "Continue";
+		Project pCurr;
+		Task tCurr;
+		while(str != "Quit")
+		{
+			string choice = "";
+			switch(loc)
 			{
-				User u;
-				u.name = uname;
-				u.id = -1;
-				user = u;
-				
-			}
-			//there is a global variable "user" (fill it in)
-			//LOGIN STUFFS
-			string str = "Continue";
-			Project pCurr;
-			Task tCurr;
-			while(str != "Quit")
-			{
-				string choice = "";
-				switch(loc)
-				{
-					case 0:
-						listProjects();
-						choice = mainMenu();
-						str = parseChoice(choice,pCurr);
-						if(str != "Continue")
+				case 0:
+					listProjects();
+					choice = mainMenu();
+					str = parseChoice(choice,pCurr);
+					if(str != "Continue" || str != "Quit")
+					{
+						pCurr = projects[str];
+					}
+					break;
+				case 1:
+					cout << pCurr.listTasks();
+					choice = projMenu(pCurr);
+					str = parseChoice(choice,pCurr);
+					if(str != "Continue"|| str != "Quit")
+					{
+						for(Phase p : pCurr.phases)
 						{
-							pCurr = projects[str];
+							//THIS MIGHT ERROR OUT PLEASE DEBUG
+							if(p.tasks.find(str) != p.tasks.end())
+								tCurr = p.tasks.at(str);
 						}
-						break;
-					case 1:
-						cout << pCurr.listTasks();
-						choice = projMenu(pCurr);
-						str = parseChoice(choice,pCurr);
-						if(str != "Continue")
-						{
-							for(Phase p : pCurr.phases)
-							{
-								//THIS MIGHT ERROR OUT PLEASE DEBUG
-								if(p.tasks.find(str) != p.tasks.end())
-									tCurr = p.tasks.at(str);
-							}
-						}
-						break;
-					case 2:
-						cout << tCurr.asString();
-						choice = taskMenu(pCurr, tCurr);
-						str = parseChoice(choice,pCurr);
-						break;
-				}
+					}
+					break;
+				case 2:
+					cout << tCurr.asString();
+					choice = taskMenu(pCurr, tCurr);
+					str = parseChoice(choice,pCurr);
+					break;
 			}
+			
 			
 		}
 	}

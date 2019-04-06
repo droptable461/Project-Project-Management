@@ -2,18 +2,45 @@
 
 using namespace std;
 
-void Project::assignPhase(Task tas, Phase phas)
+void Project::assignPhase(Task tas, string phas)
 {
-	for(Phase p : phases)
+	if(phases.size() > 0)
 	{
-		p.tasks.erase((tas.title));
+		for(Phase p : phases)
+		{
+			p.tasks.erase((tas.title));
+		}
+		for(Phase p : phases)
+		{
+			if(phas == p.title)
+			{
+				p.tasks[tas.title] = tas;
+				return;
+			}
+		}
 	}
-	phas.tasks[tas.title] = tas;
+	Phase p;
+	p.title = phas;
+	p.tasks[tas.title] = tas;
+	phases.push_back(p);
 }
 bool Project::canSee(User u)
 {
+	if(u.name == manager)
+	{
+		return true;
+	}
+	if(phases.size() <= 0)
+	{
+		return false;
+	}
 	for(Phase p : phases)
 	{
+		if(p.tasks.size() <= 0)
+		{
+			return false;
+		}
+
 		for(auto t : p.tasks)
 		{
 			for(User us : t.second.users)
@@ -29,6 +56,10 @@ bool Project::canSee(User u)
 }
 string Project::listTasks()
 {
+	if(phases.size() <= 0)
+	{
+		return "No tasks.\n";
+	}
 	string rv = "";
 	for(Phase p : phases)
 	{
@@ -41,13 +72,19 @@ string Project::listUsers()
 {
 	string rv = "";
 	set<int> all;
+	if(phases.size() <= 0)
+		return "No users.\n";
 	for(Phase p : phases)
 	{
+		if(p.tasks.size() <= 0)
+			return "No users.\n";
 		for(auto t : p.tasks)
 		{
+			if(t.second.users.size() <= 0)
+				return "No users.\n";
 			for(User u : t.second.users)
 			{
-				if(all.find(u.id) != all.end())
+				if(all.find(u.id) == all.end())
 				{
 					rv += u.name + "\n";
 					all.insert(u.id);
@@ -69,9 +106,12 @@ string Project::asString()
 	string rv = "";
 	rv += title + "\n";
 	int tasks = 0;
-	for(Phase p : phases)
+	if(phases.size() > 0)
 	{
-		tasks += p.tasks.size();
+		for(Phase p : phases)
+		{
+			tasks += p.tasks.size();
+		}
 	}
 	rv += "Number of Tasks: " + to_string(tasks) + "\n";
 	rv += disc + "\n";
@@ -80,6 +120,8 @@ string Project::asString()
 
 bool Task::canEdit(User u)
 {
+	if(users.size() <= 0)
+		return false;
 	for(User us : users)
 	{
 		if(us.id == u.id && us.name == u.name)
@@ -99,6 +141,8 @@ string Task::asString()
 string Task::listUsers()
 {
 	string rv = "";
+	if(users.size() <= 0)
+		return "No users.\n";
 	for(User u : users)
 	{
 		rv += u.name + "\n";
@@ -114,6 +158,8 @@ Task::Task(string t, string d)
 string Task::listBugs()
 {
 	string rv = "";
+	if(bugs.size() <= 0)
+		return "No Bugs.\n";
 	for(Bug b : bugs)
 	{
 		rv += b.asString();
@@ -140,6 +186,8 @@ string Bug::asString()
 string Phase::listTasks()
 {
 	string rv = "";
+	if(tasks.size() <= 0)
+		return "No tasks.\n";
 	for(auto t : tasks)
 	{
 			rv += t.second.title + "\n";

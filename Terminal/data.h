@@ -63,7 +63,7 @@ class Project{
 
 		Project(){};
 		Project(string u, string t, string d);
-		void assignPhase(Task t,Phase p);
+		void assignPhase(Task t,string p);
 		string listTasks();
 		string listUsers();
 		string asString();
