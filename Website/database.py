@@ -42,11 +42,26 @@ def populateDatabase():
 
         conn.commit()
 
+def newproj():
+    man = 'Tman6'
+    title = 'testproj7'
+    des = 'testtesttest'
+    db = conn.cursor()
+    db.execute("INSERT INTO project (manager,title,description) VALUES(?,?,?)",(man,title,des))
+
+    conn.commit()
+
+    p = [row[0] for row in db.execute("""SELECT * FROM project""").fetchall()]
+    for j in range(len(p)):
+        print(p[j])
+
+
 def retproj():
     c = conn.cursor()
     p = [row[0] for row in c.execute("""SELECT DISTINCT proj FROM user WHERE uname = ('thomas')""").fetchall()]
     for j in range(len(p)):
         print(p[j])
+
     conn.commit()
 
 def rettask():
@@ -54,6 +69,7 @@ def rettask():
     variable = [row[0] for row in c.execute("""SELECT tasks FROM user NATURAL JOIN project WHERE uname = ('thomas') AND title = ('testProj1')""").fetchall()]
     for i in range(len(variable)):
         print(c.execute("""SELECT * FROM task WHERE task_id = ?""", (variable[i],)).fetchall())
+
     conn.commit()
 
 def main():
@@ -62,6 +78,7 @@ def main():
         populateDatabase()
         retproj()
         rettask()
+        newproj()
         
 if __name__ == "__main__":
 	main()
