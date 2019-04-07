@@ -54,6 +54,19 @@ bool Project::canSee(User u)
 	}
 	return false;
 }
+string Project::listPhases()
+{
+	if(phases.size() <= 0)
+	{
+		return "No Phases.\n";
+	}
+	string rv = "";
+	for(Phase p : phases)
+	{
+		rv += p.title + "\n";
+	}
+	return rv;
+}
 string Project::listTasks()
 {
 	if(phases.size() <= 0)
@@ -96,10 +109,24 @@ string Project::listUsers()
 	return rv;
 }
 
+Project::Project()
+{
+	Phase p;
+	p.title = "To do";
+	phases.push_back(p);
+}
 Project::Project(string u, string t, string d)
 {
+	Phase p;
+	p.title = "To do";
+	phases.push_back(p);
 	title = t;
 	disc = d;
+}
+
+void Project::addTask(Task t)
+{
+	phases[0].tasks[t.title] = t;
 }
 string Project::asString()
 {

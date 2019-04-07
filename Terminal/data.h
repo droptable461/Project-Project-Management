@@ -61,9 +61,11 @@ class Project{
 		string title;  //the name of the project
 		string disc;  //the discription of the project
 
-		Project(){};
+		Project();
 		Project(string u, string t, string d);
 		void assignPhase(Task t,string p);
+		void addTask(Task t);
+		string listPhases();
 		string listTasks();
 		string listUsers();
 		string asString();
