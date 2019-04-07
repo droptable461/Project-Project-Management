@@ -291,7 +291,8 @@ bool putData(vector<Project> data){
 
 int main(int argc, char** argv)
 {
-	projects = getData();
+	check(0);
+	//projects = getData();
 	if(argc > 1)
 	{
 	//	CmdArgs cmd(argc,argv);
@@ -300,6 +301,7 @@ int main(int argc, char** argv)
 	else
 	{
 		//LOGIN STUFFS
+		check(-1);
 		cout << "Login: ";
 		string uname = "";
 		getline(cin, uname);
@@ -316,6 +318,7 @@ int main(int argc, char** argv)
 			cout << "Not a user" << endl;
 			return 0;
 		}
+		check(-2);
 		//there is a global variable "user" (fill it in)
 		//LOGIN STUFFS
 		string str = "Continue";
