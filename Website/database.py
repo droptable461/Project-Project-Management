@@ -9,10 +9,10 @@ def clearDatabase():
 	c.execute("""DROP TABLE IF EXISTS user""")
 def createDatabase():
 	c = conn.cursor()
-	c.execute("""CREATE TABLE project(manager TEXT, title TEXT, description TEXT, tasks REFERENCES task(task_id))""")
-	c.execute("""CREATE TABLE task(task_id INTEGER, title TEXT, description TEXT, phase TEXT, bug_id REFERENCES bug(b_id))""")
-	c.execute("""CREATE TABLE bug(b_id, line INTEGER, fname TEXT, description TEXT)""")
-	c.execute("""CREATE TABLE user(uname text, proj TEXT REFERENCES project(title), tasks REFERENCES task(task_id))""")
+	c.execute("""CREATE TABLE project(manager TEXT, title TEXT, description TEXT, tasks REFERENCES task(task_id),PRIMARY KEY(title,tasks))""")
+	c.execute("""CREATE TABLE task(task_id INTEGER, title TEXT, description TEXT, phase TEXT, bug_id REFERENCES bug(b_id), PRIMARY KEY(task_id,title))""")
+	c.execute("""CREATE TABLE bug(b_id PRIMARY KEY, line INTEGER, fname TEXT, description TEXT)""")
+	c.execute("""CREATE TABLE user(uname text, proj TEXT REFERENCES project(title), tasks REFERENCES task(task_id), PRIMARY KEY(uname, tasks))""")
 	conn.commit()
 def populateDatabase():
         c = conn.cursor()
@@ -42,24 +42,26 @@ def populateDatabase():
 
         conn.commit()
 
-def testquery():
+def retproj():
     c = conn.cursor()
     p = [row[0] for row in c.execute("""SELECT DISTINCT proj FROM user WHERE uname = ('thomas')""").fetchall()]
     for j in range(len(p)):
         print(p[j])
-#two functions?        
-    variable = [row[0] for row in c.execute("""SELECT tasks FROM user NATURAL JOIN project WHERE uname = ('thomas') AND title = ('testProj1')""").fetchall()]
+    conn.commit()
 
+def rettask():
+    c = conn.cursor()
+    variable = [row[0] for row in c.execute("""SELECT tasks FROM user NATURAL JOIN project WHERE uname = ('thomas') AND title = ('testProj1')""").fetchall()]
     for i in range(len(variable)):
         print(c.execute("""SELECT * FROM task WHERE task_id = ?""", (variable[i],)).fetchall())
-
     conn.commit()
 
 def main():
         clearDatabase()
         createDatabase()
         populateDatabase()
-        testquery()
+        retproj()
+        rettask()
         
 if __name__ == "__main__":
 	main()

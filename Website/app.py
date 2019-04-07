@@ -16,8 +16,8 @@ def connectDB():
 	return rv
 
 def getDB():
-	if not hasattr(g, 'sqlite_db'):
-		g.sqlite_db = connectDB()
+        if not hasattr(g, 'sqlite_db'):
+            g.sqlite_db = connectDB()
         return g.sqlite_db
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -32,7 +32,6 @@ def login():
 			session['username'] = request.form['username']
 			return render_template("index.html",name=validlogin)
 	return render_template('login.html')
-
 
 @app.route('/')
 def hello():
