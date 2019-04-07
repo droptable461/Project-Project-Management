@@ -48,6 +48,7 @@ class Phase{
 		map<string,Task> tasks; //a map of task title to task (makes my life easier)
 		string title;
 
+		Phase();
 		string listTasks();
 
 

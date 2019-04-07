@@ -210,6 +210,10 @@ string Bug::asString()
 	return rv;
 }
 
+Phase::Phase()
+{
+
+}
 string Phase::listTasks()
 {
 	string rv = "";
