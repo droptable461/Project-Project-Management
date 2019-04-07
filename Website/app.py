@@ -26,7 +26,7 @@ def login():
 		db = getDB()
 		validlogin = False
 
-		validlogin = db.execute('SELECT * FROM user WHERE uname = ?', (request.form['username'],)).fetchall()
+		validlogin = db.execute('SELECT uname FROM user WHERE uname = ?', (request.form['username'],)).fetchall()
 
 		if validlogin:
 			session['username'] = request.form['username']
