@@ -37,9 +37,18 @@ def login():
 def hello():
     return render_template("login.html")
 
-@app.route('/myproj')
+@app.route('/myproj', methods=['GET','POST'])
 def myproj():
-    return render_template('myproj.html')
+
+#dif func for dif proj operations: add(proj or tasks), retrieve(proj and tasks), remove(proj or tasks), modify(proj or tasks)
+        if request.method == 'POST':
+            db = getDB()
+            man = request.form['manager']
+            title = request.form['title']
+            des = request.form['description']
+            db.execute("INSERT INTO project (manager,title,description) VALUES(?,?,?)",(man,title,des))
+        return render_template('myproj.html')
+
 
 @app.route('/inbox')
 def inbox():

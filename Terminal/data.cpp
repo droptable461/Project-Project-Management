@@ -71,11 +71,12 @@ string Project::listTasks()
 {
 	if(phases.size() <= 0)
 	{
-		return "No tasks.\n";
+		return "No tasks..\n";
 	}
 	string rv = "";
 	for(Phase p : phases)
 	{
+		rv += p.title + ":\n";
 		rv += p.listTasks();
 	}
 	return rv;
@@ -126,7 +127,7 @@ Project::Project(string u, string t, string d)
 
 void Project::addTask(Task t)
 {
-	phases[0].tasks[t.title] = t;
+	phases[0].tasks.insert(pair<string,Task>(t.title, t));
 }
 string Project::asString()
 {
@@ -217,6 +218,7 @@ Phase::Phase()
 string Phase::listTasks()
 {
 	string rv = "";
+	//cout << "DEBUG: " << tasks.size() << endl;
 	if(tasks.size() <= 0)
 		return "No tasks.\n";
 	for(auto t : tasks)
