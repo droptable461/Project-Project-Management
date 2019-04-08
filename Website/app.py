@@ -20,26 +20,28 @@ def getDB():
             g.sqlite_db = connectDB()
         return g.sqlite_db
 def addProj():
-    db = getDB()
-    man = request.form['manager']
-    title = request.form['title']
-    des = request.form['description']
-    db.execute("""INSERT INTO project (manager,title,description) VALUES(?,?,?)""",(man,title,des))
-    db.commit()
-    db.close()    
-    return
+	if 'manager' in request.form:
+	    db = getDB()
+	    man = request.form['manager']
+	    title = request.form['title']
+	    des = request.form['description']
+	    db.execute("""INSERT INTO project (manager,title,description) VALUES(?,?,?)""",(man,title,des))
+	    db.commit()
+	    db.close()    
+	return
 
 def addTask():
-    db1 = getDB()
-    taskID = request.form['task_id']
-    taskTitle = request.form['title2']
-    taskDes = request.form['description2']
-    taskPhase = request.form['phase']
-    taskBug = request.form['bug_id']
-    db.execute("""INSERT INTO task (task_id,title,description,phase,bug_id) VALUES(?,?,?,?,?)""",(taskID,taskTitle,taskDes,taskPhase,taskBug))
-    db1.commit()
-    db1.close()    
-    return
+	if 'task_id' in request.form:
+	    db1 = getDB()
+	    taskID = request.form['task_id']
+	    taskTitle = request.form['title2']
+	    taskDes = request.form['description2']
+	    taskPhase = request.form['phase']
+	    taskBug = request.form['bug_id']
+	    db1.execute("""INSERT INTO task (task_id,title,description,phase,bug_id) VALUES(?,?,?,?,?)""",(taskID,taskTitle,taskDes,taskPhase,taskBug))
+	    db1.commit()
+	    db1.close()    
+	return
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -64,7 +66,7 @@ def myproj():
 #dif func for dif proj operations: add(proj or tasks), retrieve(proj and tasks), remove(proj or tasks), modify(proj or tasks)
         if request.method == 'POST':
              addProj()
-            # addTask()
+             addTask()
         
         return render_template('myproj.html')
 
