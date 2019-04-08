@@ -27,20 +27,20 @@ def addProj():
 	    des = request.form['description']
 	    db.execute("""INSERT INTO project (manager,title,description) VALUES(?,?,?)""",(man,title,des))
 	    db.commit()
-	    db.close()    
+	    db.close()
 	return
 
 def addTask():
-	if 'task_id' in request.form:
+	if 'title2' in request.form:
 	    db1 = getDB()
-	    taskID = request.form['task_id']
+	    #taskID = request.form['task_id']
 	    taskTitle = request.form['title2']
 	    taskDes = request.form['description2']
 	    taskPhase = request.form['phase']
-	    taskBug = request.form['bug_id']
-	    db1.execute("""INSERT INTO task (task_id,title,description,phase,bug_id) VALUES(?,?,?,?,?)""",(taskID,taskTitle,taskDes,taskPhase,taskBug))
+	   # taskBug = request.form['bug_id']
+	    db1.execute("""INSERT INTO task (title,description,phase) VALUES(?,?,?)""",(taskTitle,taskDes,taskPhase))
 	    db1.commit()
-	    db1.close()    
+	    db1.close()
 	return
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -67,13 +67,13 @@ def myproj():
         if request.method == 'POST':
              addProj()
              addTask()
-        
+
         return render_template('myproj.html')
 
 @app.route('/Project1')
 def Project1():
-    
-    
+
+
     return render_template('Project1.html')
 
 @app.route('/inbox')
