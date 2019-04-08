@@ -47,6 +47,7 @@ def myproj():
             title = request.form['title']
             des = request.form['description']
             db.execute("INSERT INTO project (manager,title,description) VALUES(?,?,?)",(man,title,des))
+            db.commit()
         return render_template('myproj.html')
 
 
