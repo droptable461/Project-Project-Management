@@ -73,11 +73,26 @@ h3 {
 }
 
 
-.container {
+.container1 {
+	display: flex; justify-content: center;
+}
+.container2 {
 	display: flex; justify-content: center;
 }
 
-.button1{
+.button1 {
+	margin: 4px 2px;
+	border: none;
+	padding: 15px 32px;
+	text-align: center;
+	background-color: #846;
+	color: white;
+	display: inline-block; 
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.button2 {
 	margin: 4px 2px;
 	border: none;
 	padding: 15px 32px;
@@ -95,7 +110,7 @@ h3 {
 	display: table;
 }	
 .column {
-	padding: 100px;
+	padding: 10px;
 	display: table-cell;
 }
 
@@ -122,14 +137,28 @@ p {
 
 }
 
-.card {
+.card1 {
 	box-shadow: 0 4px 8px 0;
-	padding: 16px;
+	padding: 10px;
 	text-align: center;
-	background-color: #513;
+	background-color: #846;
 }
 
-.modal {
+.card2 {
+	box-shadow: 0 4px 8px 0;
+	padding: 10px;
+	text-align: center;
+	background-color: #846;
+}
+
+.card3 {
+	box-shadow: 0 4px 8px 0;
+	padding: 10px;
+	text-align: center;
+	background-color: #846;
+}
+
+.modal1 {
 	display: none;
 	position: fixed;
 	z-index: 1;
@@ -142,6 +171,20 @@ p {
 	background-color: rgba(0,0,0);
 	background-color: rgba(0,0,0,0.4);
 }
+.modal2 {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	padding-top: 100px;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0,0,0);
+	background-color: rgba(0,0,0,0.4);
+}
+
 
 .modal-content {
 	background-color: #846;
@@ -193,18 +236,17 @@ p {
 
 <h2>Projects</h2>
 
-<div class ="container">
+<div class ="container1">
 <button id ="button1">Add Project</button>
 </div>
 
-<div id ="Modal1" class ="modal">
+<div id ="Modal1" class ="modal1">
 
 	<div class= "modal-content">
 		<span class="close">&times;</span>
 	
-	<form action="/myproj" method="POST" id="input">
+		<form action="/myproj" method="POST" id="input1">
 	
-
 		<p>Who is the manager of this project?</p>
 			Manager: <input type="text" name="manager">
 		
@@ -212,56 +254,100 @@ p {
 			Project Title: <input type="text" name="title">
 
 		<p>What is the description of the project?</p>
-		<textarea rows="4" cols="50" name ="description" form="input">enter a description of the project here.</textarea>
+		<textarea rows="4" cols="50" name ="description" form="input1">enter a description of the project here.</textarea>
 
 		<input type = "submit" >
 		</form>
 		</div>
 </div>
-<script>
-	//get modal
-	var modal = document.getElementById('Modal1');
-	//get button that opens the modal
-	var butt = document.getElementById('button1');
-	//get the span that closes the modal
-	var span = document.getElementsByClassName("close")[0];
-
-	//when user clicks button, open modal
-	butt.onclick = function() {
-		modal.style.display = "block";
-	}
-	//when user clicks <span> (x), close modal
-	span.onclick = function() {
-		modal.style.display = "none";
-	}
-	//when user click anywheree outside of modal, close it
-	window.onclick = function(event) {
-		if(event.target == modal){
-			modal.style.display = "none";
-		}
-
-	}
-
-</script>
 		 
 	<h3>Tasks<h3>
 	
+<div class ="container2">
+		<button id ="button2">Add Task</button>
+	</div>
+
+	<div id ="Modal2" class ="modal2">
+
+	<div class= "modal-content">
+		<span class="close">&times;</span>
+	
+	<form action="/myproj" method="POST" id="input2">
+	
+		<p>Task Id</p>
+			Task Id: <input type="text" name="task_id">
+		
+		<p>What is the name of the task?</p>
+			Task Title: <input type="text" name="title2">
+
+		<p>What is the description of the task?</p>
+		<textarea rows="4" cols="50" name ="description2" form="input2">enter a description of the task here.</textarea>
+
+		<p>What phase is the task in?</p>
+			Phase: <input type="text" name="phase">
+	
+		<p>Bug Id</p>
+			Bug Id: <input type="text" name="bug_id">
+
+		<input type = "submit" >
+		</form>
+	</div>
+</div>
+
+<script>
+	//get modal
+	var modal1 = document.getElementById('Modal1');
+	var modal2 = document.getElementById('Modal2');
+	//get button that opens the modal
+	var butt1 = document.getElementById('button1');
+	var butt2 = document.getElementById('button2');
+	//get the span that closes the modal
+	var span1 = document.getElementsByClassName("close")[0];
+	var span2 = document.getElementsByClassName("close")[1];
+	//when user clicks button, open modal
+	butt1.onclick = function() {
+		modal1.style.display = "block";
+	}
+	butt2.onclick = function() {
+		modal2.style.display = "block";
+	}
+	//when user clicks <span> (x), close modal
+	span1.onclick = function() {
+		modal1.style.display = "none";
+	}
+	span2.onclick = function() {
+		modal2.style.display = "none";
+	}
+	//when user click anywhere outside of modal, close it
+	window.onclick = function(event) {
+		if(event.target == modal1){
+			modal1.style.display = "none";
+		}
+		if(event.target == modal2){
+			modal2.style.display = "none";
+		}
+	}
+</script>
+
+
+<!--cards-->
 	<div class = "row">
 		<div class = "column">
-			<div class = "card">
+			<div class = "card1">
 				<h4>To Do</h4>
 						<p>Type here</p>
 					</div>
+			<div class = "card2">
 					<h5>Doing</h4>
 						<p>Type here</p>
 					</div>
-				</div>
+			<div class = "card3">
 					<h6>Done</h4>
 						<p>Type here</p>
 					</div>
-				</div>	
 			</div>
 		</div>
+
 
 <!--	<div class="row">
 			<div class="column left" style="background-color: #513;">
