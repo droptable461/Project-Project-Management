@@ -12,7 +12,7 @@ int loc = 0;
 
 void check(int i)
 {
-	cout << "Check["<<i<<"]"<<endl;
+//	cout << "Check["<<i<<"]"<<endl;
 }
 void listProjects()
 {
@@ -34,8 +34,9 @@ string selectProject()
 	while(true)
 	{
 		string rv = "";
+		cout << "Type a valid Project: ";
 		getline(cin,rv);
-		if((projects.find(rv) != projects.end() || rv == "quit" || rv == "Quit") && projects[rv].canSee(user))
+		if((projects.find(rv) != projects.end() || rv == "quit" || rv == "Quit") && (projects[rv].canSee(user) || user.id == -1))
 			return projects[rv].title;
 		cout << "Not a Project\n Type [quit] or a valid Project: ";
 	}
@@ -46,6 +47,7 @@ string selectTask(Project pr)
 	while(true)
 	{
 		string rv = "";
+		cout << "Type a valid Task: ";
 		getline(cin, rv);
 		for(Phase p : pr.phases)
 		{
@@ -78,7 +80,8 @@ string projMenu(Project p)
 		string rv = "";
 		getline(cin,rv);
 		for(string s : toCheck){
-			toupper(rv[0]);
+			rv[0] = toupper(rv[0]);
+			//cout << rv << endl;
 			if(s == rv)
 				return rv;
 		}
@@ -114,7 +117,8 @@ string taskMenu(Project p, Task t)
 		string rv = "";
 		getline(cin,rv);
 		for(string s : toCheck){
-			toupper(rv[0]);
+			rv[0] = toupper(rv[0]);
+			//cout << rv << endl;
 			if(s == rv)
 				return rv;
 		}
@@ -135,10 +139,10 @@ string mainMenu()
 				manager = true;
 		}
 	}
-	else if(user.name == "admin")
-		manager = true;
 	else
 		manager = false;
+	if(user.id == -1)
+		manager = true;
 	vector<string> toCheck = {"Select","Quit"};
 	while(true)
 	{
@@ -146,7 +150,7 @@ string mainMenu()
 		cout << "[Select] a project" << endl;
 		if(manager)
 		{
-			toCheck = {"Select","Add","Back","Remove","Quit"};
+			toCheck = {"Select","Add","Remove","Quit"};
 			cout << "[Add] a project" << endl;
 			cout << "[Remove] a project" << endl;
 		}
@@ -155,7 +159,8 @@ string mainMenu()
 		string rv = "";
 		getline(cin,rv);
 		for(string s : toCheck){
-			toupper(rv[0]);
+			rv[0] = toupper(rv[0]);
+			//cout << rv << endl;
 			if(s == rv)
 				return rv;
 		}
@@ -178,7 +183,8 @@ string parseChoice(string choice, Project curr)
 				rv = selectTask(curr);	
 				break;
 		}
-		loc += 1;
+		if(rv != "Quit")
+			loc += 1;
 	}
 	else if(choice == "Add")
 	{
@@ -202,7 +208,7 @@ string parseChoice(string choice, Project curr)
 			case 1:
 			{
 				Task t(title, disc);
-				projects[curr.title].addTask(t);
+				projects[curr.title].phases[0].tasks.insert(pair<string,Task>(title,t));
 				break;
 			}
 		}
@@ -322,9 +328,8 @@ int main(int argc, char** argv)
 		//there is a global variable "user" (fill it in)
 		//LOGIN STUFFS
 		string str = "Continue";
-		Project pCurr;
-		Phase fCurr;
-		Task tCurr;
+		string pCurr;
+		Task * tCurr;
 		while(str != "Quit")
 		{
 			string choice = "";
@@ -334,33 +339,36 @@ int main(int argc, char** argv)
 					check(5);
 					listProjects();
 					choice = mainMenu();
-					str = parseChoice(choice,pCurr);
+					str = parseChoice(choice,projects[pCurr]);
 					check(8);
 					if(str != "Continue" || str != "Quit")
 					{
 						check(22);
-						pCurr = projects[str];
+						pCurr = str;
 					}
 					break;
 				case 1:
 					check(4);
-					cout << pCurr.listTasks();
-					choice = projMenu(pCurr);
-					str = parseChoice(choice,pCurr);
+					cout << endl << endl;
+					cout << projects[pCurr].asString();
+					cout << endl;
+					cout << projects[pCurr].listTasks();
+					choice = projMenu(projects[pCurr]);
+					str = parseChoice(choice,projects[pCurr]);
 					if(str != "Continue"|| str != "Quit")
 					{
-						for(Phase p : pCurr.phases)
+						for(Phase p : projects[pCurr].phases)
 						{
 							//THIS MIGHT ERROR OUT PLEASE DEBUG
 							if(p.tasks.find(str) != p.tasks.end())
-								tCurr = p.tasks.at(str);
+								tCurr = &(p.tasks.at(str));
 						}
 					}
 					break;
 				case 2:
-					cout << tCurr.asString();
-					choice = taskMenu(pCurr, tCurr);
-					str = parseChoice(choice,pCurr);
+					cout << tCurr->asString();
+					choice = taskMenu(projects[pCurr], *tCurr);
+					str = parseChoice(choice,projects[pCurr]);
 					break;
 			}
 			
