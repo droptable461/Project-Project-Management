@@ -1,5 +1,8 @@
 from flask import Flask, request, g, render_template, redirect, url_for, escape, session
 import sqlite3
+import requests
+import simplejson as json
+
 
 #conn = sqlite3.connect('database.db')
 
@@ -88,10 +91,14 @@ def howto():
 def index():
     return render_template('index.html')
 
-@app.route("/task", methods=['POST'])
+@app.route("/task", methods=['GET', 'POST'])
 def task():
-    #request
-     return make_response('Test ..')
+        req = requests.get('http://127.0.0.1:5000/task')
+        print(req.text)
+        #print("HTTP Status Code: " + str(req.status_code))
+        #print(req.headers)
+        #json_response = json.loads(req.content)
+        #print(json_response['t_description'])
 
 @app.teardown_appcontext
 def closeDB(error):
