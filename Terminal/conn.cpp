@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include<arpa/inet.h>
 #include <iostream>
 #include <stdlib.h>
 #include <string.h>
@@ -78,17 +79,18 @@ bool Conn::ping_server(){
 	else{
 		m_sockfd = socket(AF_INET, SOCK_STREAM, 0);
 		if(m_sockfd<0){
-			cout<<"Socket Error"<< endl;
+			perror("Socket");
 			return false;
 		}
+		
 		bzero((char* ) &m_server_addr, sizeof(m_server_addr));
-		int32_t host;
-		inet_pton(AF_INET, m_host, host);
-		bcopy(m_host, (char*)&m_server_addr.sin_addr.s_addr, sizeof(m_host)+1);
+
 		m_server_addr.sin_family = AF_INET;
-		cout<<(char*)&m_server_addr.sin_addr << endl;
 		m_server_addr.sin_port = htons(m_port);
-		if(connect(m_sockfd, (struct sockaddr*)&m_server_addr, sizeof(m_server_addr)) < 0){
+		inet_pton(AF_INET, m_host, &m_server_addr.sin_addr.s_addr);
+
+		cout<<(char*)&m_server_addr.sin_addr << endl;
+		if(connect(m_sockfd, (struct sockaddr*)&m_server_addr, sizeof(struct sockaddr_in)) < 0){
 			perror("Connect");
 			m_is_connected = false;
 		}
