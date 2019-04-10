@@ -88,8 +88,8 @@ def howto():
 def index():
     return render_template('index.html')
 
-@app.route("/test", methods=['GET', 'POST'])
-def test():
+@app.route("/task", methods=['POST'])
+def task():
     #request
      return make_response('Test ..')
 
