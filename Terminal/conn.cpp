@@ -124,9 +124,11 @@ bool Conn::post_request(const Task t)
 	}
 	values.append((string)"t_description=" + t.disc + (string)"&t_title=" + t.title);
 	
-	string request = (string)"POST /task HTTP/1.1\nHost: " + m_host + (string)"\n Content-Type: application/x-www-form-urlencoded\nContent-Length: " + to_string(values.length()) +(string)"\n"+ values;
+	string request = (string)"127.0.0.1:5000/task?" + values;
+	
 	const char* info = request.c_str();
-	int check = write(m_sockfd, info, sizeof(info));
+	cout<< info;
+	int check = write(m_sockfd, info, strlen(info));
 	if(check < 0)
 		return false;
 
