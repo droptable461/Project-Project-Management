@@ -104,24 +104,43 @@ h3 {
 	text-decoration: none;
 }
 
-.row{
-	width: 70%;
-	margin: 0 auto;
-	display: table;
-}	
+/*@media screen and (max-width: 600px){
 .column {
-	padding: 10px;
-	display: table-cell;
+	width: 100%;
+	display: block;
+	margin-bottom: 20px;
+}
+*/
+
+.column {
+	float: left;
+	width: 25%;
+	padding: 0 10px;
 }
 
+.row {
+	margin: 70px 11px 1px 200px;
+}
+
+
+/*.row:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+*/	
+
+.card {
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+	padding: 20px;
+	text-align: center;
+	background-color: #846;
+}
+
+/*
 div.a {
 	position: relative;
 	top: auto;
-}
-
-p {
-	top: auto;
-	position: relative;
 }
 
 .left {
@@ -134,29 +153,8 @@ p {
 }
 .right {
 	width: 30%;
-
 }
-
-.card1 {
-	box-shadow: 0 4px 8px 0;
-	padding: 10px;
-	text-align: center;
-	background-color: #846;
-}
-
-.card2 {
-	box-shadow: 0 4px 8px 0;
-	padding: 10px;
-	text-align: center;
-	background-color: #846;
-}
-
-.card3 {
-	box-shadow: 0 4px 8px 0;
-	padding: 10px;
-	text-align: center;
-	background-color: #846;
-}
+*/
 
 .modal1 {
 	display: none;
@@ -207,6 +205,15 @@ p {
 	cursor: pointer;
 }
 
+textarea {
+	margin: 0px;
+	height: 450px;
+	width: 205px;
+	background-color: #846;
+	color: white;
+	border: #846;
+	outline: none;
+}
 </style>
 </head>
 <header>
@@ -331,52 +338,56 @@ p {
 
 
 <!--cards-->
-	<div class = "row">
-		<div class = "column">
-			<div class = "card1">
-				<h4>To Do</h4>
-						<p>Type here</p>
-					</div>
-			<div class = "card2">
-					<h5>Doing</h4>
-						<p>Type here</p>
-					</div>
-			<div class = "card3">
-					<h6>Done</h4>
-						<p>Type here</p>
-					</div>
-			</div>
+
+<div class = "row">
+	<div class = "column">
+		<div class = "card">
+			<h4>To Do</h4>
+			<textarea rows="4" cols="50">Type here</textarea>
 		</div>
+	</div>
+
+	<div class = "column">
+		<div class = "card">
+			<h4>Doing</h4>
+			<textarea rows="4" cols="50">Type here</textarea>
+		</div>
+	</div>
+	
+	<div class = "column">
+		<div class = "card">
+			<h4>Done</h4>
+			<textarea rows="4" cols="50">Type here</textarea>
+		</div>
+	</div>
+</div>
 
 
-<!--	<div class="row">
-			<div class="column left" style="background-color: #513;">
-					<h4>To Do:</h4>	
-					<button onclick="myFunction()">Submit</button>
-					<textarea rows="4" cols="50"> List tasks you need to do here...</textarea>
-					<script>
-						function myFunction() {
-							var x = document.createElement("INPUT");
-							x.setAttribute("type", "text");
-							x.setAttribute("value", "list tasks here");
-							document.body.appendChild(x);
-						}
-					</script>
-			</div>
-			<div class="column middle" style="background-color: #846;">
-				<div class = "b">
-					<h4>Doing:</h4>
-				</div>
-					<textarea rows="4" cols="50"> List tasks you need to do here...</textarea>
-			</div>
-			<div class="column right" style="background-color: #aaa;">
-				<div class = "c">
-					<h4>Done:</h4>
-				</div>
-					<textarea rows="4" cols="50"> List tasks you need to do here...</textarea>
-				</div>
-			</div>
-		</div>-->
+<!--<script>
+	function myFunction() {
+	var x = document.createElement("INPUT");
+	x.setAttribute("type", "text");
+	x.setAttribute("value", "list tasks here");
+	document.body.appendChild(x);
+</script>
+
+
+<div class="row">
+		<div class="column left" style="background-color: #513;">
+			<h4>To Do:</h4>	
+			<button onclick="myFunction()">Submit</button>
+			<textarea rows="4" cols="50"> List tasks you need to do here...</textarea>
+
+	<div class="column middle" style="background-color: #846;">
+			<h4>Doing:</h4>
+			<button onclick="myFunction()">Submit</button>
+			<textarea rows="4" cols="50"> List tasks you need to do here...</textarea>
+	
+	<div class="column right" style="background-color: #aaa;">
+			<h4>Done:</h4>
+			<button onclick="myFunction()">Submit</button>
+			<textarea rows="4" cols="50"> List tasks you need to do here...</textarea>
+</div>-->
 
 </body>
 </html>
