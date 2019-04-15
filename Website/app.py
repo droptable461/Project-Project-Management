@@ -49,7 +49,7 @@ def myproj():
        # else:
         #        addtask()
 
-        return render_template('myproj.html',p)
+        return render_template('myproj.html',pp = p)
         
 #dif func for dif proj operations: add(proj or tasks), retrieve(proj and tasks), remove(proj or tasks), modify(proj or tasks)
 def addproj():
