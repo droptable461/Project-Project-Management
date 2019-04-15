@@ -22,15 +22,17 @@ h3 {
 .topnav {
 	overflow: hidden;	
 	background-color: #513;
+ 
+
 }
 
 .topnav a {
 	float: left;
 	color: #fff;
 	text-align: center;
-	padding: 14px 16px;
+	padding: 14px 40px;
 	text-decoration: none;
-	font-size: 17px;	
+	font-size: 24px;	
 }
 
 .topnav a:hover {
@@ -44,10 +46,11 @@ h3 {
 }
 
 .sidenav {
-	width: 145px;
+	height: 100%;
+	width: 144px;
 	position: fixed;
 	z-index: 1;
-	top: 49px;
+	top: 56px;
 	left: 0px;
 	background-color: #111;
 	overflow-x: hidden;
@@ -207,8 +210,8 @@ div.a {
 
 textarea {
 	margin: 0px;
-	height: 450px;
-	width: 205px;
+	height: 350px;
+	width: 100px;
 	background-color: #846;
 	color: white;
 	border: #846;
@@ -220,12 +223,20 @@ textarea {
 <div class="topnav">
 	<a href="index">Home</a>
 	<a class="active"href="myproj">My Projects</a>
-	<a href="inbox">Inbox</a>
+	<a href="timeline">Timeline</a>
 	<a href="howto">How to Use</a>
 </div>
 
 <div class="sidenav">
-	<a href="#Project1">Project 1</a>
+
+{% for proj in projects %}
+
+	<a href="{{ proj }}"></a>
+
+{% endfor %}
+
+<!--
+	<a href="myproj">Project 1</a>
 	<a href="#Project2">Project 2</a>
 	<a href="#Project3">Project 3</a>
 	<a href="#Project4">Project 4</a>
@@ -235,10 +246,11 @@ textarea {
 	<a href="#Project8">Project 8</a>
 	<a href="#Project9">Project 9</a>
 	<a href="#Project10">Project 10</a>
+	
+-->	
 </div>
 
 </header>
-
 <body>
 
 <h2>Projects</h2>
@@ -360,8 +372,14 @@ textarea {
 			<textarea rows="4" cols="50">Type here</textarea>
 		</div>
 	</div>
-</div>
 
+<div class = "column">
+		<div class = "card">
+			<h4>++Add Column++</h4>
+			<textarea rows="4" cols="50">Type here</textarea>
+		</div>
+	</div>
+</div>
 
 <!--<script>
 	function myFunction() {
@@ -382,12 +400,11 @@ textarea {
 			<h4>Doing:</h4>
 			<button onclick="myFunction()">Submit</button>
 			<textarea rows="4" cols="50"> List tasks you need to do here...</textarea>
-	
 	<div class="column right" style="background-color: #aaa;">
 			<h4>Done:</h4>
 			<button onclick="myFunction()">Submit</button>
 			<textarea rows="4" cols="50"> List tasks you need to do here...</textarea>
-</div>-->
+	</div>-->
 
 </body>
 </html>

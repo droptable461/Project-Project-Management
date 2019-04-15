@@ -3,6 +3,7 @@
 <head>
 	<meta name="viewport"content="width=device-width, initial-scale=1">
 	<title>DROPTABLE 461</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <style>
@@ -20,9 +21,9 @@ body{
 	float: left;
 	color: #fff;
 	text-align: center;
-	padding: 14px 16px;
+	padding: 14px 40px;
 	text-decoration: none;
-	font-size: 17px;	
+	font-size: 24px;	
 }
 
 .topnav a:hover {
@@ -34,21 +35,50 @@ body{
 	background-color: #846;
 	color: #fff;
 }
+
+.active {
+	background-color: #513;
 	
+}
+
+/*p{
+	color: black;;
+	font-weight: bold;
+	position: absolute;
+	left: 100px;
+	top: 50px;
+	border: 2px solid #513;
+}	
+*/	
+	
+table {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+td, th {
+	border: 1px solid #846;	
+	text-align: left;
+	padding: 10px;
+}
+
+tr:nth-child(even) {
+	background-color: #513;
+	
+}
+
 </style>
 <header>
 <div class="topnav">
-	<a href="index">Home</a>
+	<a class="active" href="index">Home</a>
 	<a href="myproj">My Projects</a>
-	<a class="active" href="inbox">Inbox</a>
+	<a href="timeline">Timeline</a>
 	<a href="howto">How to Use</a>
 </div>
+
 </header>
 
 <body>
-
-
-</body>
-</html>
 
 

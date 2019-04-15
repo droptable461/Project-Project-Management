@@ -21,9 +21,9 @@ body{
 	float: left;
 	color: #fff;
 	text-align: center;
-	padding: 14px 16px;
+	padding: 14px 40px;
 	text-decoration: none;
-	font-size: 17px;	
+	font-size: 24px;	
 }
 
 .topnav a:hover {
@@ -36,31 +36,12 @@ body{
 	color: #fff;
 }
 
-.icon-bar {
-	width: 78px;
-	background-color: #846;
-}
-
-.icon-bar a {
-	display: block;
-	text-align: center;
-	padding: 16px;
-	transition: all 0.3s ease;
-	color: white;
-	font-size: 20px;
-}
-
-.icon-bar a:hover {
-	background-color: #000;
-
-}
-
 .active {
 	background-color: #513;
 	
 }
 
-p{
+/*p{
 	color: black;;
 	font-weight: bold;
 	position: absolute;
@@ -68,14 +49,31 @@ p{
 	top: 50px;
 	border: 2px solid #513;
 }	
+*/	
 	
+table {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+td, th {
+	border: 1px solid #846;	
+	text-align: left;
+	padding: 10px;
+}
+
+tr:nth-child(even) {
+	background-color: #513;
 	
+}
+
 </style>
 <header>
 <div class="topnav">
 	<a class="active" href="index">Home</a>
 	<a href="myproj">My Projects</a>
-	<a href="inbox">Inbox</a>
+	<a href="timeline">Timeline</a>
 	<a href="howto">How to Use</a>
 </div>
 
@@ -83,15 +81,45 @@ p{
 
 <body>
 
-<div class="icon-bar">
-	<a class="active" href="#"><i class="fa fa-home"></i></a>
-	<a href="#"><i class="fa fa-search"></i></a>
-	<a href="#"><i class="fa fa-envelope"></i></a>
-	<a href="#"><i class="fa fa-globe"></i></a>
-	<a href="#"><i class="fa fa-trash"></i></a>
-</div>	
+<h2>User To Do Table</h2>
 
-<p>This is the PPM Home page<p>
+<table>
+	<tr>
+		<th>Name</th>
+		<th>Task</th>
+		<th>Progress</th>
+	</tr>
+	<tr>
+		<td>Allie Menefee</td>
+		<td>Web Page GUI</td>
+		<td>kasjdlfkjalk</td>
+	</tr>
+	<tr>
+		<td>Breonna Williams</td>
+		<td>Web Page GUI</td>
+		<td>alksjdflaksjdlfkj</td>
+	</tr>
+	<tr>
+		<td>Thomas Bain</td>
+		<td>Database</td>
+		<td>kasjdlfkjalk</td>
+	</tr>
+	<tr>
+		<td>Tejas Patel</td>
+		<td>Database</td>
+		<td>alksjdflaksjdlfkj</td>
+		</tr>
+	<tr>
+		<td>Dakota Martin</td>
+		<td>Terminal</td>
+		<td>kasjdlfkjalk</td>
+	</tr>
+	<tr>
+		<td>Brandon Lewis</td>
+		<td>CLI</td>
+		<td>alksjdflaksjdlfkj</td>
+	</tr>
+</table>
 
 </body>
 </html>
