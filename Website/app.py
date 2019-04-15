@@ -45,9 +45,11 @@ def myproj():
             #print(p[j])
 
         if request.method == 'POST':
-            addproj()
+                addproj()
+       # else:
+        #        addtask()
 
-    return render_template('myproj.html')
+        return render_template('myproj.html',p)
         
 #dif func for dif proj operations: add(proj or tasks), retrieve(proj and tasks), remove(proj or tasks), modify(proj or tasks)
 def addproj():
@@ -60,6 +62,10 @@ def addproj():
         db.commit()
     return True
 
+#def addtast():
+#    if request.method == 'POST':
+#        db = getDB()
+        
 
 @app.route('/inbox')
 def inbox():
