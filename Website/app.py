@@ -45,7 +45,7 @@ def myproj():
              addProj()
              addTask()
 
-        return render_template('myproj.html',projects = p)
+        return render_template('myproj.html')#,projects = p
         
     
 def addProj():
