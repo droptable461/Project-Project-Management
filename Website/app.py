@@ -45,9 +45,9 @@ def myproj():
              addProj()
              addTask()
 
-        return render_template('myproj.html',pp = p)
-        
-    
+        return render_template('myproj.html')
+
+
 def addProj():
 	if 'manager' in request.form:
 	    db = getDB()
@@ -71,7 +71,7 @@ def addTask():
 	    db1.commit()
 	    db1.close()
 	return
-        
+
 
 @app.route('/inbox')
 def inbox():
@@ -89,7 +89,7 @@ def index():
 def test():
     #request
      return make_response('Test ..')
- 
+
 @app.route("/task", methods=['GET', 'POST'])
 def task():
     #if request.method=="GET":
