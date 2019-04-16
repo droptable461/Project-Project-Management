@@ -9,26 +9,26 @@ def clearDatabase():
 	c.execute("""DROP TABLE IF EXISTS user""")
 def createDatabase():
 	c = conn.cursor()
-	c.execute("""CREATE TABLE project(  manager TEXT, 
-                                            title TEXT, 
-                                            description TEXT, 
+	c.execute("""CREATE TABLE project(  manager TEXT,
+                                            title TEXT,
+                                            description TEXT,
                                             tasks REFERENCES task(task_id),
                                             PRIMARY KEY(title,tasks))""")
 
-	c.execute("""CREATE TABLE task( task_id INTEGER, 
-                                        title TEXT, description TEXT, 
-                                        phase TEXT, 
-                                        bug_id REFERENCES bug(b_id), 
-                                        PRIMARY KEY(task_id,title))""")
+	c.execute("""CREATE TABLE task( task_id INTEGER,
+                                        title TEXT, description TEXT,
+                                        phase TEXT,
+                                        bug_id REFERENCES bug(b_id),
+                                        PRIMARY KEY(task_id))""")
 
-	c.execute("""CREATE TABLE bug(  b_id PRIMARY KEY, 
-                                        line INTEGER, 
-                                        fname TEXT, 
+	c.execute("""CREATE TABLE bug(  b_id INTEGER PRIMARY KEY,
+                                        line INTEGER,
+                                        fname TEXT,
                                         description TEXT)""")
 
-	c.execute("""CREATE TABLE user( uname text, 
-                                        proj TEXT REFERENCES project(title), 
-                                        tasks REFERENCES task(task_id), 
+	c.execute("""CREATE TABLE user( uname text,
+                                        proj TEXT REFERENCES project(title),
+                                        tasks REFERENCES task(task_id),
                                         PRIMARY KEY(uname, tasks))""")
 	conn.commit()
 def populateDatabase():
@@ -94,6 +94,6 @@ def main():
         retproj()
         rettask()
         newproj()
-        
+
 if __name__ == "__main__":
 	main()
