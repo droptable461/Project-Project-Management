@@ -40,7 +40,7 @@ def hello():
 @app.route('/myproj', methods=['GET','POST'])
 def myproj():
         c = getDB()
-        p = [row[0] for row in c.execute("""SELECT DISTINCT proj FROM user WHERE uname = (?)""",(session['username'])).fetchall()]
+       # p = [row[0] for row in c.execute("""SELECT DISTINCT proj FROM user WHERE uname = (?)""",(session['username'])).fetchall()]
 
 #dif func for dif proj operations: add(proj or tasks), retrieve(proj and tasks), remove(proj or tasks), modify(proj or tasks)
         if request.method == 'POST':
@@ -75,9 +75,9 @@ def addTask():
 	return
         
 
-@app.route('/inbox')
-def inbox():
-    return render_template('inbox.html')
+@app.route('/timeline')
+def timeline():
+    return render_template('timeline.html')
 
 @app.route('/howto')
 def howto():
