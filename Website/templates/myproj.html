@@ -55,6 +55,7 @@ h3 {
 	background-color: #111;
 	overflow-x: hidden;
 	padding-top: 8px 0;
+	color: white;
 }
 
 .sidenav a{
@@ -231,7 +232,7 @@ textarea {
 
 {% for proj in projects %}
 
-	<li>{{ proj | safe }}</li>
+	<a href= "{{ proj | safe }}">{{ proj }}</a>
 
 {% endfor %}
 
