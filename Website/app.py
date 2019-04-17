@@ -97,6 +97,13 @@ def addTask():
 @app.route('/timeline')
 def timeline():
     return render_template('timeline.html')
+@app.route('/testProj1')
+def testproj1():
+    return render_template('testproj1.html')
+
+@app.route('/testProj2')
+def testproj2():
+    return render_template('testproj2.html')
 
 @app.route('/howto')
 def howto():
