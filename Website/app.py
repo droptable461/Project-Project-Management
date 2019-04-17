@@ -56,7 +56,7 @@ def retTask():
             current = request.form['cur']
             variable = [row[0] for row in c.execute("""SELECT tasks FROM user NATURAL JOIN project WHERE uname = (?) AND title = (?)""",(session['username'],current)).fetchall()]
             for i in range(len(variable)):
-                c.execute("""SELECT * FROM task WHERE task_id = ?""", (variable[i],)).fetchall()
+                t[i] = c.execute("""SELECT * FROM task WHERE task_id = ?""", (variable[i],)).fetchall()
 #maybe loop through putting them into a new array? & return the array
 
 def addProj():
@@ -82,7 +82,7 @@ def addTask():
 	   # taskBug = request.form['bug_id']
 	    db1.execute("""INSERT INTO task (title,description,phase) VALUES(?,?,?)""",(taskTitle,taskDes,taskPhase))
 	    v = db1.execute("""SELECT task_id FROM task WHERE title = (?)""",(taskTitle,)).fetchall()
-	    db1.execute("""INSERT INTO users (uname,tasks) VALUES(?,?)""",(session['username'],v))
+	    db1.execute("""INSERT INTO user (uname,tasks) VALUES(?,?)""",(session['username'],v))
 	    db1.commit()
 	    db1.close()
 	return
