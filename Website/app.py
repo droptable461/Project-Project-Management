@@ -66,7 +66,7 @@ def addProj():
             title = request.form['title']
             des = request.form['description']
             db.execute("""INSERT INTO project (manager,title,description) VALUES(?,?,?)""",(man,title,des))
-            db.execute("""INSERT INTO users (uname,proj) VALUES(?,?)""",(session['username'],title))
+            db.execute("""INSERT INTO user (uname,proj) VALUES(?,?)""",(session['username'],title))
             db.commit()
             db.close()
             return
@@ -81,10 +81,10 @@ def addTask():
 	    taskPhase = request.form['phase']
 	   # taskBug = request.form['bug_id']
 	    db1.execute("""INSERT INTO task (title,description,phase) VALUES(?,?,?)""",(taskTitle,taskDes,taskPhase))
-        v = db1.execute("""SELECT task_id FROM task WHERE title = (?)""",(taskTitle,)).fetchall()
-        db1.execute("""INSERT INTO users (uname,tasks) VALUES(?,?)""",(session['username'],v))
-        db1.commit()
-        db1.close()
+	    v = db1.execute("""SELECT task_id FROM task WHERE title = (?)""",(taskTitle,)).fetchall()
+	    db1.execute("""INSERT INTO users (uname,tasks) VALUES(?,?)""",(session['username'],v))
+	    db1.commit()
+	    db1.close()
 	return
 
 @app.route('/timeline')
