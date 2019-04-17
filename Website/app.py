@@ -93,13 +93,9 @@ def index():
 
 @app.route("/task", methods=['GET', 'POST'])
 def task():
-        req = requests.get('http://127.0.0.1:5000/task')
-        print(req.text)
-        #print("HTTP Status Code: " + str(req.status_code))
-        #print(req.headers)
-        #json_response = json.loads(req.content)
-        #print(json_response['t_description'])
-
+    print("hello\n")
+    print(request.form['t_description'])
+    
 @app.teardown_appcontext
 def closeDB(error):
 	if hasattr(g, 'sqlite_db'):
