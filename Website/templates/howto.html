@@ -26,9 +26,9 @@ body.p{
 	float: left;
 	color: #fff;
 	text-align: center;
-	padding: 14px 16px;
+	padding: 14px 40px;
 	text-decoration: none;
-	font-size: 17px;	
+	font-size: 24px;	
 }
 
 .topnav a:hover {
@@ -40,13 +40,68 @@ body.p{
 	background-color: #846;
 	color: #fff;
 }
-	
+
+.accordion {
+	background-color: #846;
+	color: white;
+	cursor: pointer;
+	padding: 5px 10px;
+	width: 500%;
+	border: black;
+	border-width: medium;
+	text-align: left;
+	outline: none;
+	font-size: 15px;
+	transition: 0.4s;
+}
+
+.active, .accordion:hover{
+	background-color: #513;
+}
+
+.panel{
+	padding: 0 18px;
+	display: none;
+	background-color: white;
+	overflow: hidden;
+}
+
+
+.accordion.column {
+	float: left;
+	width: 50%;
+	flex: 50%;
+	padding: 10px;
+	height: 250px;
+}
+
+.accordion.row:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.accordion.row {
+	padding: 250px;
+	display: flex;
+}
+
+h3, h4, h5 {
+	display: bold;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+p {
+	font-size: 14px;
+	font-weight: bold;
+}
 </style>
 <header>
 <div class="topnav">
 	<a href="index">Home</a>
 	<a href="myproj">My Projects</a>
-	<a href="inbox">Inbox</a>
+	<a href="timeline">Timeline</a>
 	<a class="active" href="howto">How to Use</a>
 </div>
 </header>
@@ -54,6 +109,44 @@ body.p{
 <body>
 
 <p>PPM How to Use Page</p>
+
+<button class="accordion">The Login Page</button>
+<div class="panel">
+	<p>The login page is linked to our database which holds only the usernames of the people in the DROPTABLE 461 group. 
+		So you can use allie, breonna, thomas, tejas, brandon, and dakota as a username to login to the app</p>
+</div>
+<button class="accordion">The Index Page</button>
+<div class="panel">
+	<p>not really sure what this page is going to do yet</p>
+</div>
+<button class="accordion">My Projects Page </button>
+<div class="panel">
+	<p>This is where a list of projects will be assigned based on the user that is logged in to the app. This page will allow you to add projects, as well as add tasks to the projects that have been created</p>
+</div>
+<button class="accordion">Additional Info</button>
+<div class="panel">
+	<p>At the moment all inputs added into creating a new project only create a database of info in our database file.</p>
+</div>
+
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for(i =0; i < acc.length; i++){
+	acc[i].addEventListener("click", function() {
+		this.classList.toggle("active");
+		var panel = this.nextElementSibling;
+		if(panel.style.display === "block") {	
+			panel.style.display = "none";
+		}else{
+			panel.style.display = "block";
+		}
+	});
+}
+		
+</script>
+
 
 </body>
 </html>

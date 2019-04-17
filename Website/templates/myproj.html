@@ -3,26 +3,36 @@
 <head>
 	<meta name="viewport"content="width=device-width, initial-scale=1">
 	<title>DROPTABLE 461</title>
-</head>
 
 <style>
+
 body{
 	margin: 0;
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: "Lato", sans-serif;
+}
+
+h2{
+	text-align: center;
+}
+
+h3 {
+	text-align: center;
 }
 
 .topnav {
 	overflow: hidden;	
 	background-color: #513;
+ 
+
 }
 
 .topnav a {
 	float: left;
 	color: #fff;
 	text-align: center;
-	padding: 14px 16px;
+	padding: 14px 40px;
 	text-decoration: none;
-	font-size: 17px;	
+	font-size: 24px;	
 }
 
 .topnav a:hover {
@@ -35,116 +45,367 @@ body{
 	color: #fff;
 }
 
-.accordion {
+.sidenav {
+	height: 100%;
+	width: 144px;
+	position: fixed;
+	z-index: 1;
+	top: 56px;
+	left: 0px;
+	background-color: #111;
+	overflow-x: hidden;
+	padding-top: 8px 0;
+	color: white;
+}
+
+.sidenav a{
+	padding: 6px 8px 6px 16px;
+	font-size: 24px;
+	color: #846;
+	display: block;
+}
+
+.sidenav a:hover {
+	color: #846;
+}
+
+@media screen and (max-height: 400px) .sidenav {
+	padding-top: 15px;
+}
+@media screen and (max-height: 400px) .sidenav a {
+	font-size: 18px;
+}
+
+
+.container1 {
+	display: flex; justify-content: center;
+}
+.container2 {
+	display: flex; justify-content: center;
+}
+
+.button1 {
+	margin: 4px 2px;
+	border: none;
+	padding: 15px 32px;
+	text-align: center;
 	background-color: #846;
 	color: white;
+	display: inline-block; 
 	cursor: pointer;
-	padding: 5px 10px;
-	width: 500%;
-	border: black;
-	border-width: medium;
-	text-align: left;
-	outline: none;
-	font-size: 15px;
-	transition: 0.4s;
+	text-decoration: none;
 }
 
-.active, .accordion:hover{
-	background-color: #513;
-}
-
-.panel{
-	padding: 0 18px;
-	display: none;
-	background-color: white;
-	overflow: hidden;
-}
-
-.button{
-	padding: 7px 7px;
-	text-align: left;
+.button2 {
+	margin: 4px 2px;
+	border: none;
+	padding: 15px 32px;
+	text-align: center;
 	background-color: #846;
-	font-size: 15px;
-	color: white; 
-	border: white;
-	border-width: medium;
-	
+	color: white;
+	display: inline-block; 
+	cursor: pointer;
+	text-decoration: none;
 }
-	
+
+/*@media screen and (max-width: 600px){
+.column {
+	width: 100%;
+	display: block;
+	margin-bottom: 20px;
+}
+*/
+
+.column {
+	float: left;
+	width: 25%;
+	padding: 0 10px;
+}
+
+.row {
+	margin: 70px 11px 1px 200px;
+}
+
+
+/*.row:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+*/	
+
+.card {
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+	padding: 20px;
+	text-align: center;
+	background-color: #846;
+}
+
+/*
+div.a {
+	position: relative;
+	top: auto;
+}
+
+.left {
+	width: 30%;
+}
+
+.middle {
+	width: 30%;
+
+}
+.right {
+	width: 30%;
+}
+*/
+
+.modal1 {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	padding-top: 100px;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0,0,0);
+	background-color: rgba(0,0,0,0.4);
+}
+.modal2 {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	padding-top: 100px;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0,0,0);
+	background-color: rgba(0,0,0,0.4);
+}
+
+
+.modal-content {
+	background-color: #846;
+	margin: auto;
+	padding: 20px;
+	border: 1px solid #846;
+	width: 80%;
+}
+
+.close {
+	color: #846;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover, .close:focus {
+	color: #846;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+textarea {
+	margin: 0px;
+	height: 350px;
+	width: 100px;
+	background-color: #846;
+	color: white;
+	border: #846;
+	outline: none;
+}
 </style>
+</head>
 <header>
 <div class="topnav">
 	<a href="index">Home</a>
 	<a class="active"href="myproj">My Projects</a>
-	<a href="inbox">Inbox</a>
+	<a href="timeline">Timeline</a>
 	<a href="howto">How to Use</a>
 </div>
-</header>
 
+<div class="sidenav">
+
+{% for proj in projects %}
+
+	<a href= "{{ proj | safe }}">{{ proj }}</a>
+
+{% endfor %}
+
+<!--
+	<a href="myproj">Project 1</a>
+	<a href="#Project2">Project 2</a>
+	<a href="#Project3">Project 3</a>
+	<a href="#Project4">Project 4</a>
+	<a href="#Project5">Project 5</a>
+	<a href="#Project6">Project 6</a>
+	<a href="#Project7">Project 7</a>
+	<a href="#Project8">Project 8</a>
+	<a href="#Project9">Project 9</a>
+	<a href="#Project10">Project 10</a>
+	
+-->	
+</div>
+
+</header>
 <body>
 
 <h2>Projects</h2>
 
-<button class="button">++Add Project++</button>
+<div class ="container1">
+<button id ="button1">Add Project</button>
+</div>
 
-<button class="accordion">Project One</button>
-<div class="panel">
-	<p>Tasks</p>
+<div id ="Modal1" class ="modal1">
+
+	<div class= "modal-content">
+		<span class="close">&times;</span>
+	
+		<form action="/myproj" method="POST" id="input1">
+	
+		<p>Who is the manager of this project?</p>
+			Manager: <input type="text" name="manager" >
+		
+		<p>What is the title of the project?</p>
+			Project Title: <input type="text" name="title"  >
+
+		<p>What is the description of the project?</p>
+		<textarea rows="4" cols="50" name ="description" form="input1">enter a description of the project here.</textarea>
+
+		<input type = "submit" >
+		</form>
+		</div>
 </div>
-<button class="accordion">Project Two</button>
-<div class="panel">
-	<p>Tasks</p>
-</div>
-<button class="accordion">Project Three</button>
-<div class="panel">
-	<p>Tasks</p>
-</div>
-<button class="accordion">Project Four</button>
-<div class="panel">
-	<p>Tasks</p>
-</div>
-<button class="accordion">Project Five</button>
-<div class="panel">
-	<p>Tasks</p>
-</div>
-<button class="accordion">Project Six</button>
-<div class="panel">
-	<p>Tasks</p>
-</div>
-<button class="accordion">Project Seven</button>
-<div class="panel">
-	<p>Tasks</p>
-</div>
-<button class="accordion">Project Eight</button>
-<div class="panel">
-	<p>Tasks</p>
-</div>
-<button class="accordion">Project Nine</button>
-<div class="panel">
-	<p>Tasks</p>
-</div>
-<button class="accordion">Project Ten</button>
-<div class="panel">
-	<p>Tasks</p>
+		 
+	<h3>Tasks<h3>
+	
+<div class ="container2">
+		<button id ="button2">Add Task</button>
+	</div>
+
+	<div id ="Modal2" class ="modal2">
+
+	<div class= "modal-content">
+		<span class="close">&times;</span>
+	
+	<form action="/myproj" method="POST" id="input2">
+	
+		<p>Task Id</p>
+        <!--Task Id: <input type="text" name="task_id">-->
+		
+		<p>What is the name of the task?</p>
+			Task Title: <input type="text" name="title2" >
+
+		<p>What is the description of the task?</p>
+		<textarea rows="4" cols="50" name ="description2"  form="input2">enter a description of the task here.</textarea>
+
+		<p>What phase is the task in?</p>
+			Phase: <input type="text" name="phase" >
+	
+		<p>Bug Id</p>
+        <!--Bug Id: <input type="text" name="bug_id" >-->
+
+		<input type = "submit" >
+		</form>
+	</div>
 </div>
 
 <script>
-var acc = document.getElementsByClassName("accordion");
-var i;
-
-for(i =0; i < acc.length; i++){
-	acc[i].addEventListener("click", function() {
-		this.classList.toggle("active");
-		var panel = this.nextElementSibling;
-		if(panel.style.display === "block") {	
-			panel.style.display = "none";
-		}else{
-			panel.style.display = "block";
+	//get modal
+	var modal1 = document.getElementById('Modal1');
+	var modal2 = document.getElementById('Modal2');
+	//get button that opens the modal
+	var butt1 = document.getElementById('button1');
+	var butt2 = document.getElementById('button2');
+	//get the span that closes the modal
+	var span1 = document.getElementsByClassName("close")[0];
+	var span2 = document.getElementsByClassName("close")[1];
+	//when user clicks button, open modal
+	butt1.onclick = function() {
+		modal1.style.display = "block";
+	}
+	butt2.onclick = function() {
+		modal2.style.display = "block";
+	}
+	//when user clicks <span> (x), close modal
+	span1.onclick = function() {
+		modal1.style.display = "none";
+	}
+	span2.onclick = function() {
+		modal2.style.display = "none";
+	}
+	//when user click anywhere outside of modal, close it
+	window.onclick = function(event) {
+		if(event.target == modal1){
+			modal1.style.display = "none";
 		}
-	});
-}
-		
+		if(event.target == modal2){
+			modal2.style.display = "none";
+		}
+	}
 </script>
+
+
+<!--cards-->
+
+<div class = "row">
+	<div class = "column">
+		<div class = "card">
+			<h4>To Do</h4>
+			<textarea rows="4" cols="50"></textarea>
+		</div>
+	</div>
+
+	<div class = "column">
+		<div class = "card">
+			<h4>Doing</h4>
+			<textarea rows="4" cols="50"></textarea>
+		</div>
+	</div>
+	
+	<div class = "column">
+		<div class = "card">
+			<h4>Done</h4>
+			<textarea rows="4" cols="50"></textarea>
+		</div>
+	</div>
+
+<div class = "column">
+		<div class = "card">
+			<h4>++Add Column++</h4>
+			<textarea rows="4" cols="50"></textarea>
+		</div>
+	</div>
+</div>
+
+<!--<script>
+	function myFunction() {
+	var x = document.createElement("INPUT");
+	x.setAttribute("type", "text");
+	x.setAttribute("value", "list tasks here");
+	document.body.appendChild(x);
+</script>
+
+
+<div class="row">
+		<div class="column left" style="background-color: #513;">
+			<h4>To Do:</h4>	
+			<button onclick="myFunction()">Submit</button>
+			<textarea rows="4" cols="50"> List tasks you need to do here...</textarea>
+
+	<div class="column middle" style="background-color: #846;">
+			<h4>Doing:</h4>
+			<button onclick="myFunction()">Submit</button>
+			<textarea rows="4" cols="50"> List tasks you need to do here...</textarea>
+	<div class="column right" style="background-color: #aaa;">
+			<h4>Done:</h4>
+			<button onclick="myFunction()">Submit</button>
+			<textarea rows="4" cols="50"> List tasks you need to do here...</textarea>
+	</div>-->
 
 </body>
 </html>
