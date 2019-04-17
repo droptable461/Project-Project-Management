@@ -104,7 +104,7 @@ bool Conn::post_request(const Task t)
 {
 	if(m_is_connected){
 	string values = "";
-	if(!t.bugs.empty())
+	/*if(!t.bugs.empty())
 		for(int i = 0; i < t.bugs.size(); ++i)
 		{
 			string x = (string)"bug" + to_string(i) + (string)"_linenum=" + to_string(t.bugs[i].lineNum) 
@@ -121,10 +121,10 @@ bool Conn::post_request(const Task t)
 			values.append(x);
 			count++;
 		}
-	}
+	}*/
 	values.append((string)"t_description=" + t.disc + (string)"&t_title=" + t.title);
 	
-	string request = (string)"127.0.0.1:5000/task?" + values;
+	string request = "POST /task HTTP/1.0\r\nContent-Type: text/html\r\nContent-Length: "+ to_string(values.length()) + "\r\n\r\n" + values;
 	
 	const char* info = request.c_str();
 	cout<< info;
