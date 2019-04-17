@@ -34,8 +34,16 @@ class Conn {
 		//Other
 		bool ping_server();
 		bool disconnect_server();
+		bool auth(User u, string pword);
 	//	bool connect_server(const char* hname, const int port);
+		//POSTS
 		bool post_request(const Task t);
+		bool post_request(const Bug b);
+		bool post_request(const Project p);
+		bool post_request(const User u);
+		bool post_request(const Phase p);
+	
+		//GETS
 		vector<Project> get_request(char* request);
 };
 #endif
