@@ -43,13 +43,19 @@ def myproj():
         p = [row[0] for row in c.execute("""SELECT DISTINCT proj FROM user WHERE uname = (?)""",(session['username'],)).fetchall()]
 #dif func for dif proj operations: add(proj or tasks), retrieve(proj and tasks), remove(proj or tasks), modify(proj or tasks)
         if request.method == 'PUT':
-             retTask()
+            k = retCol()
+            t = retTask()
         if request.method == 'POST':
              addProj()
              addTask()
 
-        return render_template('myproj.html',projects = p)
+        return render_template('myproj.html',projects = p,columns = k)
 
+def retCol():
+    c = getDB()
+    current = request.form['cur']
+    k = [row[0] for row in c.execute("""SELECT coll FROM columns WHERE proj = (?)""",(current)).fetchall()]
+    return k
 def retTask():
         if True:
             c = getDB()
@@ -57,6 +63,7 @@ def retTask():
             variable = [row[0] for row in c.execute("""SELECT tasks FROM user NATURAL JOIN project WHERE uname = (?) AND title = (?)""",(session['username'],current)).fetchall()]
             for i in range(len(variable)):
                 t[i] = c.execute("""SELECT * FROM task WHERE task_id = ?""", (variable[i],)).fetchall()
+            return t
 #maybe loop through putting them into a new array? & return the array
 
 def addProj():
@@ -123,4 +130,4 @@ def closeDB(error):
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0")
+    app.run()#host="0.0.0.0")
