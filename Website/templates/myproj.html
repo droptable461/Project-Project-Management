@@ -308,7 +308,7 @@ textarea {
 		<p>What phase is the task in?</p>
 			Phase: <input type="text" name="phase" >
 	
-		<p>Bug Id</p>
+		<!--p>Bug Id</p>-->
         <!--Bug Id: <input type="text" name="bug_id" >-->
 
 		<input type = "submit" >
@@ -354,15 +354,19 @@ textarea {
 
 <!--cards-->
 
+{% for col in columns %}
+
 <div class = "row">
 	<div class = "column">
 		<div class = "card">
-			<h4>To Do</h4>
+			<h4>{{ col }}</h4>
 			<textarea rows="4" cols="50"></textarea>
 		</div>
 	</div>
 
-	<div class = "column">
+{% endfor %}
+
+<!--	<div class = "column">
 		<div class = "card">
 			<h4>Doing</h4>
 			<textarea rows="4" cols="50"></textarea>
@@ -376,13 +380,34 @@ textarea {
 		</div>
 	</div>
 
+<div class ="container1">
+
+<button id ="button1">Add Column</button>
+</div>
+
+<div id ="Modal1" class ="modal1">
+
+	<div class= "modal-content">
+		
+		<span class="close">&times;</span>
+	
+		<form action="/myproj" method="GET" id="input1">
+	
+		<p>What is the column title?</p>
+			Column title: <input type="text" name="col_title">
+
+		<input type = "submit" >
+		</form>
+		</div>
+</div>
+	
 <div class = "column">
 		<div class = "card">
 			<h4>++Add Column++</h4>
 			<textarea rows="4" cols="50"></textarea>
 		</div>
 	</div>
-</div>
+</div>-->
 
 <!--<script>
 	function myFunction() {
