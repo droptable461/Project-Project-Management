@@ -37,37 +37,52 @@ def login():
 def hello():
     return render_template("login.html")
 
-@app.route('/myproj', methods=['GET','POST'])
+@app.route('/myproj', methods=['GET','POST','PUT'])
 def myproj():
         c = getDB()
-        p = [row[0] for row in c.execute("""SELECT DISTINCT proj FROM user WHERE uname = ("thomas")""").fetchall()]
+        p = [row[0] for row in c.execute("""SELECT DISTINCT proj FROM user WHERE uname = (?)""",(session['username'],)).fetchall()]
 #dif func for dif proj operations: add(proj or tasks), retrieve(proj and tasks), remove(proj or tasks), modify(proj or tasks)
+        if request.method == 'PUT':
+             retTask()
         if request.method == 'POST':
              addProj()
              addTask()
 
         return render_template('myproj.html',projects = p)
 
+def retTask():
+        if True:
+            c = getDB()
+            current = request.form['cur']
+            variable = [row[0] for row in c.execute("""SELECT tasks FROM user NATURAL JOIN project WHERE uname = (?) AND title = (?)""",(session['username'],current)).fetchall()]
+            for i in range(len(variable)):
+                c.execute("""SELECT * FROM task WHERE task_id = ?""", (variable[i],)).fetchall()
+#maybe loop through putting them into a new array? & return the array
+
 def addProj():
 	if 'manager' in request.form:
-	    db = getDB()
-	    man = request.form['manager']
-	    title = request.form['title']
-	    des = request.form['description']
-	    db.execute("""INSERT INTO project (manager,title,description) VALUES(?,?,?)""",(man,title,des))
-	    db.commit()
-	    db.close()
-	return
+            db = getDB()
+            man = request.form['manager']
+            title = request.form['title']
+            des = request.form['description']
+            db.execute("""INSERT INTO project (manager,title,description) VALUES(?,?,?)""",(man,title,des))
+            db.execute("""INSERT INTO user (uname,proj) VALUES(?,?)""",(session['username'],title))
+            db.commit()
+            db.close()
+            return
 
 def addTask():
 	if 'title2' in request.form:
 	    db1 = getDB()
 	    #taskID = request.form['task_id']
+        #something to link task to the current proj
 	    taskTitle = request.form['title2']
 	    taskDes = request.form['description2']
 	    taskPhase = request.form['phase']
 	   # taskBug = request.form['bug_id']
 	    db1.execute("""INSERT INTO task (title,description,phase) VALUES(?,?,?)""",(taskTitle,taskDes,taskPhase))
+	    v = db1.execute("""SELECT task_id FROM task WHERE title = (?)""",(taskTitle,)).fetchall()
+	    db1.execute("""INSERT INTO users (uname,tasks) VALUES(?,?)""",(session['username'],v))
 	    db1.commit()
 	    db1.close()
 	return
