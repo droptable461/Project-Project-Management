@@ -41,16 +41,24 @@ def hello():
 def myproj():
         c = getDB()
         p = [row[0] for row in c.execute("""SELECT DISTINCT proj FROM user WHERE uname = (?)""",(session['username'],)).fetchall()]
-        k = [row[0] for row in c.execute("""SELECT coll FROM columns """)]#WHERE proj = (?)""",(current)).fetchall()]
+        k = [row[0] for row in c.execute("""SELECT coll FROM columns WHERE proj = 'NULL'""")]#WHERE proj = (?)""",(current)).fetchall()]
 #dif func for dif proj operations: add(proj or tasks), retrieve(proj and tasks), remove(proj or tasks), modify(proj or tasks)
         if request.method == 'PUT':
-            #k = retCol()
+            k = retCol()
             t = retTask()
         if request.method == 'POST':
              addProj()
              addTask()
+             addCol()
 
         return render_template('myproj.html',projects = p,columns = k)
+
+def addCol():
+    if 'title3' in request.form:
+        c = getDB()
+        c.execute("""INSERT INTO columns(proj,coll) VALUES('NULL',?)""",(request.form['title3'],))
+        c.commit()
+        c.close()
 
 def retCol():
     c = getDB()
