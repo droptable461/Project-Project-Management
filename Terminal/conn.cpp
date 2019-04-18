@@ -122,7 +122,7 @@ bool Conn::post_request(const Task t)
 			count++;
 		}
 	}*/
-	values.append((string)"t_description=" + t.disc + (string)"&t_title=" + t.title);
+	values.append((string)"?t_description=" + t.disc + (string)"&t_title=" + t.title);
 	
 	string request = "POST /task HTTP/1.0\r\nContent-Type: text/html\r\nContent-Length: "+ to_string(values.length()) + "\r\n\r\n" + values;
 	
