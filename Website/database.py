@@ -34,7 +34,7 @@ def createDatabase():
                                         tasks REFERENCES task(task_id),
                                         PRIMARY KEY(uname, tasks))""")
 
-        c.execute("""CREATE TABLE columns(proj TEXT REFERENCES project(title),coll TEXT,PRIMARY KEY (proj,coll))""")
+        c.execute("""CREATE TABLE columns(proj TEXT REFERENCES project(title),coll TEXT)""")
 
         conn.commit()
 def populateDatabase():
