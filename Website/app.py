@@ -1,5 +1,11 @@
 from flask import Flask, request, g, render_template, redirect, url_for, escape, session
 import sqlite3
+import requests
+import json 
+#from urllib.request import urlopren
+from collections import defaultdict
+import simplejson
+import urllib.parse
 
 #conn = sqlite3.connect('database.db')
 
@@ -120,17 +126,60 @@ def test():
     #request
      return make_response('Test ..')
 
-@app.route("/task", methods=['GET', 'POST'])
+#@app.route("/task/<string:t_description>", methods=['GET', 'POST'])
+#def task(t_description):
+@app.route('/task', methods=['GET', 'POST'])
 def task():
-    #if request.method=="GET":
-        #req = requests.get('http://127.0.0.1:5000/task')
-        ##print(req.text)
-        #print("HTTP Status Code: " + str(req.status_code))
-        #print(req.headers)
-        #json_response = json.loads(req.content)
-        #print(json_response['t_description'])
-        language = request.args.get('t_description') #if key doesn't exist, returns None
+    #if request.method == 'POST':
+        #language = request.form.get('t_description') #if key doesn't exist, returns None
+        #two = request.form.get('t_title')
+        #print(language)
+        #print(two)
+        #return '''<h1>The string is: {}</h1>'''.format(language)
+        #return '''<h1>The string issssss: {}</h1>'''.format(two)
+
+        language = request.form.get('name') #if key doesn't exist, returns None
+        two = request.form.get('project')
+        print(language)
+        print(two)
         return '''<h1>The string is: {}</h1>'''.format(language)
+
+@app.route('/git', methods=['GET', 'POST'])
+def git():
+#name , date , message
+#https://api.github.com/repos/droptable461/Project-Project-Management/commits
+#commit { author { name and date
+#commit { message
+
+    #with urlopen('https://api.github.com/repos/droptable461/Project-Project-Management/commits') as response:
+        #source = response.read()
+
+    #data = json.loads(source)
+    #state = []
+    #for state in data['committer']:
+        #state.append(state['name'])
+        #print(state)
+
+    link = 'https://api.github.com/repos/droptable461/Project-Project-Management/events'
+    r = requests.get('https://api.github.com/repos/droptable461/Project-Project-Management/commits')
+    #print(r)
+    
+    #one = r['commit']
+    #####print(one)
+    for item in r.json():
+        for key in item['commit']['committer']:
+            print(item['commit']['committer']['name'])
+            print(item['commit']['committer']['date'])
+            print(item['commit']['message'])
+    return 'suc'
+            
+    #for item2 in r.json():
+        #for c in item2['payload']['commits']:
+            #for d in item2['author']:
+                #print(d['name'])
+
+    #print(type(r.text))
+    
 
 @app.teardown_appcontext
 def closeDB(error):
@@ -139,4 +188,4 @@ def closeDB(error):
 
 
 if __name__ == '__main__':
-    app.run()#host="0.0.0.0")
+    app.run(host="0.0.0.0")
