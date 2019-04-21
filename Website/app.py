@@ -1,7 +1,7 @@
 from flask import Flask, request, g, render_template, redirect, url_for, escape, session
 import sqlite3
 import requests
-import json 
+import json
 #from urllib.request import urlopren
 from collections import defaultdict
 import simplejson
@@ -173,7 +173,7 @@ def git():
     link = 'https://api.github.com/repos/droptable461/Project-Project-Management/events'
     r = requests.get('https://api.github.com/repos/droptable461/Project-Project-Management/commits')
     #print(r)
-    
+
     #one = r['commit']
     #####print(one)
     for item in r.json():
@@ -182,14 +182,14 @@ def git():
             print(item['commit']['committer']['date'])
             print(item['commit']['message'])
     return 'suc'
-            
+
     #for item2 in r.json():
         #for c in item2['payload']['commits']:
             #for d in item2['author']:
                 #print(d['name'])
 
     #print(type(r.text))
-    
+
 
 @app.teardown_appcontext
 def closeDB(error):
