@@ -248,7 +248,7 @@ textarea {
 {% for proj in projects %}
 
 	<form action="/myproj" method="put" >
-		<button name="cur" type="submit" value= "{{ proj | safe }}"> {{ proj | safe }}</button>
+				<button name="cur" type="submit" value= "{{ proj | safe }}"> {{ proj | safe }}</button>
 	</form>
     
 {% endfor %}

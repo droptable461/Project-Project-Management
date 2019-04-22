@@ -1,7 +1,4 @@
 <!DOCTYPE html>
-<?php
-secure_session_start();
-?>
 
 <html>
 <head>
@@ -85,6 +82,7 @@ h2 {
 	width: 50px;
 	height: 50px;
 	border-radius: 50%;
+}
 
 </style>
 <header>
@@ -93,7 +91,8 @@ h2 {
 	<a href="myproj">My Projects</a>
 	<a href="timeline">Timeline</a>
 	<a href="howto">How to Use</a>
-	<p>Welcome, <?php echo $_SESSION['uname'] = sanitized_username;?>!</p>
+	<p>Welcome, {{ uname }}</p>
+
 </div>
 
 </header>
