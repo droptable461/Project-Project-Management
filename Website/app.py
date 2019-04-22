@@ -138,9 +138,11 @@ def task():
         #print(req.headers)
         #json_response = json.loads(req.content)
         #print(json_response['t_description'])
-        language = request.args.get('t_description') #if key doesn't exist, returns None
-        return '''<h1>The string is: {}</h1>'''.format(language)
-
+         #if key doesn't exist, returns None
+    descr = request.form['t_description']
+    title = request.form['t_title']
+    print(title)
+    return ""
 @app.teardown_appcontext
 def closeDB(error):
 	if hasattr(g, 'sqlite_db'):
