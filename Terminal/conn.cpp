@@ -195,17 +195,37 @@ bool Conn::post_request(const Phase p, const string p_title){
 
 
 }
-/*vector<Project> Conn::get_request(char* request)
-  {	
-  char* info;
-  if(!m_is_connected)
-  return false;
+size_t writeback(void *ptr, size_t size, size_t nmemb, string* data){
+	data->append((char*) ptr, size * nmemb);
+	return size * nmemb;
+}
+vector<Project> parse_response(string res){
+	vector<Project> ret;
 
-  int check = read(m_sockfd, info, 255);
+	return ret;
+}
+vector<Project> Conn::get_request(char* request)
+{
+	CURL* curl;
+	CURLcode res;
+	
+	curl_global_init(CURL_GLOBAL_ALL);
 
-  if( check < 0)
-  return false;
-  else
-  return true;
-  }*/
+	curl = curl_easy_init();
+	
+	if(curl) {
+
+		string sub_url = m_host + "/update";
+		curl_easy_setopt(curl, CURLOPT_URL, sub_url.c_str());
+		curl_easy_setopt(curl, CURLOPT_TCP_KEEPALIVE, 1L);
+
+		string response;
+		string header;
+
+		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writeback);
+		curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
+		curl_easy_setopt(curl, CURLOPT_HEADERDATA, &header);	
+		cout<<response;
+		return parse_response(response);
+}
 
