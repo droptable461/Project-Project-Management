@@ -160,36 +160,19 @@ def git():
 #https://api.github.com/repos/droptable461/Project-Project-Management/commits
 #commit { author { name and date
 #commit { message
-
-    #with urlopen('https://api.github.com/repos/droptable461/Project-Project-Management/commits') as response:
-        #source = response.read()
-
-    #data = json.loads(source)
-    #state = []
-    #for state in data['committer']:
-        #state.append(state['name'])
-        #print(state)
+#https://api.github.com/repos/droptable461/Project-Project-Management/commits?per_page=100&sha=f97103bab8a64a9656fa8139052bc4759aa9b625
+#https://api.github.com/repos/droptable461/Project-Project-Management/commits?since=2019-04-21T19:42:22Z
+#https://api.github.com/repos/droptable461/Project-Project-Management/commits?page=2&per_page=100
 
     link = 'https://api.github.com/repos/droptable461/Project-Project-Management/events'
     r = requests.get('https://api.github.com/repos/droptable461/Project-Project-Management/commits')
-    #print(r)
-
-    #one = r['commit']
-    #####print(one)
+   
     for item in r.json():
         for key in item['commit']['committer']:
             print(item['commit']['committer']['name'])
             print(item['commit']['committer']['date'])
             print(item['commit']['message'])
     return 'suc'
-
-    #for item2 in r.json():
-        #for c in item2['payload']['commits']:
-            #for d in item2['author']:
-                #print(d['name'])
-
-    #print(type(r.text))
-
 
 @app.teardown_appcontext
 def closeDB(error):
