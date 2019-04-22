@@ -47,7 +47,7 @@ def hello():
 def myproj():
         c = getDB()
         p = [row[0] for row in c.execute("""SELECT DISTINCT proj FROM user WHERE uname = (?)""",(session['username'],)).fetchall()]
-        k = [row[0] for row in c.execute("""SELECT DISTINCT coll FROM columns WHERE proj = 'NULL'""")]#WHERE proj = (?)""",(current)).fetchall()]
+        k = [row[0] for row in c.execute("""SELECT DISTINCT coll FROM columns""").fetchall()]#WHERE proj = (?)""",(current)).fetchall()]
 #dif func for dif proj operations: add(proj or tasks), retrieve(proj and tasks), remove(proj or tasks), modify(proj or tasks)
         if request.method == 'PUT':
             k = retCol()
