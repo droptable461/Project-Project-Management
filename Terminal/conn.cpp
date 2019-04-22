@@ -6,6 +6,7 @@
 #include "conn.h"
 #define DEFAULT_ADDR "0.0.0.0"
 #define DEFAULT_PORT 533
+char testvar[64];
 using namespace std;
 Conn::Conn(): m_host(DEFAULT_ADDR)
 {}
@@ -47,7 +48,7 @@ void Conn::set_host(const string host){
 
 }*/
 
-bool Conn::post_request(const Task t)
+bool Conn::post_request(const Task t, string p_title)
 {
 	CURL *curl;
 	CURLcode res;
@@ -58,10 +59,13 @@ bool Conn::post_request(const Task t)
 
 
 	if(curl) {
-		curl_easy_setopt(curl, CURLOPT_URL, "http://127.0.0.1/task");
+		string sub_url = m_host + "/task";
+		curl_easy_setopt(curl, CURLOPT_URL, sub_url.c_str());
 		string values = "";
-		values.append((string)"t_description=" + t.disc + (string)"&t_title=" + t.title);
+		values.append((string)"t_description=" + t.disc + (string)"&t_title=" + t.title + "&p_title=" + p_title);
 
+
+		curl_easy_setopt(curl, CURLOPT_READDATA, &testvar);
 		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, values);
 		res = curl_easy_perform(curl);
 		if(res != CURLE_OK){
@@ -74,6 +78,121 @@ bool Conn::post_request(const Task t)
 		return false;
 	curl_global_cleanup();
 	return true;
+
+}
+bool Conn::post_request(const Bug b, const string t_title){
+	CURL *curl;
+	CURLcode res;
+	
+	curl_global_init(CURL_GLOBAL_ALL);
+	
+	curl = curl_easy_init();
+	
+	if(curl) {
+
+		string sub_url = m_host + "/bug";
+		
+		curl_easy_setopt(curl, CURLOPT_URL, sub_url.c_str());
+		string values = "";
+		values.append((string)"b_line=" + to_string(b.lineNum) + "&b_file=" + b.file 
+			+ "&b_description=" + b.disc + "&t_title=" + t_title);
+		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, values);
+		res = curl_easy_perform(curl);
+		if(res != CURLE_OK){
+			fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
+			return false;
+		}
+	}
+	else
+		return false;
+	curl_global_cleanup();
+	return true;
+
+}
+bool Conn::post_request(const Project p, const int uid){
+	CURL *curl;
+	CURLcode res;
+	
+	curl_global_init(CURL_GLOBAL_ALL);
+	
+	curl = curl_easy_init();
+	
+	if(curl) {
+
+		string sub_url = m_host + "/project";
+		
+		curl_easy_setopt(curl, CURLOPT_URL, sub_url.c_str());
+		string values = "";
+		values.append((string)"p_title=" + p.title + "&p_description=" + p.disc 
+			+ "&uid=" + to_string(uid));
+		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, values);
+		res = curl_easy_perform(curl);
+		if(res != CURLE_OK){
+			fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
+			return false;
+		}
+	}
+	else
+		return false;
+	curl_global_cleanup();
+	return true;
+
+}
+bool Conn::post_request(const User u){
+	CURL *curl;
+	CURLcode res;
+	
+	curl_global_init(CURL_GLOBAL_ALL);
+	
+	curl = curl_easy_init();
+	
+	if(curl) {
+
+		string sub_url = m_host + "/user";
+		
+		curl_easy_setopt(curl, CURLOPT_URL, sub_url.c_str());
+		string values = "";
+		values.append((string)"uname="+ u.name);
+		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, values);
+		res = curl_easy_perform(curl);
+		if(res != CURLE_OK){
+			fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
+			return false;
+		}
+	}
+	else
+		return false;
+	curl_global_cleanup();
+	return true;
+
+} 
+bool Conn::post_request(const Phase p, const string p_title){
+	CURL *curl;
+	CURLcode res;
+	
+	curl_global_init(CURL_GLOBAL_ALL);
+	
+	curl = curl_easy_init();
+	
+	if(curl) {
+
+		string sub_url = m_host + "/phase";
+		
+		curl_easy_setopt(curl, CURLOPT_URL, sub_url.c_str());
+		string values = "";
+		values.append((string)"ph_title="+ p.title + "&p_title=" + p_title);
+		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, values);
+		res = curl_easy_perform(curl);
+		if(res != CURLE_OK){
+			fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
+			return false;
+		}
+	}
+	else
+		return false;
+	curl_global_cleanup();
+	return true;
+
 
 }
 /*vector<Project> Conn::get_request(char* request)

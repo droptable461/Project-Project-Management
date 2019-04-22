@@ -8,7 +8,7 @@
 #include <curl/curl.h>
 #include "data.h"
 using namespace std;
-
+extern char testvar[64];
 class Conn {
 	private:
 		string m_host;
@@ -28,11 +28,11 @@ class Conn {
 		bool auth(User u, string pword);
 	//	bool connect_server(const char* hname, const int port);
 		//POSTS
-		bool post_request(const Task t);
-		bool post_request(const Bug b);
-		bool post_request(const Project p);
+		bool post_request(const Task t, const string p_title);
+		bool post_request(const Bug b, const string t_title);
+		bool post_request(const Project p, const int uid);
 		bool post_request(const User u);
-		bool post_request(const Phase p);
+		bool post_request(const Phase p, const string p_title);
 	
 		//GETS
 		vector<Project> get_request(char* request);
