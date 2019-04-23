@@ -33,7 +33,8 @@ class Task{
 		set<User> users;    //Users assigned to the task
 		string title;      //the name of the task
 		string disc;      //general discription of the task
-		
+		string date;
+
 		Task();
 		Task(string t, string d);
 
