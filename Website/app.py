@@ -6,6 +6,7 @@ import json
 from collections import defaultdict
 import simplejson
 import urllib.parse
+from datetime import datetime
 
 #conn = sqlite3.connect('database.db')
 
@@ -131,28 +132,92 @@ def howto():
 def index():
     return render_template('index.html',uname = session['username'])
 
-@app.route("/test", methods=['GET', 'POST'])
-def test():
-    #request
-     return make_response('Test ..')
 
-#@app.route("/task/<string:t_description>", methods=['GET', 'POST'])
-#def task(t_description):
 @app.route('/task', methods=['GET', 'POST'])
 def task():
-    #if request.method == 'POST':
-        #language = request.form.get('t_description') #if key doesn't exist, returns None
-        #two = request.form.get('t_title')
+        c = getDB()
+        language = request.form.get('t_description')
+        two = request.form.get('t_title')
+        three = request.form.get('p_title')
+        #language = "tejas"
+        #two = "roma"
+        #three = "sima"
+        now = datetime.now()
+        formatted_date = now.strftime('%m-%d-%Y %H:%M:%S')
+        c.execute("""INSERT INTO task(title,description,phase,dateMade) VALUES(?,?,?,?)""",(language,two,three,formatted_date))
+        c.commit()
+        c.close() 
+        
         #print(language)
         #print(two)
+        #print(three)
         #return '''<h1>The string is: {}</h1>'''.format(language)
-        #return '''<h1>The string issssss: {}</h1>'''.format(two)
+    
+        return '''<h1>The string is: {}</h1>'''.format('task')
+    
+@app.route('/bug', methods=['GET', 'POST'])
+def bug():
+        c = getDB()
+        #one = request.form.get('b_line')
+        #two = request.form.get('b_file')
+        #three = request.form.get('b_description')
+        #four = request.form.get('t_title')
 
-        language = request.form.get('name') #if key doesn't exist, returns None
-        two = request.form.get('project')
-        print(language)
-        print(two)
-        return '''<h1>The string is: {}</h1>'''.format(language)
+        one = "tejas"
+        two = "roma"
+        three = "sima"
+        four = "dhruvi"
+        now = datetime.now()
+        formatted_date = now.strftime('%m-%d-%Y %H:%M:%S')
+        c.execute("""INSERT INTO bug(line,fname,description) VALUES(?,?,?)""",(one,two,three))
+        c.commit()
+        c.close() 
+
+        return '''<h1>The string is: {}</h1>'''.format('bug')
+
+@app.route('/project', methods=['GET', 'POST'])
+def project():
+        c = getDB()
+        one = request.form.get('p_title')
+        two = request.form.get('p_description')
+        three = request.form.get('uid')
+        #one = "tejas"
+        #two = "roma"
+        #three = "sima"
+        now = datetime.now()
+        formatted_date = now.strftime('%m-%d-%Y %H:%M:%S')
+        c.execute("""INSERT INTO project(manager,title,description) VALUES(?,?,?)""",(one,two,three))
+        c.commit()
+        c.close() 
+        return '''<h1>The string is: {}</h1>'''.format('project')
+    
+@app.route('/user', methods=['GET', 'POST'])
+def user():
+        c = getDB()
+        #one = request.form.get('uname')      
+        one = "tejas"
+        now = datetime.now()
+        formatted_date = now.strftime('%m-%d-%Y %H:%M:%S')
+        c.execute("""INSERT INTO user(uname) VALUES (?)""",(one,))
+        c.commit()
+        c.close() 
+        return '''<h1>The string is: {}</h1>'''.format('user')
+    
+@app.route('/phase', methods=['GET', 'POST'])
+def phase():
+        c = getDB()
+        #one = request.form.get('ph_title')
+        #two = request.form.get('p_title')
+        
+        one = "tejas"
+        two = "roma"
+      
+        now = datetime.now()
+        formatted_date = now.strftime('%m-%d-%Y %H:%M:%S')
+        c.execute("""INSERT INTO (manager,title) VALUES(?,?)""",(one,two))
+        c.commit()
+        c.close() 
+        return '''<h1>The string is: {}</h1>'''.format('phase')
 
 @app.route('/git', methods=['GET', 'POST'])
 def git():
@@ -160,36 +225,19 @@ def git():
 #https://api.github.com/repos/droptable461/Project-Project-Management/commits
 #commit { author { name and date
 #commit { message
-
-    #with urlopen('https://api.github.com/repos/droptable461/Project-Project-Management/commits') as response:
-        #source = response.read()
-
-    #data = json.loads(source)
-    #state = []
-    #for state in data['committer']:
-        #state.append(state['name'])
-        #print(state)
+#https://api.github.com/repos/droptable461/Project-Project-Management/commits?per_page=100&sha=f97103bab8a64a9656fa8139052bc4759aa9b625
+#https://api.github.com/repos/droptable461/Project-Project-Management/commits?since=2019-04-21T19:42:22Z
+#https://api.github.com/repos/droptable461/Project-Project-Management/commits?page=2&per_page=100
 
     link = 'https://api.github.com/repos/droptable461/Project-Project-Management/events'
     r = requests.get('https://api.github.com/repos/droptable461/Project-Project-Management/commits')
-    #print(r)
-
-    #one = r['commit']
-    #####print(one)
+   
     for item in r.json():
         for key in item['commit']['committer']:
             print(item['commit']['committer']['name'])
             print(item['commit']['committer']['date'])
             print(item['commit']['message'])
     return 'suc'
-
-    #for item2 in r.json():
-        #for c in item2['payload']['commits']:
-            #for d in item2['author']:
-                #print(d['name'])
-
-    #print(type(r.text))
-
 
 @app.teardown_appcontext
 def closeDB(error):
@@ -199,3 +247,4 @@ def closeDB(error):
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0")
+    task()
