@@ -27,6 +27,10 @@ class Task{
 		set<User> users;    //Users assigned to the task
 		string title;      //the name of the task
 		string disc;      //general discription of the task
+		string date;
+
+		Task();
+		Task(string t, string d);
 
 		string asString();
 		string listUsers();
@@ -34,9 +38,18 @@ class Task{
 		bool canEdit(User u);
 };
 
-class Project{
+class Phase{
 	public:
 		map<string,Task> tasks; //a map of task title to task (makes my life easier)
+		string title;
+		Phase();
+		string listTasks();
+
+}
+
+class Project{
+	public:
+		vector<Phase> phases;
 		//this would not nessaserally be displayed as its just for figuring out who would be able to see this
 		string manager; //this could be an int/id
 		string title;  //the name of the project
@@ -48,102 +61,3 @@ class Project{
 		bool canSee(User u);
 };
 
-bool Project::canSee(User u)
-{
-	for(Task t : tasks)
-	{
-		for(User u : t.users)
-		{
-			if(u.id == us.id && u.name == us.name)
-			{
-				return true;
-			}
-		}
-	}
-	return false;
-}
-string Project::listTasks()
-{
-	string rv = "";
-	for(Task t : tasks)
-	{
-		rv += t.title + "\n";
-	}
-	return rv;
-}
-
-string Project::listUsers()
-{
-	string rv = "";
-	set<int> all;
-	for(Task t : tasks)
-	{
-		for(User u : t.users)
-		{
-			if(all.find(u.id) != all.end())
-			{
-				rv += u.name + "\n";
-				all.insert(u.id);
-			}
-		}
-			
-	}
-	return rv;
-}
-
-string Project::asString()
-{
-	string rv = "";
-	rv += title + "\n";
-	rv += "Number of Tasks: " + to_string(tasks.size()) + "\n";
-	rv += disc + "\n";
-	return rv;
-}
-
-bool Task::canEdit(User u)
-{
-	for(User us : users)
-	{
-		if(us.id == u.id && us.name == u.id)
-			return true;
-	}
-	return false;
-}
-
-string Task::asString()
-{
-	string rv = "";
-	rv += title + "\n";
-	rv += "Number of Users: " + to_string(users.size()) + "\n";
-	rv += disc + "\n";
-	return rv;
-}
-
-string Task::listUsers()
-{
-	string rv = "";
-	for(User u : users)
-	{
-		rv += u.name + "\n";
-	}
-	return rv;
-}
-
-string Task::listBugs()
-{
-	string rv = "";
-	for(Bug b : bugs)
-	{
-		rv += b.asString();
-	}
-	return rv;
-}
-
-string Bug::asString()
-{
-	string rv = "";
-	rv += "File: " + file + "\n";
-	rv += "Line Number: " + to_string(lineNum) + "\n";
-	rv += disc + "\n\n";
-	return rv;
-}
