@@ -64,10 +64,10 @@ bool Conn::post_request(const Task t, string p_title)
 		string values = "";
 		values.append((string)"t_description=" + t.disc + (string)"&t_title=" + t.title + "&p_title=" + p_title);
 
-		printf("Sending %s to %s\n", values, sub_url);
+		printf("Sending %s to %s\n", values.c_str(), sub_url.c_str());
 
 		curl_easy_setopt(curl, CURLOPT_URL, sub_url.c_str());
-		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, values);
+		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, values.c_str());
 		res = curl_easy_perform(curl);
 		if(res != CURLE_OK){
 			fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
@@ -95,10 +95,10 @@ bool Conn::post_request(const Bug b, const string t_title){
 		string values = "";
 		values.append((string)"b_line=" + to_string(b.lineNum) + "&b_file=" + b.file 
 			+ "&b_description=" + b.disc + "&t_title=" + t_title);
-		printf("Sending %s to %s\n", values, sub_url);
+		printf("Sending %s to %s\n", values.c_str(), sub_url.c_str());
 
 		curl_easy_setopt(curl, CURLOPT_URL, sub_url.c_str());
-		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, values);
+		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, values.c_str());
 		res = curl_easy_perform(curl);
 		if(res != CURLE_OK){
 			fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
@@ -125,10 +125,10 @@ bool Conn::post_request(const Project p, const int uid){
 		string values = "";
 		values.append((string)"p_title=" + p.title + "&p_description=" + p.disc 
 			+ "&uid=" + to_string(uid));
-		printf("Sending %s to %s\n", values, sub_url);
+		printf("Sending %s to %s\n", values.c_str(), sub_url.c_str());
 
 		curl_easy_setopt(curl, CURLOPT_URL, sub_url.c_str());
-		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, values);
+		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, values.c_str());
 		res = curl_easy_perform(curl);
 		if(res != CURLE_OK){
 			fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
@@ -154,10 +154,10 @@ bool Conn::post_request(const User u){
 		string sub_url = m_host + "/user";
 		string values = "";
 		values.append((string)"uname="+ u.name);
-		printf("Sending %s to %s\n", values, sub_url);
+		printf("Sending %s to %s\n", values.c_str(), sub_url.c_str());
 
 		curl_easy_setopt(curl, CURLOPT_URL, sub_url.c_str());
-		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, values);
+		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, values.c_str());
 		res = curl_easy_perform(curl);
 		if(res != CURLE_OK){
 			fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
@@ -183,10 +183,10 @@ bool Conn::post_request(const Phase p, const string p_title){
 		string sub_url = m_host + "/phase";
 		string values = "";
 		values.append((string)"ph_title="+ p.title + "&p_title=" + p_title);
-		printf("Sending %s to %s\n", values, sub_url);
+		printf("Sending %s to %s\n", values.c_str(), sub_url.c_str());
 
 		curl_easy_setopt(curl, CURLOPT_URL, sub_url.c_str());
-		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, values);
+		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, values.c_str());
 		res = curl_easy_perform(curl);
 		if(res != CURLE_OK){
 			fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));

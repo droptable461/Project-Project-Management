@@ -8,16 +8,20 @@ using namespace std;
 
 class User{
 	public:
+		User();
+		User(string i, int x);
 		string name;
 		int id;
 };
 
 class Bug{
 	public:
+		Bug();
+		Bug(int ln, string f, string d);
 		int lineNum;  //the line number that the bug is on
 		string file; //the file that the bug is located in
 		string disc;//a short discription of the bug
-		           //could add more but im not sure what kind of information we should have
+		bool completed;           //could add more but im not sure what kind of information we should have
 		
 		string asString();
 };
@@ -45,7 +49,7 @@ class Phase{
 		Phase();
 		string listTasks();
 
-}
+};
 
 class Project{
 	public:
@@ -55,9 +59,14 @@ class Project{
 		string title;  //the name of the project
 		string disc;  //the discription of the project
 
+		Project();
+		Project(string u, string t, string x);
 		string listTasks();
 		string listUsers();
 		string asString();
 		bool canSee(User u);
+		void assignPhase(Task tas, string s);
+		void addTask(Task t);
+		string listPhases();
 };
 

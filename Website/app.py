@@ -137,8 +137,9 @@ def index():
 def task():
         c = getDB()
         language = request.form.get('t_description')
-        two = request.form.get('t_title')
-        three = request.form.get('p_title')
+        two = request.form['t_title']
+        three = request.form['p_title']
+        print(two)
         #language = "tejas"
         #two = "roma"
         #three = "sima"
@@ -193,14 +194,14 @@ def project():
     
 @app.route('/user', methods=['GET', 'POST'])
 def user():
-        c = getDB()
-        #one = request.form.get('uname')      
-        one = "tejas"
-        now = datetime.now()
-        formatted_date = now.strftime('%m-%d-%Y %H:%M:%S')
-        c.execute("""INSERT INTO user(uname) VALUES (?)""",(one,))
-        c.commit()
-        c.close() 
+        #c = getDB()
+        one = request.form.get('uname')
+        print(one)      
+        #now = datetime.now()
+        #formatted_date = now.strftime('%m-%d-%Y %H:%M:%S')
+        #c.execute("""INSERT INTO user(uname) VALUES (?)""",(one,))
+        #c.commit()
+        #c.close() 
         return '''<h1>The string is: {}</h1>'''.format('user')
     
 @app.route('/phase', methods=['GET', 'POST'])
