@@ -48,11 +48,11 @@ class Project{
 		bool canSee(User u);
 };
 
-bool Project canSee(User u);
+bool Project::canSee(User u)
 {
 	for(Task t : tasks)
 	{
-		for(User us : t.users)
+		for(User u : t.users)
 		{
 			if(u.id == us.id && u.name == us.name)
 			{

@@ -59,13 +59,14 @@ bool Conn::post_request(const Task t, string p_title)
 
 
 	if(curl) {
+
 		string sub_url = m_host + "/task";
-		curl_easy_setopt(curl, CURLOPT_URL, sub_url.c_str());
 		string values = "";
 		values.append((string)"t_description=" + t.disc + (string)"&t_title=" + t.title + "&p_title=" + p_title);
 
+		printf("Sending %s to %s\n", values, sub_url);
 
-		curl_easy_setopt(curl, CURLOPT_READDATA, &testvar);
+		curl_easy_setopt(curl, CURLOPT_URL, sub_url.c_str());
 		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, values);
 		res = curl_easy_perform(curl);
 		if(res != CURLE_OK){
@@ -91,11 +92,12 @@ bool Conn::post_request(const Bug b, const string t_title){
 	if(curl) {
 
 		string sub_url = m_host + "/bug";
-		
-		curl_easy_setopt(curl, CURLOPT_URL, sub_url.c_str());
 		string values = "";
 		values.append((string)"b_line=" + to_string(b.lineNum) + "&b_file=" + b.file 
 			+ "&b_description=" + b.disc + "&t_title=" + t_title);
+		printf("Sending %s to %s\n", values, sub_url);
+
+		curl_easy_setopt(curl, CURLOPT_URL, sub_url.c_str());
 		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, values);
 		res = curl_easy_perform(curl);
 		if(res != CURLE_OK){
@@ -120,11 +122,12 @@ bool Conn::post_request(const Project p, const int uid){
 	if(curl) {
 
 		string sub_url = m_host + "/project";
-		
-		curl_easy_setopt(curl, CURLOPT_URL, sub_url.c_str());
 		string values = "";
 		values.append((string)"p_title=" + p.title + "&p_description=" + p.disc 
 			+ "&uid=" + to_string(uid));
+		printf("Sending %s to %s\n", values, sub_url);
+
+		curl_easy_setopt(curl, CURLOPT_URL, sub_url.c_str());
 		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, values);
 		res = curl_easy_perform(curl);
 		if(res != CURLE_OK){
@@ -149,10 +152,11 @@ bool Conn::post_request(const User u){
 	if(curl) {
 
 		string sub_url = m_host + "/user";
-		
-		curl_easy_setopt(curl, CURLOPT_URL, sub_url.c_str());
 		string values = "";
 		values.append((string)"uname="+ u.name);
+		printf("Sending %s to %s\n", values, sub_url);
+
+		curl_easy_setopt(curl, CURLOPT_URL, sub_url.c_str());
 		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, values);
 		res = curl_easy_perform(curl);
 		if(res != CURLE_OK){
@@ -177,10 +181,11 @@ bool Conn::post_request(const Phase p, const string p_title){
 	if(curl) {
 
 		string sub_url = m_host + "/phase";
-		
-		curl_easy_setopt(curl, CURLOPT_URL, sub_url.c_str());
 		string values = "";
 		values.append((string)"ph_title="+ p.title + "&p_title=" + p_title);
+		printf("Sending %s to %s\n", values, sub_url);
+
+		curl_easy_setopt(curl, CURLOPT_URL, sub_url.c_str());
 		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, values);
 		res = curl_easy_perform(curl);
 		if(res != CURLE_OK){
@@ -227,5 +232,6 @@ vector<Project> Conn::get_request(char* request)
 		curl_easy_setopt(curl, CURLOPT_HEADERDATA, &header);	
 		cout<<response;
 		return parse_response(response);
+	}
 }
 

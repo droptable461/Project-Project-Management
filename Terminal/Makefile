@@ -13,7 +13,8 @@ all: $(SOURCES) $(EXECUTABLE)
 $(EXECUTABLE): $(OBJECTS)
 	$(CC) -o $@ $^ $(LDFLAGS) $(LIBS)
 
-all: $(SOURCES2) $(EXECUTABLE2) 
+test:
+	g++ main.cpp conn.cpp data.cpp -lcurl -Wfatal-errors -g -o test 
 
 $(EXECUTABLE2): $(OBJECTS)
 	$(CC) -o $@ $^ $(LDFLAGS) $(LIBS)
