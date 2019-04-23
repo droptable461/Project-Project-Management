@@ -6,9 +6,13 @@
 
 <style>
 
+* {
+	box-sizing: border-box;
+}
+
 body{
 	margin: 0;
-	font-family: "Lato", sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 h2{
@@ -22,8 +26,6 @@ h3 {
 .topnav {
 	overflow: hidden;	
 	background-color: #513;
- 
-
 }
 
 .topnav a {
@@ -50,7 +52,7 @@ h3 {
 	width: 144px;
 	position: fixed;
 	z-index: 1;
-	top: 56px;
+	top: 55.5px;
 	left: 0px;
 	background-color: #111;
 	overflow-x: hidden;
@@ -187,6 +189,19 @@ div.a {
 	background-color: rgba(0,0,0,0.4);
 }
 
+.modal3 {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	padding-top: 100px;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0,0,0);
+	background-color: rgba(0,0,0,0.4);
+}
 
 .modal-content {
 	background-color: #846;
@@ -233,7 +248,7 @@ textarea {
 {% for proj in projects %}
 
 	<form action="/myproj" method="put" >
-		<button name="cur" type="submit" value= "{{ proj | safe }}"> {{ proj | safe }}</button>
+				<button name="cur" type="submit" value= "{{ proj | safe }}"> {{ proj | safe }}</button>
 	</form>
     
 {% endfor %}
@@ -316,16 +331,40 @@ textarea {
 	</div>
 </div>
 
+	<h3>Columns<h3>
+	
+<div class ="container3">
+		<button id ="button3">Add Columns</button>
+	</div>
+
+	<div id ="Modal3" class ="modal3">
+
+	<div class= "modal-content">
+		<span class="close">&times;</span>
+	
+	<form action="/myproj" method="POST" id="input3">
+	
+		<p>What is the name of the column?</p>
+			Column Title: <input type="text" name="title3" >
+
+		<input type = "submit" >
+		</form>
+	</div>
+</div>
+
 <script>
 	//get modal
 	var modal1 = document.getElementById('Modal1');
 	var modal2 = document.getElementById('Modal2');
+	var modal3 = document.getElementById('Modal3');
 	//get button that opens the modal
 	var butt1 = document.getElementById('button1');
 	var butt2 = document.getElementById('button2');
+	var butt3 = document.getElementById('button3');
 	//get the span that closes the modal
 	var span1 = document.getElementsByClassName("close")[0];
 	var span2 = document.getElementsByClassName("close")[1];
+	var span3 = document.getElementsByClassName("close")[2];
 	//when user clicks button, open modal
 	butt1.onclick = function() {
 		modal1.style.display = "block";
@@ -333,12 +372,18 @@ textarea {
 	butt2.onclick = function() {
 		modal2.style.display = "block";
 	}
+	butt3.onclick = function() {
+		modal3.style.display = "block";
+	}
 	//when user clicks <span> (x), close modal
 	span1.onclick = function() {
 		modal1.style.display = "none";
 	}
 	span2.onclick = function() {
 		modal2.style.display = "none";
+	}
+	span3.onclick = function() {
+		modal3.style.display = "none";
 	}
 	//when user click anywhere outside of modal, close it
 	window.onclick = function(event) {
@@ -348,9 +393,11 @@ textarea {
 		if(event.target == modal2){
 			modal2.style.display = "none";
 		}
+		if(event.target == modal3){
+			modal3.style.display = "none";
+		}
 	}
 </script>
-
 
 <!--cards-->
 
@@ -382,7 +429,6 @@ textarea {
 
 <div class ="container1">
 
-<button id ="button1">Add Column</button>
 </div>
 
 <div id ="Modal1" class ="modal1">
@@ -399,17 +445,9 @@ textarea {
 		<input type = "submit" >
 		</form>
 		</div>
-</div>
-	
-<div class = "column">
-		<div class = "card">
-			<h4>++Add Column++</h4>
-			<textarea rows="4" cols="50"></textarea>
-		</div>
-	</div>
 </div>-->
-
-<!--<script>
+<!--
+<script>
 	function myFunction() {
 	var x = document.createElement("INPUT");
 	x.setAttribute("type", "text");
