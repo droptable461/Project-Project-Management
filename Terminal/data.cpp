@@ -194,7 +194,7 @@ string Task::listBugs()
 	}
 	return rv;
 }
-
+Bug::Bug(){}
 Bug::Bug(int ln, string f, string d)
 {
 	lineNum = ln;
@@ -227,7 +227,7 @@ string Phase::listTasks()
 	}
 	return rv;
 }
-
+User::User(){}
 User::User(string n, int i)
 {
 	name = n;
