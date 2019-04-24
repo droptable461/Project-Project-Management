@@ -23,7 +23,7 @@ In the my projects page (adding a project):
 	-Next, type the project name in the "Project Title" text box 
 	-Lastly, type a description of project in the text box underneath "What is the description of the project?"
 	-When you are done, click "Submit"
-	-Refresh the page after submit and a button should be displayed on the side navigation bar with the name of your project you just submitted (ex: testProj3)
+	-Refresh the page after submit and a button should be displayed on the side navigation bar with the name of your project you just submitted (ex: testProj2 which may already be displayed in the side nav depending on what username is used)
 
 In the my projects page (adding a task):
 	-To add a task, simply click the "Add Task" button 
@@ -33,10 +33,17 @@ In the my projects page (adding a task):
 	-When you are done, click "Submit"
 
 In the my projects page (adding a column):
-	 
+	-To add a column, simply click the "Add Column" button
+	-type the name of the column you wish to add beside the to do, doing, and done columns
+	-Click the "Submit" button when you're done
+	-Refresh the page and the new column should appear next to to do, doing, and done (ex: done2 will appear next to the "done" column)
 
 In the timeline page: 
 	-click the "Timeline" tab on the top navigation bar
+	-On the timeline page, you should see a vertical timeline that displayed what we did for this project at different times (scroll down to see what we did at different stage)
 
 In the how to use page: 
-	-click the "How To Use" tab on the top navigation bar 
+	-click the "How To Use" tab on the top navigation bar
+	-On the how to use page, you should see accordion tabs that when clicked, display what each of our pages mean
+	-For example, when you hover over "The Login Page" and click on it, a description of that page should display underneath that tab
+ 
