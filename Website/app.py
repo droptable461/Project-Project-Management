@@ -63,8 +63,8 @@ def myproj():
 def addCol():
     if 'title3' in request.form:
         c = getDB()
-        current = request.form['cur']
-        c.execute("""INSERT INTO columns(proj,coll) VALUES(?,?)""",(current,request.form['title3'],))
+        #current = request.form['cur']
+        c.execute("""INSERT INTO columns(coll) VALUES(?)""",(request.form['title3'],))
         c.commit()
         c.close()
 
