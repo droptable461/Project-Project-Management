@@ -25,9 +25,10 @@ int main()
 		cout<<"SENT" << endl;
 	else
 		cout<<"FAILED" << endl;
+
 //PROJECT TEST
 	cout<<"Testing PROJECT Post.....";
-	if(c->post_request(p, 0);
+	if(c->post_request(p, 0))
 		cout<<"SENT" << endl;
 	else
 		cout<<"FAILED" << endl;
@@ -46,8 +47,9 @@ int main()
 		cout<< "FAILED" << endl;
 //BUG TEST
 	cout<<"Testing BUG Post.........";
-	if(c->post_request(b, "task1" );
+	if(c->post_request(b, "task1" ))
 		cout<< "SENT" << endl;
 	else
 		cout<<"FAILED"<< endl;
+	
 }
