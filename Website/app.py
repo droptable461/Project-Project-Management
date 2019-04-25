@@ -37,7 +37,7 @@ def login():
 
 		if validlogin:
 			session['username'] = request.form['username']
-			return render_template("index.html",name=validlogin)
+			return render_template("index.html",name=session['username'])
 	return render_template('login.html')
 
 @app.route('/')
@@ -63,8 +63,8 @@ def myproj():
 def addCol():
     if 'title3' in request.form:
         c = getDB()
-        #current = request.form['cur']
-        c.execute("""INSERT INTO columns(coll) VALUES(?)""",(request.form['title3'],))
+        current = request.form['cur']
+        c.execute("""INSERT INTO columns(proj,coll) VALUES(?,?)""",(current,request.form['title3'],))
         c.commit()
         c.close()
 
@@ -105,8 +105,9 @@ def addTask():
 	    taskTitle = request.form['title2']
 	    taskDes = request.form['description2']
 	    taskPhase = request.form['phase']
-	   # taskBug = request.form['bug_id']
-	    db1.execute("""INSERT INTO task (title,description,phase) VALUES(?,?,?)""",(taskTitle,taskDes,taskPhase))
+	    taskDate = request.form['date']
+	    #taskBug = request.form['bug_id']
+	    db1.execute("""INSERT INTO task (title,description,dateMade,phase) VALUES(?,?,?)""",(taskTitle,taskDes,taskDate,taskPhase))
 	    v = db1.execute("""SELECT task_id FROM task WHERE title = (?)""",(taskTitle,)).fetchall()
 	    db1.execute("""INSERT INTO user (uname,tasks) VALUES(?,?)""",(session['username'],v))
 	    db1.commit()

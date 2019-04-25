@@ -23,6 +23,12 @@ h3 {
 	text-align: center;
 }
 
+p {
+	font-weight: bold;
+	font-size: 16px;
+	text-align: center;
+}
+
 .topnav {
 	overflow: hidden;	
 	background-color: #513;
@@ -96,6 +102,7 @@ h3 {
 	display: inline-block; 
 	cursor: pointer;
 	text-decoration: none;
+	font-weight: bold;
 }
 
 .button2 {
@@ -108,15 +115,8 @@ h3 {
 	display: inline-block; 
 	cursor: pointer;
 	text-decoration: none;
+	font-weight: bold;
 }
-
-/*@media screen and (max-width: 600px){
-.column {
-	width: 100%;
-	display: block;
-	margin-bottom: 20px;
-}
-*/
 
 .column {
 	float: left;
@@ -141,6 +141,7 @@ h3 {
 	padding: 20px;
 	text-align: center;
 	background-color: #846;
+	
 }
 
 /*
@@ -233,6 +234,12 @@ textarea {
 	border: #846;
 	outline: none;
 }
+/*
+#box1 {
+	margin-left: auto;
+	margin-right: auto;
+}*/
+
 </style>
 </head>
 <header>
@@ -255,19 +262,6 @@ textarea {
     
 {% endfor %}
 
-<!--
-	<a href="myproj">Project 1</a>
-	<a href="#Project2">Project 2</a>
-	<a href="#Project3">Project 3</a>
-	<a href="#Project4">Project 4</a>
-	<a href="#Project5">Project 5</a>
-	<a href="#Project6">Project 6</a>
-	<a href="#Project7">Project 7</a>
-	<a href="#Project8">Project 8</a>
-	<a href="#Project9">Project 9</a>
-	<a href="#Project10">Project 10</a>
-	
--->	
 </div>
 
 </header>
@@ -287,13 +281,13 @@ textarea {
 		<form action="/myproj" method="POST" id="input1">
 	
 		<p>Who is the manager of this project?</p>
-			Manager: <input type="text" name="manager" >
+			<p>Manager: <input type="text" name="manager" ></p>
 		
 		<p>What is the title of the project?</p>
-			Project Title: <input type="text" name="title"  >
+			<p>Project Title: <input type="text" name="title"></p>
 
 		<p>What is the description of the project?</p>
-		<textarea rows="4" cols="50" name ="description" form="input1">enter a description of the project here.</textarea>
+		<textarea id="box1" rows="4" cols="50" name ="description" form="input1">enter a description of the project here.</textarea>
 
 		<input type = "submit" >
 		</form>
@@ -318,6 +312,8 @@ textarea {
 		
 		<p>What is the name of the task?</p>
 			Task Title: <input type="text" name="title2" >
+		
+		<p>Date task created: <input type="text" name="date"></p>
 
 		<p>What is the description of the task?</p>
 		<textarea rows="4" cols="50" name ="description2"  form="input2">enter a description of the task here.</textarea>
