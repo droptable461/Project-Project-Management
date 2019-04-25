@@ -63,7 +63,7 @@ def myproj():
 def addCol():
     if 'title3' in request.form:
         c = getDB()
-        current = request.form['cur']
+        current = request.form['proj']
         c.execute("""INSERT INTO columns(proj,coll) VALUES(?,?)""",(current,request.form['title3'],))
         c.commit()
         c.close()
@@ -107,7 +107,7 @@ def addTask():
 	    taskPhase = request.form['phase']
 	    taskDate = request.form['date']
 	    #taskBug = request.form['bug_id']
-	    db1.execute("""INSERT INTO task (title,description,dateMade,phase) VALUES(?,?,?)""",(taskTitle,taskDes,taskDate,taskPhase))
+	    db1.execute("""INSERT INTO task (title,description,dateMade,phase) VALUES(?,?,?,?)""",(taskTitle,taskDes,taskDate,taskPhase))
 	    v = db1.execute("""SELECT task_id FROM task WHERE title = (?)""",(taskTitle,)).fetchall()
 	    db1.execute("""INSERT INTO user (uname,tasks) VALUES(?,?)""",(session['username'],v))
 	    db1.commit()
