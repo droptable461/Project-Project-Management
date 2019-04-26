@@ -56,14 +56,14 @@ def myproj():
         if request.method == 'POST':
              addProj()
              addTask()
-             addCol()
+             addCol(request.form)
 
         return render_template('myproj.html',projects = p,columns = k)
 
-def addCol():
-    if 'title3' in request.form:
+def addCol(form):
+    if 'title3' in form:
         c = getDB()
-        current = request.form['proj']
+        current = form['current']
         c.execute("""INSERT INTO columns(proj,coll) VALUES(?,?)""",(current,request.form['title3'],))
         c.commit()
         c.close()
