@@ -50,9 +50,9 @@ def myproj():
         p = [row[0] for row in c.execute("""SELECT DISTINCT proj FROM user WHERE uname = (?)""",(session['username'],)).fetchall()]
         k = [row[0] for row in c.execute("""SELECT DISTINCT coll FROM columns""").fetchall()]#WHERE proj = (?)""",(current)).fetchall()]
 #dif func for dif proj operations: add(proj or tasks), retrieve(proj and tasks), remove(proj or tasks), modify(proj or tasks)
-        if request.method == 'PUT':
-            k = retCol()
-            t = retTask()
+        #if request.method == 'GET':
+            #k = retCol()
+            #t = retTask()
         if request.method == 'POST':
              addProj()
              addTask()

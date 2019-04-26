@@ -315,13 +315,15 @@ textarea#box1 {
 <button id ="button1">Add Project</button>
 </div>
 
+	<form action="/myproj" method="GET" >
 {% for proj in projects %}
 
-	<form action="/myproj" method="GET" >
-				<input name="proj" type="submit" value= "{{ proj | safe }}"></input:w>
-	</form>
+				<input name="proj" type="submit" value= "{{ proj | safe }}"></input><br> 
+<!--					<input name="proj" type="radio" value= "{{ proj | safe }}">{{ proj | safe }}<br>-->
     
 {% endfor %}
+<!--					<input type="submit">-->
+	</form>
 
 </div>
 
@@ -355,7 +357,7 @@ textarea#box1 {
 	
 <!--<div class ="container2">
 		<button id ="button2">Add Task</button>
-	</div>
+	</div>-->
 
 	<div id ="Modal2" class ="modal2">
 
@@ -365,7 +367,7 @@ textarea#box1 {
 	<form action="/myproj" method="POST" id="input2">
 	
 		<p>Task Id</p>
-        Task Id: <input type="text" name="task_id">
+        <!--Task Id: <input type="text" name="task_id">-->
 		
 		<p>What is the name of the task?</p>
 			Task Title: <input type="text" name="title2" >
@@ -378,8 +380,8 @@ textarea#box1 {
 		<p>What phase is the task in?</p>
 			Phase: <input type="text" name="phase" >
 	
-		<p>Bug Id</p>
-        Bug Id: <input type="text" name="bug_id" >
+		<!--p>Bug Id</p>-->
+        <!--Bug Id: <input type="text" name="bug_id" >-->
 
 		<input type = "submit" >
 		</form>
@@ -408,7 +410,7 @@ textarea#box1 {
 <script>
 	//get modal
 	var modal1 = document.getElementById('Modal1');
-//  var modal2 = document.getElementById('Modal2');
+//	var modal2 = document.getElementById('Modal2');
 	var modal3 = document.getElementById('Modal3');
 	//get button that opens the modal
 	var butt1 = document.getElementById('button1');
@@ -443,6 +445,9 @@ textarea#box1 {
 		if(event.target == modal1){
 			modal1.style.display = "none";
 		}
+//		if(event.target == modal2){
+//			modal2.style.display = "none";
+//		}
 		if(event.target == modal3){
 			modal3.style.display = "none";
 		}
@@ -466,47 +471,29 @@ textarea#box1 {
 
 							<div class= "modal-content">
 							<span class="close">&times;</span>
-	
-						<form action="/myproj" method="POST" id="input2">
-	
-						<p>Task Id</p>
-						 Task Id: <input type="text" name="task_id">
-		
-						<p>What is the name of the task?</p>
-						Task Title: <input type="text" name="title2" >
-		
-						<p>Date task created: <input type="text" name="date"></p>
 
-						<p>What is the description of the task?</p>
-						<textarea rows="4" cols="50" name ="description2"  form="input2">enter a description of the task here.</textarea>
+						<script>
+							var modal2 = document.getElementById('Modal2');
 
-						<p>What phase is the task in?</p>
-						Phase: <input type="text" name="phase" >
-		<input type = "submit" >
-			<!--</form>-->
-				<script>
-				var modal2 = document.getElementById('Modal2');
-
-				var butt2 = document.getElementById('button2');
+							var butt2 = document.getElementById('button2');
 					
-				var span2 = document.getElementsByClassName("close")[0];
+							var span2 = document.getElementsByClassName("close")[0];
 
-				butt2.onclick = function() {
-					modal2.style.display = "block";
-				}
-				span2.onclick = function() {
-					modal2.style.display = "none";
-				}
-				window.onclick = function(event) {
-					if(event.target == modal2){
-						modal2.style.display = "none";
-					}
-				}
+							butt2.onclick = function() {
+							modal2.style.display = "block";
+							}
+							span2.onclick = function() {
+							modal2.style.display = "none";
+							}
+							window.onclick = function(event) {
+							if(event.target == modal2){
+								modal2.style.display = "none";
+							}
+						}
 				</script>
 
 					</div>
 				</div>
-					
 			</div>
 		</div>
 	</div>
