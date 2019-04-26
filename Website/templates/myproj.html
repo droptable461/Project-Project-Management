@@ -105,7 +105,6 @@ p {
 	cursor: pointer;
 }
 	
-
 #button2 {
 	background-color: white;
 	border: none;
@@ -219,6 +218,32 @@ div.a {
 	background-color: rgba(0,0,0);
 	background-color: rgba(0,0,0,0.4);
 }
+.modal4 {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	padding-top: 100px;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0,0,0);
+	background-color: rgba(0,0,0,0.4);
+}
+.modal5 {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	padding-top: 100px;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0,0,0);
+	background-color: rgba(0,0,0,0.4);
+}
 
 .modal-content {
 	background-color: #846;
@@ -243,12 +268,17 @@ div.a {
 
 textarea {
 	margin: 0px;
-	height: 350px;
-	width: 100px;
+	height: 100px;
+	width: 300px;
 	background-color: #846;
 	color: white;
 	border: #846;
 	outline: none;
+	position: relative;
+	left: 27px;
+	top: 4px;
+	right: 9px;
+	bottom: 5px;
 }
 /*
 #box1 {
@@ -344,7 +374,7 @@ textarea {
 		<input type = "submit" >
 		</form>
 	</div>
-</div>
+</div>-->
 	
 <div class ="container3">
 		<button id ="button3">Add Columns</button>
@@ -419,14 +449,17 @@ textarea {
 <div class = "row">
 	<div class = "column">
 		<div class = "card">
-				<div class ="container2">
+				<!--<div class ="container2">-->
+		
+						<h4>{{ col }}</h4>
+
 					<button id ="button2">Add Task</button>
 				</div>
 				<h4>{{ col }}</h4>
 			<textarea rows="4" cols="50"></textarea>
 		</div>
 	</div>
-
+	
 {% endfor %}
 
 <!--	<div class = "column">
@@ -459,7 +492,35 @@ textarea {
 			Column title: <input type="text" name="col_title">
 
 		<input type = "submit" >
+<<<<<<< HEAD
 		</form>
+=======
+			</form>
+				<script>
+				var modal2 = document.getElementById('Modal2');
+
+				var butt2 = document.getElementById('button2');
+					
+				var span2 = document.getElementsByClassName("close")[0];
+
+				butt2.onclick = function() {
+					modal2.style.display = "block";
+				}
+				span2.onclick = function() {
+					modal2.style.display = "none";
+				}
+				window.onclick = function(event) {
+					if(event.target == modal2){
+						modal2.style.display = "none";
+					}
+				}
+				</script>
+
+					</div>
+				</div>
+					
+			</div>
+>>>>>>> 07825ad34a0dd2f82dd07390fe549b573d042e8a
 		</div>
 </div>-->
 <!--
