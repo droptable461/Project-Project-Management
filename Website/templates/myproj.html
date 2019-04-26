@@ -273,17 +273,15 @@ textarea {
 <button id ="button1">Add Project</button>
 </div>
 
-		<form action="/myproj" method="GET" >
+	<form action="/myproj" method="GET" >
 {% for proj in projects %}
 
-<!--	<form action="/myproj" method="GET" >-->
-				<input name="proj" type="submit" value= "{{ proj | safe }}"></input:w> 
+				<input name="proj" type="submit" value= "{{ proj | safe }}"></input><br> 
 <!--					<input name="proj" type="radio" value= "{{ proj | safe }}">{{ proj | safe }}<br>-->
-<!--	</form>-->
     
 {% endfor %}
 <!--					<input type="submit">-->
-		</form>
+	</form>
 
 </div>
 
