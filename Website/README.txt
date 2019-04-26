@@ -14,6 +14,7 @@ In the login page:
 In the home page: 
 	-the home page simply displays a table of each member of our group and what they were assigned to during our project (ex: allie) 
 	-On the right of the top navigation bar, you should see "Welcome, " with the current users name displayed (ex: Welcome, allie)
+	-"Welcome,allie" for example, only shows up when you click on a different page than the home page and then you return to the home page 
 
 In the my projects page (adding a project): 
 	-click the "My Projects" tab on the top navigation bar
