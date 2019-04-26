@@ -275,8 +275,8 @@ textarea {
 
 {% for proj in projects %}
 
-	<form action="/myproj" method="PUT" >
-				<input type="button" id="cur" onclick="javascript:setval({{ proj | safe }})" /> {{ proj | safe }}
+	<form action="/myproj" method="GET" >
+				<button name="proj" type="submit" value= "{{ proj | safe }}"> {{ proj | safe }}</button>
 	</form>
     
 {% endfor %}
