@@ -37,7 +37,7 @@ def login():
 
 		if validlogin:
 			session['username'] = request.form['username']
-			return render_template("index.html",name=validlogin)
+			return render_template("index.html",name=session['username'])
 	return render_template('login.html')
 
 @app.route('/')
@@ -50,20 +50,20 @@ def myproj():
         p = [row[0] for row in c.execute("""SELECT DISTINCT proj FROM user WHERE uname = (?)""",(session['username'],)).fetchall()]
         k = [row[0] for row in c.execute("""SELECT DISTINCT coll FROM columns""").fetchall()]#WHERE proj = (?)""",(current)).fetchall()]
 #dif func for dif proj operations: add(proj or tasks), retrieve(proj and tasks), remove(proj or tasks), modify(proj or tasks)
-        if request.method == 'PUT':
-            k = retCol()
-            t = retTask()
+        #if request.method == 'GET':
+            #k = retCol()
+            #t = retTask()
         if request.method == 'POST':
              addProj()
              addTask()
-             addCol()
+             addCol(request.form)
 
         return render_template('myproj.html',projects = p,columns = k)
 
-def addCol():
-    if 'title3' in request.form:
+def addCol(form):
+    if 'title3' in form:
         c = getDB()
-        current = request.form['cur']
+        current = form['current']
         c.execute("""INSERT INTO columns(proj,coll) VALUES(?,?)""",(current,request.form['title3'],))
         c.commit()
         c.close()
@@ -105,8 +105,9 @@ def addTask():
 	    taskTitle = request.form['title2']
 	    taskDes = request.form['description2']
 	    taskPhase = request.form['phase']
-	   # taskBug = request.form['bug_id']
-	    db1.execute("""INSERT INTO task (title,description,phase) VALUES(?,?,?)""",(taskTitle,taskDes,taskPhase))
+	    taskDate = request.form['date']
+	    #taskBug = request.form['bug_id']
+	    db1.execute("""INSERT INTO task (title,description,dateMade,phase) VALUES(?,?,?,?)""",(taskTitle,taskDes,taskDate,taskPhase))
 	    v = db1.execute("""SELECT task_id FROM task WHERE title = (?)""",(taskTitle,)).fetchall()
 	    db1.execute("""INSERT INTO user (uname,tasks) VALUES(?,?)""",(session['username'],v))
 	    db1.commit()
@@ -137,44 +138,30 @@ def index():
 def task():
         c = getDB()
         language = request.form.get('t_description')
-        two = request.form['t_title']
-        three = request.form['p_title']
-        print(two)
-        #language = "tejas"
-        #two = "roma"
-        #three = "sima"
+        two = request.form.get('t_title')
+        three = request.form.get('p_title')
+        four = request.form.get('ph_id')
+        var1 = c.execute("""SELECT phase_id FROM columns WHERE coll = (?) AND proj = (?) LIMIT 1""",(four,three,)).fetchall()
         now = datetime.now()
         formatted_date = now.strftime('%m-%d-%Y %H:%M:%S')
-        c.execute("""INSERT INTO task(title,description,phase,dateMade) VALUES(?,?,?,?)""",(language,two,three,formatted_date))
+        c.execute("""INSERT INTO task(title,description,phase,dateMade) VALUES(?,?,?,?)""",(language,two,str(var1),formatted_date))
         c.commit()
-        c.close() 
-        
-        #print(language)
-        #print(two)
-        #print(three)
-        #return '''<h1>The string is: {}</h1>'''.format(language)
-    
-        return '''<h1>The string is: {}</h1>'''.format('task')
-    
+        c.close()
+        return "suc"
+
 @app.route('/bug', methods=['GET', 'POST'])
 def bug():
         c = getDB()
-        #one = request.form.get('b_line')
-        #two = request.form.get('b_file')
-        #three = request.form.get('b_description')
-        #four = request.form.get('t_title')
-
-        one = "tejas"
-        two = "roma"
-        three = "sima"
-        four = "dhruvi"
-        now = datetime.now()
-        formatted_date = now.strftime('%m-%d-%Y %H:%M:%S')
-        c.execute("""INSERT INTO bug(line,fname,description) VALUES(?,?,?)""",(one,two,three))
+        one = request.form.get('b_line')
+        two = request.form.get('b_file')
+        three = request.form.get('b_description')
+        four = request.form.get('t_title')
+        five = request.form.get('p_title')
+        var1 = c.execute("""SELECT task_id FROM task,columns  WHERE task.phase = columns.phase_id  AND columns.proj = (?) AND task.title = (?) LIMIT 1""",(five,four,)).fetchall()
+        c.execute("""INSERT INTO bug(task_id,line,fname,description) VALUES(?,?,?,?)""",(str(var1),one,two,three))
         c.commit()
-        c.close() 
-
-        return '''<h1>The string is: {}</h1>'''.format('bug')
+        c.close()
+        return
 
 @app.route('/project', methods=['GET', 'POST'])
 def project():
@@ -182,16 +169,11 @@ def project():
         one = request.form.get('p_title')
         two = request.form.get('p_description')
         three = request.form.get('uid')
-        #one = "tejas"
-        #two = "roma"
-        #three = "sima"
-        now = datetime.now()
-        formatted_date = now.strftime('%m-%d-%Y %H:%M:%S')
-        c.execute("""INSERT INTO project(manager,title,description) VALUES(?,?,?)""",(one,two,three))
+        c.execute("""INSERT INTO project(manager,title,description) VALUES(?,?,?)""",(three,one,two))
         c.commit()
-        c.close() 
-        return '''<h1>The string is: {}</h1>'''.format('project')
-    
+        c.close()
+        return
+
 @app.route('/user', methods=['GET', 'POST'])
 def user():
         c = getDB()
@@ -203,19 +185,6 @@ def user():
         c.close() 
         return 
     
-@app.route('/phase', methods=['GET', 'POST'])
-def phase():
-    c = getDB()
-    one = request.form.get('ph_title')
-    two = request.form.get('p_title')
-        
-      
-    #now = datetime.now()
-    #formatted_date = now.strftime('%m-%d-%Y %H:%M:%S')
-    #c.execute("""INSERT INTO (manager,title) VALUES(?,?)""",(one,two))
-    #c.commit()
-    #c.close() 
-    return
 @app.route('/update', methods=['GET', 'POST'])
 def update():
     c = getDB()
@@ -245,6 +214,17 @@ def update():
     
     return raw
     
+
+@app.route('/phase', methods=['GET', 'POST'])
+def phase():
+        c = getDB()
+        one = request.form.get('ph_title')
+        two = request.form.get('p_title')
+        c.execute("""INSERT INTO columns(proj,coll) VALUES(?,?)""",(two,one))
+        c.commit()
+        c.close()
+        return
+
 @app.route('/git', methods=['GET', 'POST'])
 def git():
 #name , date , message
@@ -257,7 +237,7 @@ def git():
 
     link = 'https://api.github.com/repos/droptable461/Project-Project-Management/events'
     r = requests.get('https://api.github.com/repos/droptable461/Project-Project-Management/commits')
-   
+
     for item in r.json():
         for key in item['commit']['committer']:
             print(item['commit']['committer']['name'])
@@ -273,4 +253,3 @@ def closeDB(error):
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0")
-    task()

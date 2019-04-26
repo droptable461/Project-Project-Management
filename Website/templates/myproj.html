@@ -23,6 +23,12 @@ h3 {
 	text-align: center;
 }
 
+p {
+	font-weight: bold;
+	font-size: 16px;
+	text-align: center;
+}
+
 .topnav {
 	overflow: hidden;	
 	background-color: #513;
@@ -86,37 +92,46 @@ h3 {
 	display: flex; justify-content: center;
 }
 
-.button1 {
-	margin: 4px 2px;
+#button1 {
+	background-color: white;
 	border: none;
-	padding: 15px 32px;
+	color: black;
+	padding: 16px 22px;
 	text-align: center;
-	background-color: #846;
-	color: white;
-	display: inline-block; 
+	font-size: 16px;
+	margin: 4px 2px;
+	transition: 0.3s;
+	display: inline-block;
 	cursor: pointer;
-	text-decoration: none;
+}
+	
+#button2 {
+	background-color: white;
+	border: none;
+	color: black;
+	padding: 8px 12px;
+	text-align: center;
+	font-size: 11.5px;
+	margin: 4px 2px;
+	transition: 0.3s;
+	display: inline-block;
+	cursor: pointer;
 }
 
-.button2 {
-	margin: 4px 2px;
-	border: none;
-	padding: 15px 32px;
-	text-align: center;
+#button3 {
 	background-color: #846;
+	border: none;
 	color: white;
-	display: inline-block; 
+	padding: 24px 28px;
+	text-align: center;
+	font-size: 20px;
+	margin: 20px 1px 0px 250px;
+	transition: 0.3s;
+	display: inline-block;
 	cursor: pointer;
-	text-decoration: none;
-}
+	width: 70%;
 
-/*@media screen and (max-width: 600px){
-.column {
-	width: 100%;
-	display: block;
-	margin-bottom: 20px;
 }
-*/
 
 .column {
 	float: left;
@@ -141,6 +156,7 @@ h3 {
 	padding: 20px;
 	text-align: center;
 	background-color: #846;
+	
 }
 
 /*
@@ -202,6 +218,32 @@ div.a {
 	background-color: rgba(0,0,0);
 	background-color: rgba(0,0,0,0.4);
 }
+.modal4 {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	padding-top: 100px;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0,0,0);
+	background-color: rgba(0,0,0,0.4);
+}
+.modal5 {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	padding-top: 100px;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0,0,0);
+	background-color: rgba(0,0,0,0.4);
+}
 
 .modal-content {
 	background-color: #846;
@@ -226,13 +268,36 @@ div.a {
 
 textarea {
 	margin: 0px;
-	height: 350px;
-	width: 100px;
+	height: 100px;
+	width: 300px;
 	background-color: #846;
 	color: white;
 	border: #846;
 	outline: none;
+	position: relative;
+	left: 27px;
+	top: 4px;
+	right: 9px;
+	bottom: 5px;
 }
+
+textarea#box1 {
+
+	margin: 0px;
+	height: 100px;
+	width: 300px;
+	background-color: #846;
+	color: white;
+	border: #846;
+	outline: none;
+	position: relative;
+	left: 27px;
+	top: 4px;
+	right: 9px;
+	bottom: 5px;
+
+}
+
 </style>
 </head>
 <header>
@@ -245,37 +310,30 @@ textarea {
 
 <div class="sidenav">
 
+<!--do something with AJAX-->
+<div class ="container1">
+<button id ="button1">Add Project</button>
+</div>
+
+	<form action="/myproj" method="GET" >
 {% for proj in projects %}
 
-	<form action="/myproj" method="put" >
-				<button name="cur" type="submit" value= "{{ proj | safe }}"> {{ proj | safe }}</button>
-	</form>
+				<input name="proj" type="submit" value= "{{ proj | safe }}" onclick="currentProj({{ proj | safe }})" ></input><br> 
     
 {% endfor %}
-
-<!--
-	<a href="myproj">Project 1</a>
-	<a href="#Project2">Project 2</a>
-	<a href="#Project3">Project 3</a>
-	<a href="#Project4">Project 4</a>
-	<a href="#Project5">Project 5</a>
-	<a href="#Project6">Project 6</a>
-	<a href="#Project7">Project 7</a>
-	<a href="#Project8">Project 8</a>
-	<a href="#Project9">Project 9</a>
-	<a href="#Project10">Project 10</a>
-	
--->	
+	</form>
+<script>
+	function currentProj(proj)
+		var current = proj
+</script>
 </div>
 
 </header>
 <body>
 
-<h2>Projects</h2>
-
-<div class ="container1">
+<!--<div class ="container1">
 <button id ="button1">Add Project</button>
-</div>
+</div>-->
 
 <div id ="Modal1" class ="modal1">
 
@@ -285,24 +343,22 @@ textarea {
 		<form action="/myproj" method="POST" id="input1">
 	
 		<p>Who is the manager of this project?</p>
-			Manager: <input type="text" name="manager" >
+			<p>Manager: <input type="text" name="manager" ></p>
 		
 		<p>What is the title of the project?</p>
-			Project Title: <input type="text" name="title"  >
+			<p>Project Title: <input type="text" name="title"></p>
 
 		<p>What is the description of the project?</p>
-		<textarea rows="4" cols="50" name ="description" form="input1">enter a description of the project here.</textarea>
+		<textarea id="box1" rows="4" cols="50" name ="description" form="input1">enter a description of the project here.</textarea>
 
 		<input type = "submit" >
 		</form>
 		</div>
 </div>
-		 
-	<h3>Tasks<h3>
 	
-<div class ="container2">
+<!--<div class ="container2">
 		<button id ="button2">Add Task</button>
-	</div>
+	</div>-->
 
 	<div id ="Modal2" class ="modal2">
 
@@ -316,6 +372,8 @@ textarea {
 		
 		<p>What is the name of the task?</p>
 			Task Title: <input type="text" name="title2" >
+		
+		<p>Date task created: <input type="text" name="date"></p>
 
 		<p>What is the description of the task?</p>
 		<textarea rows="4" cols="50" name ="description2"  form="input2">enter a description of the task here.</textarea>
@@ -329,9 +387,7 @@ textarea {
 		<input type = "submit" >
 		</form>
 	</div>
-</div>
-
-	<h3>Columns<h3>
+</div>-->
 	
 <div class ="container3">
 		<button id ="button3">Add Columns</button>
@@ -355,23 +411,23 @@ textarea {
 <script>
 	//get modal
 	var modal1 = document.getElementById('Modal1');
-	var modal2 = document.getElementById('Modal2');
+//	var modal2 = document.getElementById('Modal2');
 	var modal3 = document.getElementById('Modal3');
 	//get button that opens the modal
 	var butt1 = document.getElementById('button1');
-	var butt2 = document.getElementById('button2');
+//	var butt2 = document.getElementById('button2');
 	var butt3 = document.getElementById('button3');
 	//get the span that closes the modal
 	var span1 = document.getElementsByClassName("close")[0];
-	var span2 = document.getElementsByClassName("close")[1];
+//	var span2 = document.getElementsByClassName("close")[1];
 	var span3 = document.getElementsByClassName("close")[2];
 	//when user clicks button, open modal
 	butt1.onclick = function() {
 		modal1.style.display = "block";
 	}
-	butt2.onclick = function() {
-		modal2.style.display = "block";
-	}
+//	butt2.onclick = function() {
+//		modal2.style.display = "block";
+//	}
 	butt3.onclick = function() {
 		modal3.style.display = "block";
 	}
@@ -379,9 +435,9 @@ textarea {
 	span1.onclick = function() {
 		modal1.style.display = "none";
 	}
-	span2.onclick = function() {
-		modal2.style.display = "none";
-	}
+//	span2.onclick = function() {
+//		modal2.style.display = "none";
+//	}
 	span3.onclick = function() {
 		modal3.style.display = "none";
 	}
@@ -390,9 +446,9 @@ textarea {
 		if(event.target == modal1){
 			modal1.style.display = "none";
 		}
-		if(event.target == modal2){
-			modal2.style.display = "none";
-		}
+//		if(event.target == modal2){
+//			modal2.style.display = "none";
+//		}
 		if(event.target == modal3){
 			modal3.style.display = "none";
 		}
@@ -406,71 +462,44 @@ textarea {
 <div class = "row">
 	<div class = "column">
 		<div class = "card">
-			<h4>{{ col }}</h4>
-			<textarea rows="4" cols="50"></textarea>
-		</div>
-	</div>
-
-{% endfor %}
-
-<!--	<div class = "column">
-		<div class = "card">
-			<h4>Doing</h4>
-			<textarea rows="4" cols="50"></textarea>
-		</div>
-	</div>
-	
-	<div class = "column">
-		<div class = "card">
-			<h4>Done</h4>
-			<textarea rows="4" cols="50"></textarea>
-		</div>
-	</div>
-
-<div class ="container1">
-
-</div>
-
-<div id ="Modal1" class ="modal1">
-
-	<div class= "modal-content">
+				<!--<div class ="container2">-->
 		
-		<span class="close">&times;</span>
-	
-		<form action="/myproj" method="GET" id="input1">
-	
-		<p>What is the column title?</p>
-			Column title: <input type="text" name="col_title">
+						<h4>{{ col }}</h4>
 
-		<input type = "submit" >
-		</form>
+						<button id ="button2">Add Task</button>
+	
+						<div id = "Modal2" class = "modal2">
+
+							<div class= "modal-content">
+							<span class="close">&times;</span>
+
+						<script>
+							var modal2 = document.getElementById('Modal2');
+
+							var butt2 = document.getElementById('button2');
+					
+							var span2 = document.getElementsByClassName("close")[0];
+
+							butt2.onclick = function() {
+							modal2.style.display = "block";
+							}
+							span2.onclick = function() {
+							modal2.style.display = "none";
+							}
+							window.onclick = function(event) {
+							if(event.target == modal2){
+								modal2.style.display = "none";
+							}
+						}
+				</script>
+
+					</div>
+				</div>
+			</div>
 		</div>
-</div>-->
-<!--
-<script>
-	function myFunction() {
-	var x = document.createElement("INPUT");
-	x.setAttribute("type", "text");
-	x.setAttribute("value", "list tasks here");
-	document.body.appendChild(x);
-</script>
-
-
-<div class="row">
-		<div class="column left" style="background-color: #513;">
-			<h4>To Do:</h4>	
-			<button onclick="myFunction()">Submit</button>
-			<textarea rows="4" cols="50"> List tasks you need to do here...</textarea>
-
-	<div class="column middle" style="background-color: #846;">
-			<h4>Doing:</h4>
-			<button onclick="myFunction()">Submit</button>
-			<textarea rows="4" cols="50"> List tasks you need to do here...</textarea>
-	<div class="column right" style="background-color: #aaa;">
-			<h4>Done:</h4>
-			<button onclick="myFunction()">Submit</button>
-			<textarea rows="4" cols="50"> List tasks you need to do here...</textarea>
-	</div>-->
+	</div>
+</form>
+{% endfor %}
 
 </body>
 </html>
