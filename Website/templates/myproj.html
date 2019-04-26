@@ -273,13 +273,17 @@ textarea {
 <button id ="button1">Add Project</button>
 </div>
 
+		<form action="/myproj" method="GET" >
 {% for proj in projects %}
 
-	<form action="/myproj" method="GET" >
-				<input name="proj" type="submit" value= "{{ proj | safe }}"></input:w>
-	</form>
+<!--	<form action="/myproj" method="GET" >-->
+				<input name="proj" type="submit" value= "{{ proj | safe }}"></input:w> 
+<!--					<input name="proj" type="radio" value= "{{ proj | safe }}">{{ proj | safe }}<br>-->
+<!--	</form>-->
     
 {% endfor %}
+<!--					<input type="submit">-->
+		</form>
 
 </div>
 
@@ -311,9 +315,9 @@ textarea {
 		</div>
 </div>
 	
-<div class ="container2">
+<!--<div class ="container2">
 		<button id ="button2">Add Task</button>
-	</div>
+	</div>-->
 
 	<div id ="Modal2" class ="modal2">
 
@@ -323,7 +327,7 @@ textarea {
 	<form action="/myproj" method="POST" id="input2">
 	
 		<p>Task Id</p>
-        Task Id: <input type="text" name="task_id">
+        <!--Task Id: <input type="text" name="task_id">-->
 		
 		<p>What is the name of the task?</p>
 			Task Title: <input type="text" name="title2" >
@@ -336,8 +340,8 @@ textarea {
 		<p>What phase is the task in?</p>
 			Phase: <input type="text" name="phase" >
 	
-		<p>Bug Id</p>
-        Bug Id: <input type="text" name="bug_id" >
+		<!--p>Bug Id</p>-->
+        <!--Bug Id: <input type="text" name="bug_id" >-->
 
 		<input type = "submit" >
 		</form>
@@ -366,23 +370,23 @@ textarea {
 <script>
 	//get modal
 	var modal1 = document.getElementById('Modal1');
-//  var modal2 = document.getElementById('Modal2');
+	var modal2 = document.getElementById('Modal2');
 	var modal3 = document.getElementById('Modal3');
 	//get button that opens the modal
 	var butt1 = document.getElementById('button1');
-//	var butt2 = document.getElementById('button2');
+	var butt2 = document.getElementById('button2');
 	var butt3 = document.getElementById('button3');
 	//get the span that closes the modal
 	var span1 = document.getElementsByClassName("close")[0];
-//	var span2 = document.getElementsByClassName("close")[1];
+	var span2 = document.getElementsByClassName("close")[1];
 	var span3 = document.getElementsByClassName("close")[2];
 	//when user clicks button, open modal
 	butt1.onclick = function() {
 		modal1.style.display = "block";
 	}
-//	butt2.onclick = function() {
-//		modal2.style.display = "block";
-//	}
+	butt2.onclick = function() {
+		modal2.style.display = "block";
+	}
 	butt3.onclick = function() {
 		modal3.style.display = "block";
 	}
@@ -390,9 +394,9 @@ textarea {
 	span1.onclick = function() {
 		modal1.style.display = "none";
 	}
-//	span2.onclick = function() {
-//		modal2.style.display = "none";
-//	}
+	span2.onclick = function() {
+		modal2.style.display = "none";
+	}
 	span3.onclick = function() {
 		modal3.style.display = "none";
 	}
@@ -400,6 +404,9 @@ textarea {
 	window.onclick = function(event) {
 		if(event.target == modal1){
 			modal1.style.display = "none";
+		}
+		if(event.target == modal2){
+			modal2.style.display = "none";
 		}
 		if(event.target == modal3){
 			modal3.style.display = "none";
@@ -410,60 +417,78 @@ textarea {
 <!--cards-->
 
 {% for col in columns %}
-var i
+
 <div class = "row">
 	<div class = "column">
 		<div class = "card">
 				<div class ="container2">
 					<button id ="button2">Add Task</button>
-						<div id ="Modal2" class ="modal2">
-
-						<div class= "modal-content">
-						<span class="close">&times;</span>
-	
-						<form action="/myproj" method="POST" id="input2">
-	
-						<p>Task Id</p>
-						 Task Id: <input type="text" name="task_id">
-		
-						<p>What is the name of the task?</p>
-						Task Title: <input type="text" name="title2" >
-		
-						<p>Date task created: <input type="text" name="date"></p>
-
-						<p>What is the description of the task?</p>
-						<textarea rows="4" cols="50" name ="description2"  form="input2">enter a description of the task here.</textarea>
-
-						<p>What phase is the task in?</p>
-						Phase: <input type="text" name="phase" >
-		<input type = "submit" >
-			</form>
-				<script>
-				var modal2 = document.getElementById('Modal2');
-				var butt2 = document.getElementById('button2');
-				var span2 = document.getElementsByClassName("close")[0];
-				butt2.onclick = function() {
-					modal2.style.display = "block";
-				}
-				span2.onclick = function() {
-					modal2.style.display = "none";
-				}
-				window.onclick = function(event) {
-					if(event.target == modal2){
-						modal2.style.display = "none";
-					}
-				}
-				</script>
-
-					</div>
 				</div>
-					
 				<h4>{{ col }}</h4>
-			</div>
+			<textarea rows="4" cols="50"></textarea>
 		</div>
 	</div>
 
 {% endfor %}
+
+<!--	<div class = "column">
+		<div class = "card">
+			<h4>Doing</h4>
+			<textarea rows="4" cols="50"></textarea>
+		</div>
+	</div>
+	
+	<div class = "column">
+		<div class = "card">
+			<h4>Done</h4>
+			<textarea rows="4" cols="50"></textarea>
+		</div>
+	</div>
+
+<div class ="container1">
+
+</div>
+
+<div id ="Modal1" class ="modal1">
+
+	<div class= "modal-content">
+		
+		<span class="close">&times;</span>
+	
+		<form action="/myproj" method="GET" id="input1">
+	
+		<p>What is the column title?</p>
+			Column title: <input type="text" name="col_title">
+
+		<input type = "submit" >
+		</form>
+		</div>
+</div>-->
+<!--
+<script>
+	function myFunction() {
+	var x = document.createElement("INPUT");
+	x.setAttribute("type", "text");
+	x.setAttribute("value", "list tasks here");
+	document.body.appendChild(x);
+</script>
+
+
+<div class="row">
+		<div class="column left" style="background-color: #513;">
+			<h4>To Do:</h4>	
+			<button onclick="myFunction()">Submit</button>
+			<textarea rows="4" cols="50"> List tasks you need to do here...</textarea>
+
+	<div class="column middle" style="background-color: #846;">
+			<h4>Doing:</h4>
+			<button onclick="myFunction()">Submit</button>
+			<textarea rows="4" cols="50"> List tasks you need to do here...</textarea>
+	<div class="column right" style="background-color: #aaa;">
+			<h4>Done:</h4>
+			<button onclick="myFunction()">Submit</button>
+			<textarea rows="4" cols="50"> List tasks you need to do here...</textarea>
+	</div>-->
 
 </body>
 </html>
