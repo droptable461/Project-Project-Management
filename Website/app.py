@@ -194,32 +194,57 @@ def project():
     
 @app.route('/user', methods=['GET', 'POST'])
 def user():
-        #c = getDB()
+        c = getDB()
         one = request.form.get('uname')
-        print(one)      
-        #now = datetime.now()
-        #formatted_date = now.strftime('%m-%d-%Y %H:%M:%S')
-        #c.execute("""INSERT INTO user(uname) VALUES (?)""",(one,))
-        #c.commit()
-        #c.close() 
-        return '''<h1>The string is: {}</h1>'''.format('user')
+        now = datetime.now()
+        formatted_date = now.strftime('%m-%d-%Y %H:%M:%S')
+        c.execute("""INSERT INTO user(uname) VALUES (?)""",(one,))
+        c.commit()
+        c.close() 
+        return 
     
 @app.route('/phase', methods=['GET', 'POST'])
 def phase():
-        c = getDB()
-        #one = request.form.get('ph_title')
-        #two = request.form.get('p_title')
+    c = getDB()
+    one = request.form.get('ph_title')
+    two = request.form.get('p_title')
         
-        one = "tejas"
-        two = "roma"
       
-        now = datetime.now()
-        formatted_date = now.strftime('%m-%d-%Y %H:%M:%S')
-        c.execute("""INSERT INTO (manager,title) VALUES(?,?)""",(one,two))
-        c.commit()
-        c.close() 
-        return '''<h1>The string is: {}</h1>'''.format('phase')
-
+    #now = datetime.now()
+    #formatted_date = now.strftime('%m-%d-%Y %H:%M:%S')
+    #c.execute("""INSERT INTO (manager,title) VALUES(?,?)""",(one,two))
+    #c.commit()
+    #c.close() 
+    return
+@app.route('/update', methods=['GET', 'POST'])
+def update():
+    c = getDB()
+    proj = c.execute('''SELECT manager, title, description FROM project''').fetchall()
+    task = c.execute('''SELECT * FROM task''').fetchall()
+    bug = c.execute('''SELECT * FROM  bug''').fetchall()
+    u = c.execute('''SELECT * FROM user''').fetchall()
+    
+    c.close()
+    raw = "^"
+    for x in proj:
+        raw = raw + str(x)
+        raw = raw + " "
+    raw = raw + "#"
+    for x in task:
+        raw = raw + str(x)
+        raw = raw + " "
+    raw = raw + "&"
+    for x in bug:
+        raw = raw + str(x)
+        raw = raw + " "
+    raw = raw + "*"
+    for x in u:
+        raw = raw + str(x)
+        raw = raw + " "
+    raw = raw + "$"
+    
+    return raw
+    
 @app.route('/git', methods=['GET', 'POST'])
 def git():
 #name , date , message
