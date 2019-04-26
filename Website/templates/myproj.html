@@ -280,11 +280,23 @@ textarea {
 	right: 9px;
 	bottom: 5px;
 }
-/*
-#box1 {
-	margin-left: auto;
-	margin-right: auto;
-}*/
+
+textarea#box1 {
+
+	margin: 0px;
+	height: 100px;
+	width: 300px;
+	background-color: #846;
+	color: white;
+	border: #846;
+	outline: none;
+	position: relative;
+	left: 27px;
+	top: 4px;
+	right: 9px;
+	bottom: 5px;
+
+}
 
 </style>
 </head>
@@ -448,12 +460,12 @@ textarea {
 		
 						<h4>{{ col }}</h4>
 
-					<button id ="button2">Add Task</button>
+						<button id ="button2">Add Task</button>
 	
-					<div id = "Modal2" class = "modal2">
+						<div id = "Modal2" class = "modal2">
 
-						<div class= "modal-content">
-						<span class="close">&times;</span>
+							<div class= "modal-content">
+							<span class="close">&times;</span>
 	
 						<form action="/myproj" method="POST" id="input2">
 	
@@ -471,7 +483,7 @@ textarea {
 						<p>What phase is the task in?</p>
 						Phase: <input type="text" name="phase" >
 		<input type = "submit" >
-			</form>
+			<!--</form>-->
 				<script>
 				var modal2 = document.getElementById('Modal2');
 
@@ -498,7 +510,7 @@ textarea {
 			</div>
 		</div>
 	</div>
-
+</form>
 {% endfor %}
 
 </body>
