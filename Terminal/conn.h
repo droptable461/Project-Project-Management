@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <map>
 #include <vector>
 #include <curl/curl.h>
 #include "data.h"
@@ -31,10 +32,10 @@ class Conn {
 		bool post_request(const Task t, const string p_title);
 		bool post_request(const Bug b, const string t_title);
 		bool post_request(const Project p, const int uid);
-		bool post_request(const User u);
+		bool post_request(const User u, int uid=0);
 		bool post_request(const Phase p, const string p_title);
 	
 		//GETS
-		vector<Project> get_request(char* request);
+		map<string, Project> get_request();
 };
 #endif
