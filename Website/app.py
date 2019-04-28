@@ -7,6 +7,9 @@ from collections import defaultdict
 import simplejson
 import urllib.parse
 from datetime import datetime
+from git import Git
+from git import Repo
+
 
 #conn = sqlite3.connect('database.db')
 
@@ -182,9 +185,9 @@ def user():
         formatted_date = now.strftime('%m-%d-%Y %H:%M:%S')
         c.execute("""INSERT INTO user(uname) VALUES (?)""",(one,))
         c.commit()
-        c.close() 
-        return 
-    
+        c.close()
+        return
+
 @app.route('/update', methods=['GET', 'POST'])
 def update():
     c = getDB()
@@ -192,7 +195,7 @@ def update():
     task = c.execute('''SELECT * FROM task''').fetchall()
     bug = c.execute('''SELECT * FROM  bug''').fetchall()
     u = c.execute('''SELECT * FROM user''').fetchall()
-    
+
     c.close()
     raw = "^"
     for x in proj:
@@ -211,9 +214,9 @@ def update():
         raw = raw + str(x)
         raw = raw + " "
     raw = raw + "$"
-    
+
     return raw
-    
+
 
 @app.route('/phase', methods=['GET', 'POST'])
 def phase():
