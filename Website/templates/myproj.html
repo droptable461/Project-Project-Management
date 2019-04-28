@@ -319,7 +319,7 @@ textarea#box1 {
 	<form action="/myproj" method="GET" >
 {% for proj in projects %}
 
-				<input name="proj" type="submit" value= "{{ proj | safe }}" onclick="currentProj({{ proj | safe }})" ></input><br> 
+				<input name="proj" type="submit" value= "{{ proj | safe }}" onclick="currentProj({{ proj | safe }})"></input><br> 
     
 {% endfor %}
 	</form>
