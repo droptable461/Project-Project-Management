@@ -128,7 +128,9 @@ p {
 </div>
 <button class="accordion">Comments</button>
 	<div class="panel">
-		<p></p>
+{% for bug in bugf %}
+<p> {{ bug }} </p>
+{% endfor %}
 </div>
 
 <script>
