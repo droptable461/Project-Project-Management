@@ -63,7 +63,7 @@ def myproj():
 def addCol(form):
     if 'title3' in form:
         c = getDB()
-        current = form['current']
+        session['project'] = form['current']
         c.execute("""INSERT INTO columns(proj,coll) VALUES(?,?)""",(current,request.form['title3'],))
         c.commit()
         c.close()
