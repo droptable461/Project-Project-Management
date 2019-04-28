@@ -318,8 +318,12 @@ p {
 }
 
 li {
+	background-color: rgba(0,0,0);
+	background-color: rgba(0,0,0,0.4);
+
+	text-align: center;
 	color: white;
-	font-size: 16px;
+	font-size: 11px;
 }
 </style>
 
@@ -341,7 +345,7 @@ li {
 <button id ="button1">Add Project</button>
 </div>
 
-	<form action="/currProj" method="GET" >
+<!--	<form action="/currProj" method="GET" >-->
 {% for proj in projects %}
 
 
@@ -515,8 +519,16 @@ li {
 <div class = "row">
 	<div class = "column">
 		<div class = "card">
+		
 			<div class ="container2">
 						<h4>{{ col }}</h4>
+						{% for task in tasks %}
+						HELLO
+							<li><a href="/{{ task | safe }}">{{ task | safe }}</a></li>
+
+						{% endfor %}
+
+
 				</script>
 					</div>
 				</div>
