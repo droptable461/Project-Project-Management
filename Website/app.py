@@ -49,24 +49,36 @@ def hello():
 
 @app.route('/myproj', methods=['GET','POST','PUT'])
 def myproj():
+        session['projec'] = ""
         c = getDB()
         p = [row[0] for row in c.execute("""SELECT DISTINCT proj FROM user WHERE uname = (?)""",(session['username'],)).fetchall()]
         k = [row[0] for row in c.execute("""SELECT DISTINCT coll FROM columns""").fetchall()]#WHERE proj = (?)""",(current)).fetchall()]
-#dif func for dif proj operations: add(proj or tasks), retrieve(proj and tasks), remove(proj or tasks), modify(proj or tasks)
-        #if request.method == 'GET':
+        if request.method == 'GET':
+            print('here2')
+            currentProject()
+        #if 'projec' in session
             #k = retCol()
             #t = retTask()
         if request.method == 'POST':
              addProj()
              addTask()
-             addCol(request.form)
+             addCol()
 
         return render_template('myproj.html',projects = p,columns = k)
 
-def addCol(form):
-    if 'title3' in form:
+def currentProject():
+    #if 'current' in request.form:
+    print('here')
+    print(request.args.get('current',''))
+    print('here4')
+    session['projec'] = request.args.get('current','')
+    print(session['projec'])
+    print('here3')
+
+def addCol():
+    if 'title3' in request.form:
         c = getDB()
-        current = form['current']
+        current = session['projec']
         c.execute("""INSERT INTO columns(proj,coll) VALUES(?,?)""",(current,request.form['title3'],))
         c.commit()
         c.close()
