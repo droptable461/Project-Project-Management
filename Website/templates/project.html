@@ -56,16 +56,20 @@
 .sidenav a:hover {
 	color: #846;
 }
+li {
+	color: white;
+	font-size: 12px
+}
 
 </style>
 
 </head>
 <header>
 <div class="topnav">
-	<a href="index">Home</a>
-	<a class="active"href="myproj">My Projects</a>
-	<a href="timeline">Timeline</a>
-	<a href="howto">How to Use</a>
+	<a href="/index">Home</a>
+	<a class="active"href="/myproj/">My Projects</a>
+	<a href="/timeline">Timeline</a>
+	<a href="/howto">How to Use</a>
 </div>
 
 <div class="sidenav">
@@ -78,7 +82,7 @@
 	<form action="/currProj" method="GET" >
 {% for proj in projects %}
 
-<li><a href="myproj/{{ proj | safe }}"><{{ proj | safe }}/a></li>
+	<p><a href="/myproj/{{ proj | safe }}/">{{ proj | safe }}</a></p>
 <!--	<input name="proj" type="submit" value= "{{ proj | safe }}" onclick="currentProj({{ proj | safe }})"></input><br> -->
     
 {% endfor %}

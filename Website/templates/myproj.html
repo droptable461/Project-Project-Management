@@ -331,11 +331,11 @@ li {
 
 <header>
 <div class="topnav">
-	<a href="index">Home</a>
-	<a class="active"href="myproj">My Projects</a>
-	<a href="timeline">Timeline</a>
-	<a href="howto">How to Use</a>
-	<a href="logout">Log Out</a>
+	<a href="/index">Home</a>
+	<a class="active"href="/myproj/">My Projects</a>
+	<a href="/timeline">Timeline</a>
+	<a href="/howto">How to Use</a>
+	<a href="/logout">Log Out</a>
 </div>
 
 <div class="sidenav">
@@ -349,7 +349,7 @@ li {
 {% for proj in projects %}
 
 
-<li><a href="{{ proj | safe }}">{{ proj | safe }}</a></li>
+<li><a href="/{{ proj | safe }}/">{{ proj | safe }}</a></li>
 
 <!--<input name="proj" type="submit" value= "{{ proj | safe }}" onclick="currentProj({{ proj | safe }})"></input><br>-->
     
@@ -374,7 +374,7 @@ li {
 	<div class= "modal-content">
 		<span class="close">&times;</span>
 	
-		<form action="/myproj" method="POST" id="input1">
+		<form action="/myproj/" method="POST" id="input1">
 	
 		<p>Who is the manager of this project?</p>
 			<p>Manager: <input type="text" name="manager" ></p>
@@ -396,7 +396,7 @@ li {
 	<div class= "modal-content">
 		<span class="close">&times;</span>
 	
-	<form action="/myproj" method="POST" id="input2">
+	<form action="/myproj/" method="POST" id="input2">
 	
 		<p>Task Id</p>
         <!--Task Id: <input type="text" name="task_id">-->
@@ -455,7 +455,7 @@ li {
 	<div class= "modal-content">
 		<span class="close">&times;</span>
 	
-	<form action="/myproj" method="POST" id="input3">
+	<form action="/myproj/" method="POST" id="input3">
 	
 		<p>What is the name of the column?</p>
 			<h1>Column Title: <input type="text" name="title3" ></h1>
@@ -523,9 +523,9 @@ li {
 			<div class ="container2">
 						<h4>{{ col }}</h4>
 						{% for task in tasks %}
-						HELLO
-							<li><a href="/{{ task | safe }}">{{ task | safe }}</a></li>
-
+						<p>
+							<a href="{{ task | safe }}">{{ task | safe }}</a>
+						</p>
 						{% endfor %}
 
 

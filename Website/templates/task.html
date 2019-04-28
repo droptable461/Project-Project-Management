@@ -109,28 +109,33 @@ p {
 
 <body>
 
-<p>TASKS</p>
-
+	{% for t in title %}
+		<p>{{ t | safe }}</p>
+	{% endfor %}
 <button class="accordion">Users</button>
 <div class="panel">
-	<h1>jdlfkajs</h1>
-	<p>asdfasdf</p>
+	{% for u in user %}
+		<p>{{ u | safe }}</p>
+	{% endfor %}
 </div>
 
 <button class="accordion">Description</button>
 	<div class="panel">
-		<p></p>
+	{% for d in disc %}
+		<p>{{ d | safe }}</p>
+	{% endfor %}
 </div>
 
 <button class="accordion">Bugs</button>
 	<div class="panel">
-		<p></p>
+{% for bug in bugf %}
+{% for thing in bug %}
+<p> {{ thing | safe}} </p>
+{% endfor %}
+{% endfor %}
 </div>
 <button class="accordion">Comments</button>
 	<div class="panel">
-{% for bug in bugf %}
-<p> {{ bug }} </p>
-{% endfor %}
 </div>
 
 <script>
