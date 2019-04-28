@@ -218,97 +218,79 @@ void check(int a)
 {
 cout << "[" << a << "]" << endl;
 }
+
+/*
+^('Tman1', 'testProj1', 'abcdefghijklmnop', 1, None) #(1, 'testTask1', 'onetwothree', 'todo', None, None) &(1, 'tejas', 'roma', 'sima') *('thomas', 'testProj1', 2)*/ 
 map<string, Project> parse_response(string res){
 	map<string, Project> ret;
 	check(0);
 	//Do da parse
-	char val;
-	int cursor = 0;
-	bool in_proj, in_task, in_bug, in_user = false;
-	for(int i = 0; i < res.length(); ++i){
-	//	check(555);
-		if(res[i] == '$')
-			break;
-		if(res[i] == '^'){
-			check(11);
-			while( res[i] != '#' || res[i] != '&' || res[i]!='$'){
-				i++;
-				Project tmpp;
-		//		check(12);
-				if(res[i] == '#')
-					break;
-				if(res[i] == '('){
-		//			check(13);
-					i += 2;
-					string tmp = "";
-					while(res[i] != '\''){
-						tmp = tmp + res[i];
-		//				cout<< res[i] << endl;
-						i++;
-						if(res[i] == '#')
-							break;
-					}
-					cout<< tmp << endl;
-					check(i);
-		//			check(14);
-					++i;
-					while(res[i] != '\''){
-						i++;
-		//				cout<<res[i] << endl;
-						if(res[i] == '#')
-							break;
-					}
-					if(tmp.length() > 0)
-						tmpp.manager = tmp;
-					tmp = "";
-					while(res[i] != '\''){
-						tmp = tmp + res[i];
-						i++;
-						if(res[i] == '#')
-							break;
-					}
-					cout<< tmp << endl;
-					check(i);
-		//			check(15);
-					++i;
-					while(res[i] != '\''){
-						 i++;
-						if(res[i] == '#')
-							break;
-					}
-					if(tmp.length() > 0)
-						tmpp.disc = tmp;
-					tmp = "";
-					while(res[i] != '\''){
-						tmp = tmp + res[i];
-						i++;
-						if(res[i] == '#')
-							break;
-					}
-					cout << tmp << endl;
-					if(tmp.length() > 0)
-						tmpp.disc = tmp;
-					ret[tmpp.title] = tmpp;
-					
-						
-		//			 check(16);
-					
-				}
-			}
-			//while( val!= '&' || val != '$'){
-			//	cursor++;
-			//	val = res[cursor];
-			//	Task tempt;
-			//	if(val == '('){
-			//	}
-			//}
-			
-		}
-	//	cout<< i << endl;
-
+	string proj, task, bug, usr; 
+	int p1, p2;
+	p1 = res.find_first_of('^');
+	if(p1 < 0){
+		fprintf(stderr, "Update Message Error");
+		return map<string, Project>();
 	}
-	for( pair<string, Project> x : ret)
-		cout<< x.first << ": " << x.second.title << endl;
+	p2 = res.find_first_of('#');
+	proj = res.substr(p1+1, (p2 - p1) - 1);
+//	printf("Projects: %s\n", proj.c_str());
+	p1 = p2;
+	p2 = res.find_first_of('&');
+	task = res.substr(p1+1, (p2-p1)-1);
+//	printf("Tasks: %s\n", task.c_str());
+	p1 = p2;
+	p2 = res.find_first_of('*');
+	bug = res.substr(p1+1, (p2-p1)-1);
+	printf("Bugs: %s\n", bug.c_str());
+	p1 = p2;
+	p2 = res.find_first_of('$');
+	usr = res.substr(p1+1, (p2-p1)-1);
+//	printf("Users: %s\n", usr.c_str());
+
+	//Project Parsing
+	p1 = 0;
+	p2 = 0;
+	int end = proj.find_last_of('\'');
+	bool first_loop = true;
+	while(p2 < end){
+		Project proj_tmp;
+		string proj_mod;
+		string man, desc, title;
+		if(first_loop){
+			p1 = proj.find('\'');
+			first_loop = false;
+		}
+		else
+		
+		p1 = proj.find('\'', p2+1);
+		p2 = proj.find('\'', p1+1);
+		man = proj.substr(p1+1, (p2-p1)-1);
+		p1 = proj.find('\'', p2+1);
+		p2 = proj.find('\'', p1+1);
+		title = proj.substr(p1+1, (p2-p1)-1);
+		p1 = proj.find('\'', p2+1);
+		p2 = proj.find('\'', p1+1);
+		desc = proj.substr(p1+1, (p2-p1)-1);
+		if(p1 == -1 || p2 == -1)
+			break;
+		proj_tmp.title = title;
+		proj_tmp.manager = man;
+		proj_tmp.disc = desc;
+		ret[proj_tmp.title] = proj_tmp;
+		printf("Manager: %s\n", man.c_str());
+		printf("Title: %s\n", title.c_str());
+		printf("Description: %s\n", desc.c_str());
+	}
+		printf("Origin: %s\n", proj.c_str());
+	p1 = 0;
+	p2 = 0;
+	end = task.find_last_of 
+	//	
+	
+
+
+	
 	return ret;
 }
 map<string, Project> Conn::get_request()
