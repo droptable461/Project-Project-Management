@@ -62,7 +62,7 @@ def myproj():
         if request.method == 'POST':
              addProj()
              addTask()
-             addCol()
+             addCol(request.form)
 
         return render_template('myproj.html',projects = p,columns = k)
 
