@@ -12,7 +12,7 @@ all: $(SOURCES) $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
 	$(CC) -o $@ $^ $(LDFLAGS) $(LIBS)
-
+.PHONY= test clean
 test:
 	g++ main.cpp conn.cpp data.cpp -lcurl -Wfatal-errors -g -o test 
 

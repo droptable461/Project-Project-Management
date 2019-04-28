@@ -178,10 +178,42 @@ def project():
 def user():
         c = getDB()
         one = request.form.get('uname')
+        now = datetime.now()
+        formatted_date = now.strftime('%m-%d-%Y %H:%M:%S')
         c.execute("""INSERT INTO user(uname) VALUES (?)""",(one,))
         c.commit()
-        c.close()
-        return
+        c.close() 
+        return 
+    
+@app.route('/update', methods=['GET', 'POST'])
+def update():
+    c = getDB()
+    proj = c.execute('''SELECT manager, title, description FROM project''').fetchall()
+    task = c.execute('''SELECT * FROM task''').fetchall()
+    bug = c.execute('''SELECT * FROM  bug''').fetchall()
+    u = c.execute('''SELECT * FROM user''').fetchall()
+    
+    c.close()
+    raw = "^"
+    for x in proj:
+        raw = raw + str(x)
+        raw = raw + " "
+    raw = raw + "#"
+    for x in task:
+        raw = raw + str(x)
+        raw = raw + " "
+    raw = raw + "&"
+    for x in bug:
+        raw = raw + str(x)
+        raw = raw + " "
+    raw = raw + "*"
+    for x in u:
+        raw = raw + str(x)
+        raw = raw + " "
+    raw = raw + "$"
+    
+    return raw
+    
 
 @app.route('/phase', methods=['GET', 'POST'])
 def phase():
