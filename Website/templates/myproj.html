@@ -317,8 +317,14 @@ p {
 	margin: 13px 10px 4px 6px;
 }
 
+li {
+	color: white;
+	font-size: 16px;
+}
 </style>
+
 </head>
+
 <header>
 <div class="topnav">
 	<a href="index">Home</a>
@@ -338,10 +344,12 @@ p {
 {% for proj in projects %}
 
 
-<li><a href="{{ proj | safe }}"><{{ proj | safe }}/a></li>
+<li><a href="{{ proj | safe }}">{{ proj | safe }}</a></li>
+
 <!--<input name="proj" type="submit" value= "{{ proj | safe }}" onclick="currentProj({{ proj | safe }})"></input><br>-->
     
 {% endfor %}
+
 	</form>
 <script>
 	function currentProj(proj)
@@ -497,11 +505,11 @@ p {
 						<script>
 							var modal2 = document.getElementById('Modal2');
 
-							var butt2 = document.getElementById('button2');
+							var button2 = document.getElementById('button2');
 					
 							var span2 = document.getElementsByClassName("close")[0];
 
-							butt2.onclick = function() {
+							button2.onclick = function() {
 							modal2.style.display = "block";
 							}
 							span2.onclick = function() {
