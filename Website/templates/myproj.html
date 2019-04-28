@@ -85,7 +85,6 @@ p {
 	font-size: 18px;
 }
 
-
 .container1 {
 	display: flex; justify-content: center;
 }
@@ -107,16 +106,17 @@ p {
 }
 	
 #button2 {
-	background-color: white;
+	background-color: #846;
 	border: none;
-	color: black;
-	padding: 8px 12px;
+	color: white;
+	padding: 24px 28px;
 	text-align: center;
-	font-size: 11.5px;
-	margin: 4px 2px;
+	font-size: 20px;
+	margin: 20px 1px 0px 117px;
 	transition: 0.3s;
 	display: inline-block;
 	cursor: pointer;
+	width: 70%;
 }
 
 #button3 {
@@ -154,10 +154,10 @@ p {
 
 .card {
 	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-	padding: 20px;
+	padding: 78px;
 	text-align: center;
-	background-color: #846;
-	
+	background-color: #846;	
+	margin: 12px 11px 13px 111px;
 }
 
 /*
@@ -289,11 +289,11 @@ textarea#box1 {
 	height: 100px;
 	width: 300px;
 	background-color: #846;
-	color: white;
+	color: wh117pxite;
 	border: #846;
 	outline: none;
 	position: relative;
-	left: 27px;
+	left: 150px;
 	top: 4px;
 	right: 9px;
 	bottom: 5px;
@@ -387,12 +387,65 @@ li {
 		<input type = "submit" >
 		</form>
 		</div>
-<!--<div class ="container2">
+</div>
+
+<div class ="container2">
 		<button id ="button2">Add Task</button>
-	</div>-->
+	</div>
+	<div id ="Modal2" class ="modal2">
+	<div class= "modal-content">
+		<span class="close">&times;</span>
+	
+	<form action="/myproj" method="POST" id="input2">
+	
+		<p>Task Id</p>
+        <!--Task Id: <input type="text" name="task_id">-->
+		
+		<p>What is the name of the task?</p>
+			Task Title: <input type="text" name="title2" >
+		
+		<p>Date task created: <input type="text" name="date"></p>
+		<p>What is the description of the task?</p>
+		<textarea rows="4" cols="50" name ="description2"  form="input2">enter a description of the task here.</textarea>
+		<p>What phase is the task in?</p>
+			Phase: <input type="text" name="phase" >
+	
+		<!--p>Bug Id</p>-->
+        <!--Bug Id: <input type="text" name="bug_id" >-->
+		<input type = "submit" >
+		</form>
+	</div>
+</div>
 
-	<!--<div class ="container2">-->
+<!--	<div id ="Modal2" class ="modal2">
 
+	<div class= "modal-content">
+		<span class="close">&times;</span>
+	
+	<form action="/myproj" method="POST" id="input2">
+	
+		<p>Task Id</p>
+        Task Id: <input type="text" name="task_id">
+		
+		<p>What is the name of the task?</p>
+			<h1>Task Title: <input type="text" name="title2" ></h1>
+		
+		<p>Date task created: <input type="text" name="date"></p>
+
+		<p>What is the description of the task?</p>
+		<textarea rows="4" cols="50" name ="description2"  form="input2">enter a description of the task here.</textarea>
+
+		<p>What phase is the task in?</p>
+			<h2>Phase: <input type="text" name="phase" ></h2>
+	
+		<p>Bug Id</p>
+        Bug Id: <input type="text" name="bug_id" >
+
+		<h1><input type = "submit" ></h1>
+		</form>
+	</div>
+</div>-->
+	
 <div class ="container3">
 		<button id ="button3">Add Columns</button>
 	</div>
@@ -415,23 +468,23 @@ li {
 <script>
 	//get modal
 	var modal1 = document.getElementById('Modal1');
-//	var modal2 = document.getElementById('Modal2');
+	var modal2 = document.getElementById('Modal2');
 	var modal3 = document.getElementById('Modal3');
 	//get button that opens the modal
 	var butt1 = document.getElementById('button1');
-//	var butt2 = document.getElementById('button2');
+	var butt2 = document.getElementById('button2');
 	var butt3 = document.getElementById('button3');
 	//get the span that closes the modal
 	var span1 = document.getElementsByClassName("close")[0];
-//	var span2 = document.getElementsByClassName("close")[1];
+	var span2 = document.getElementsByClassName("close")[1];
 	var span3 = document.getElementsByClassName("close")[2];
 	//when user clicks button, open modal
 	butt1.onclick = function() {
 		modal1.style.display = "block";
 	}
-//	butt2.onclick = function() {
-//		modal2.style.display = "block";
-//	}
+	butt2.onclick = function() {
+		modal2.style.display = "block";
+	}
 	butt3.onclick = function() {
 		modal3.style.display = "block";
 	}
@@ -439,9 +492,9 @@ li {
 	span1.onclick = function() {
 		modal1.style.display = "none";
 	}
-//	span2.onclick = function() {
-//		modal2.style.display = "none";
-//	}
+	span2.onclick = function() {
+		modal2.style.display = "none";
+	}
 	span3.onclick = function() {
 		modal3.style.display = "none";
 	}
@@ -450,9 +503,9 @@ li {
 		if(event.target == modal1){
 			modal1.style.display = "none";
 		}
-//		if(event.target == modal2){
-//			modal2.style.display = "none";
-//		}
+		if(event.target == modal2){
+			modal2.style.display = "none";
+		}
 		if(event.target == modal3){
 			modal3.style.display = "none";
 		}
@@ -467,40 +520,13 @@ li {
 	<div class = "column">
 		<div class = "card">
 		
+			<div class ="container2">
 						<h4>{{ col }}</h4>
-
-						<button id ="button2">Add Task</button>
-	
-						<div id = "Modal2" class = "modal2">
-
-							<div class= "modal-content">
-							<span class="close">&times;</span>
-
-						<script>
-							var modal2 = document.getElementById('Modal2');
-
-							var button2 = document.getElementById('button2');
-					
-							var span2 = document.getElementsByClassName("close")[0];
-
-							button2.onclick = function() {
-							modal2.style.display = "block";
-							}
-							span2.onclick = function() {
-							modal2.style.display = "none";
-							}
-							window.onclick = function(event) {
-							if(event.target == modal2){
-								modal2.style.display = "none";
-							}
-						}
 				</script>
-
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 </form>
 {% endfor %}
 
