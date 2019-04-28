@@ -228,7 +228,7 @@ div.a {
 	margin: auto;
 	padding: 20px;
 	border: 1px solid #846;
-	width: 80%;
+	width: 50%;
 }
 
 .close {
@@ -257,6 +257,7 @@ textarea {
 	top: 4px;
 	right: 9px;
 	bottom: 5px;
+	margin: -6px 10px 4px 145px;
 }
 
 textarea#box1 {
@@ -274,6 +275,23 @@ textarea#box1 {
 	right: 9px;
 	bottom: 5px;
 
+}
+
+h1 {
+	font-size: 16px;
+	text-align: center;
+	margin: 6px 10px 4px 20px;
+}
+	
+h2 {
+	font-size: 16px;
+	text-align: center;
+	margin: 13px 10px 4px 6px;
+}
+
+p {
+	text-align: center;
+	margin: 13px 10px 4px 6px;
 }
 
 </style>
@@ -348,7 +366,7 @@ textarea#box1 {
         <!--Task Id: <input type="text" name="task_id">-->
 		
 		<p>What is the name of the task?</p>
-			Task Title: <input type="text" name="title2" >
+			<h1>Task Title: <input type="text" name="title2" ></h1>
 		
 		<p>Date task created: <input type="text" name="date"></p>
 
@@ -356,7 +374,7 @@ textarea#box1 {
 		<textarea rows="4" cols="50" name ="description2"  form="input2">enter a description of the task here.</textarea>
 
 		<p>What phase is the task in?</p>
-			Phase: <input type="text" name="phase" >
+			<h2>Phase: <input type="text" name="phase" ></h2>
 	
 		<!--p>Bug Id</p>-->
         <!--Bug Id: <input type="text" name="bug_id" >-->
@@ -378,9 +396,9 @@ textarea#box1 {
 	<form action="/myproj" method="POST" id="input3">
 	
 		<p>What is the name of the column?</p>
-			Column Title: <input type="text" name="title3" >
+			<h1>Column Title: <input type="text" name="title3" ></h1>
+		<p><input type = "submit" ></p>
 
-		<input type = "submit" >
 		</form>
 	</div>
 </div>
