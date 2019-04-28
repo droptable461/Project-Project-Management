@@ -337,7 +337,9 @@ p {
 	<form action="/currProj" method="GET" >
 {% for proj in projects %}
 
-				<input name="proj" type="submit" value= "{{ proj | safe }}" onclick="currentProj({{ proj | safe }})"></input><br> 
+
+<li><a href="{{ proj | safe }}"><{{ proj | safe }}/a></li>
+<!--<input name="proj" type="submit" value= "{{ proj | safe }}" onclick="currentProj({{ proj | safe }})"></input><br>-->
     
 {% endfor %}
 	</form>
