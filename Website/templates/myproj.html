@@ -316,7 +316,7 @@ textarea#box1 {
 <button id ="button1">Add Project</button>
 </div>
 
-	<form action="/myproj" method="GET" >
+	<form action="/myproj" method="POST" >
 {% for proj in projects %}
 
 				<input name="proj" type="submit" value= "{{ proj | safe }}" onclick="currentProj({{ proj | safe }})"></input><br> 

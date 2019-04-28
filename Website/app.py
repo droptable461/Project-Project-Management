@@ -53,25 +53,25 @@ def myproj():
         c = getDB()
         p = [row[0] for row in c.execute("""SELECT DISTINCT proj FROM user WHERE uname = (?)""",(session['username'],)).fetchall()]
         k = [row[0] for row in c.execute("""SELECT DISTINCT coll FROM columns""").fetchall()]#WHERE proj = (?)""",(current)).fetchall()]
-        if request.method == 'GET':
+        if request.method == 'POST':
             print('here2')
             currentProject()
         #if 'projec' in session
             #k = retCol()
             #t = retTask()
-        if request.method == 'POST':
-             addProj()
-             addTask()
-             addCol()
+        #if request.method == 'POST':
+         #    addProj()
+          #   addTask()
+            addCol()
 
         return render_template('myproj.html',projects = p,columns = k)
 
 def currentProject():
     #if 'current' in request.form:
     print('here')
-    print(request.args.get('current',''))
+    print(request.form('current'))
     print('here4')
-    session['projec'] = request.args.get('current','')
+    session['projec'] = request.form('current')
     print(session['projec'])
     print('here3')
 
