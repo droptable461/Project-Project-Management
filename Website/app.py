@@ -30,6 +30,12 @@ def getDB():
             g.sqlite_db = connectDB()
         return g.sqlite_db
 
+
+def checkLogged():
+	if 'uname' in session:
+		return True
+	return False
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 	if request.method == 'POST':
@@ -41,6 +47,13 @@ def login():
 		if validlogin:
 			session['username'] = request.form['username']
 			return render_template("index.html",name=session['username'])
+	return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+	if not checkLogged():
+		return render_template('login.html')
+	session.pop('uname', None)
 	return render_template('login.html')
 
 @app.route('/')
