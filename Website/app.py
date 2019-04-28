@@ -7,6 +7,9 @@ from collections import defaultdict
 import simplejson
 import urllib.parse
 from datetime import datetime
+from git import Git
+from git import Repo
+
 
 #conn = sqlite3.connect('database.db')
 
@@ -46,11 +49,14 @@ def hello():
 
 @app.route('/myproj', methods=['GET','POST','PUT'])
 def myproj():
+        session['projec'] = ""
         c = getDB()
         p = [row[0] for row in c.execute("""SELECT DISTINCT proj FROM user WHERE uname = (?)""",(session['username'],)).fetchall()]
         k = [row[0] for row in c.execute("""SELECT DISTINCT coll FROM columns""").fetchall()]#WHERE proj = (?)""",(current)).fetchall()]
-#dif func for dif proj operations: add(proj or tasks), retrieve(proj and tasks), remove(proj or tasks), modify(proj or tasks)
-        #if request.method == 'GET':
+        if request.method == 'GET':
+            print('here2')
+            currentProject()
+        #if 'projec' in session
             #k = retCol()
             #t = retTask()
         if request.method == 'POST':
@@ -60,10 +66,19 @@ def myproj():
 
         return render_template('myproj.html',projects = p,columns = k)
 
-def addCol(form):
-    if 'title3' in form:
+def currentProject():
+    #if 'current' in request.form:
+    print('here')
+    print(request.args.get('current',''))
+    print('here4')
+    session['projec'] = request.args.get('current','')
+    print(session['projec'])
+    print('here3')
+
+def addCol():
+    if 'title3' in request.form:
         c = getDB()
-        session['project'] = form['current']
+        current = session['projec']
         c.execute("""INSERT INTO columns(proj,coll) VALUES(?,?)""",(current,request.form['title3'],))
         c.commit()
         c.close()
@@ -178,10 +193,42 @@ def project():
 def user():
         c = getDB()
         one = request.form.get('uname')
+        now = datetime.now()
+        formatted_date = now.strftime('%m-%d-%Y %H:%M:%S')
         c.execute("""INSERT INTO user(uname) VALUES (?)""",(one,))
         c.commit()
         c.close()
         return
+
+@app.route('/update', methods=['GET', 'POST'])
+def update():
+    c = getDB()
+    proj = c.execute('''SELECT manager, title, description FROM project''').fetchall()
+    task = c.execute('''SELECT * FROM task''').fetchall()
+    bug = c.execute('''SELECT * FROM  bug''').fetchall()
+    u = c.execute('''SELECT * FROM user''').fetchall()
+
+    c.close()
+    raw = "^"
+    for x in proj:
+        raw = raw + str(x)
+        raw = raw + " "
+    raw = raw + "#"
+    for x in task:
+        raw = raw + str(x)
+        raw = raw + " "
+    raw = raw + "&"
+    for x in bug:
+        raw = raw + str(x)
+        raw = raw + " "
+    raw = raw + "*"
+    for x in u:
+        raw = raw + str(x)
+        raw = raw + " "
+    raw = raw + "$"
+
+    return raw
+
 
 @app.route('/phase', methods=['GET', 'POST'])
 def phase():

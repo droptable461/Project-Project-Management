@@ -19,6 +19,7 @@ int main()
 	t.title = "task1";
 	t.disc = "description1";
 	Conn *c = new Conn("http://127.0.0.1:5000");
+/*
 //USER TEST
 	cout<<"Testing USER Post........";
 	if(c->post_request(u))
@@ -51,5 +52,13 @@ int main()
 		cout<< "SENT" << endl;
 	else
 		cout<<"FAILED"<< endl;
+*/
+//UPDATE TEST
+	cout<<"Testing UPDATE..........";
+	if(!c->get_request().empty())
+		cout<<"RECIEVED"<< endl;
+	else
+		cout<<"FAILED" << endl;
+	
 	
 }
