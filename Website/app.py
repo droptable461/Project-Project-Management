@@ -7,6 +7,9 @@ from collections import defaultdict
 import simplejson
 import urllib.parse
 from datetime import datetime
+from git import Git
+from git import Repo
+
 
 #conn = sqlite3.connect('database.db')
 
@@ -27,6 +30,12 @@ def getDB():
             g.sqlite_db = connectDB()
         return g.sqlite_db
 
+
+def checkLogged():
+	if 'uname' in session:
+		return True
+	return False
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 	if request.method == 'POST':
@@ -40,30 +49,81 @@ def login():
 			return render_template("index.html",name=session['username'])
 	return render_template('login.html')
 
+@app.route('/logout')
+def logout():
+	if not checkLogged():
+		return render_template('login.html')
+	session.pop('uname', None)
+	return render_template('login.html')
+
 @app.route('/')
 def hello():
     return render_template("login.html")
 
+@app.route("/<proj>/<task>")
+def update_py(task="",proj=""):
+
+        
+        t = [row[0] for row in c.execute("""SELECT DISTINCT title FROM task, columns WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.title = (?)""",(proj,task)).fetchall()]
+        d = [row[0] for row in c.execute("""SELECT DISTINCT description FROM task, columns WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.title = (?)""",(proj,task)).fetchall()]
+        bf = [row[0] for row in c.execute("""SELECT DISTINCT fname,line,description FROM task, columns, bug WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.task_id = bug.t_id AND task.title = (?)""",(proj,task)).fetchall()]
+        #bl = [row[0] for row in c.execute("""SELECT DISTINCT line FROM task, columns, bug WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.task_id = bug.t_id AND task.title = (?)""",(proj,task)).fetchall()]
+        #bd = [row[0] for row in c.execute("""SELECT DISTINCT description FROM task, columns, bug WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.task_id = bug.t_id AND task.title = (?)""",(proj,task)).fetchall()]
+        m = [row[0] for row in c.execute("""SELECT DISTINCT dateMade FROM task, columns WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.title = (?)""",(proj,task)).fetchall()]
+        u = [row[0] for row in c.execute("""SELECT DISTINCT user FROM task, columns WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.title = (?)""",(proj,task)).fetchall()]
+        #p = [row[0] for row in c.execute("""SELECT DISTINCT commits FROM task, columns WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.title = (?)""",(proj,task)).fetchall()]
+        return render_template("task.html",title = t, disc = d, date = m, user = u, bugf = bf)#, bugd = bd, bugl = bl)
+
 @app.route('/myproj', methods=['GET','POST','PUT'])
-def myproj():
+def proj(proj=""):
         c = getDB()
         p = [row[0] for row in c.execute("""SELECT DISTINCT proj FROM user WHERE uname = (?)""",(session['username'],)).fetchall()]
         k = [row[0] for row in c.execute("""SELECT DISTINCT coll FROM columns""").fetchall()]#WHERE proj = (?)""",(current)).fetchall()]
-#dif func for dif proj operations: add(proj or tasks), retrieve(proj and tasks), remove(proj or tasks), modify(proj or tasks)
-        #if request.method == 'GET':
+        #if request.method == 'POST':
+            #print('here2')
+            #currentProject()
+        #if 'projec' in session
             #k = retCol()
             #t = retTask()
         if request.method == 'POST':
              addProj()
              addTask()
-             addCol(request.form)
+             addCol()
+
+        return render_template('project.html',projects = p)
+
+@app.route('/myproj/<proj>', methods=['GET','POST','PUT'])
+def myproj(proj=""):
+        c = getDB()
+        p = [row[0] for row in c.execute("""SELECT DISTINCT proj FROM user WHERE uname = (?)""",(session['username'],)).fetchall()]
+        k = [row[0] for row in c.execute("""SELECT DISTINCT coll FROM columns""").fetchall()]#WHERE proj = (?)""",(current)).fetchall()]
+        #if request.method == 'POST':
+            #print('here2')
+            #currentProject()
+        #if 'projec' in session
+            #k = retCol()
+            #t = retTask()
+        if request.method == 'POST':
+             addProj()
+             addTask()
+             addCol()
 
         return render_template('myproj.html',projects = p,columns = k)
 
-def addCol(form):
-    if 'title3' in form:
+@app.route('/currProj', methods=['GET'])
+def currentProject():
+    #if 'current' in request.form:
+    print('here')
+    print(request.args.get('current',''))
+    print('here2')
+    session['projec'] = request.args.get('current','')
+    print(session['projec'])
+    print('here3')
+
+def addCol():
+    if 'title3' in request.form:
         c = getDB()
-        current = form['current']
+        current = session['projec']
         c.execute("""INSERT INTO columns(proj,coll) VALUES(?,?)""",(current,request.form['title3'],))
         c.commit()
         c.close()
@@ -182,9 +242,9 @@ def user():
         formatted_date = now.strftime('%m-%d-%Y %H:%M:%S')
         c.execute("""INSERT INTO user(uname) VALUES (?)""",(one,))
         c.commit()
-        c.close() 
-        return 
-    
+        c.close()
+        return
+
 @app.route('/update', methods=['GET', 'POST'])
 def update():
     c = getDB()
@@ -192,7 +252,7 @@ def update():
     task = c.execute('''SELECT * FROM task''').fetchall()
     bug = c.execute('''SELECT * FROM  bug''').fetchall()
     u = c.execute('''SELECT * FROM user''').fetchall()
-    
+
     c.close()
     raw = "^"
     for x in proj:
@@ -211,9 +271,9 @@ def update():
         raw = raw + str(x)
         raw = raw + " "
     raw = raw + "$"
-    
+
     return raw
-    
+
 
 @app.route('/phase', methods=['GET', 'POST'])
 def phase():

@@ -21,10 +21,9 @@ def createDatabase():
                                         title TEXT, 
                                         description TEXT,
                                         phase TEXT,
-                                        bug_id REFERENCES bug(b_id),
                                         dateMade DATE,
                                         PRIMARY KEY(task_id))""")
-        c.execute("""CREATE TABLE bug(  b_id INTEGER PRIMARY KEY,
+        c.execute("""CREATE TABLE bug(  t_id REFERENCES task(task_id),
                                         line INTEGER,
                                         fname TEXT,
                                         description TEXT)""")
@@ -34,7 +33,7 @@ def createDatabase():
                                         tasks REFERENCES task(task_id),
                                         PRIMARY KEY(uname, tasks))""")
 
-        c.execute("""CREATE TABLE columns(proj TEXT REFERENCES project(title),coll TEXT)""")
+        c.execute("""CREATE TABLE columns(proj TEXT REFERENCES project(title),coll TEXT, task_id REFERENCES task(task_id))""")
 
         conn.commit()
 def populateDatabase():
