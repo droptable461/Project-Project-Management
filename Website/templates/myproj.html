@@ -318,8 +318,12 @@ p {
 }
 
 li {
+	background-color: rgba(0,0,0);
+	background-color: rgba(0,0,0,0.4);
+
+	text-align: center;
 	color: white;
-	font-size: 16px;
+	font-size: 11px;
 }
 </style>
 
@@ -340,7 +344,7 @@ li {
 <button id ="button1">Add Project</button>
 </div>
 
-	<form action="/currProj" method="GET" >
+<!--	<form action="/currProj" method="GET" >-->
 {% for proj in projects %}
 
 
@@ -383,41 +387,12 @@ li {
 		<input type = "submit" >
 		</form>
 		</div>
-</div>
-	
 <!--<div class ="container2">
 		<button id ="button2">Add Task</button>
 	</div>-->
 
-	<div id ="Modal2" class ="modal2">
+	<!--<div class ="container2">-->
 
-	<div class= "modal-content">
-		<span class="close">&times;</span>
-	
-	<form action="/myproj" method="POST" id="input2">
-	
-		<p>Task Id</p>
-        <!--Task Id: <input type="text" name="task_id">-->
-		
-		<p>What is the name of the task?</p>
-			<h1>Task Title: <input type="text" name="title2" ></h1>
-		
-		<p>Date task created: <input type="text" name="date"></p>
-
-		<p>What is the description of the task?</p>
-		<textarea rows="4" cols="50" name ="description2"  form="input2">enter a description of the task here.</textarea>
-
-		<p>What phase is the task in?</p>
-			<h2>Phase: <input type="text" name="phase" ></h2>
-	
-		<!--p>Bug Id</p>-->
-        <!--Bug Id: <input type="text" name="bug_id" >-->
-
-		<h1><input type = "submit" ></h1>
-		</form>
-	</div>
-</div>-->
-	
 <div class ="container3">
 		<button id ="button3">Add Columns</button>
 	</div>
@@ -491,7 +466,6 @@ li {
 <div class = "row">
 	<div class = "column">
 		<div class = "card">
-				<!--<div class ="container2">-->
 		
 						<h4>{{ col }}</h4>
 
