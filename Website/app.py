@@ -62,7 +62,7 @@ def update_py(task="",proj=""):
         return render_template("task.html",title = t, disc = d, date = m, user = u, bugf = bf)#, bugd = bd, bugl = bl)
 
 @app.route('/myproj', methods=['GET','POST','PUT'])
-def myproj(proj=""):
+def proj(proj=""):
         c = getDB()
         p = [row[0] for row in c.execute("""SELECT DISTINCT proj FROM user WHERE uname = (?)""",(session['username'],)).fetchall()]
         k = [row[0] for row in c.execute("""SELECT DISTINCT coll FROM columns""").fetchall()]#WHERE proj = (?)""",(current)).fetchall()]
