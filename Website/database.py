@@ -14,7 +14,6 @@ def createDatabase():
                                             title TEXT,
                                             description TEXT,
                                             tasks REFERENCES task(task_id),
-                                            cols TEXT,
                                             PRIMARY KEY(title,tasks))""")
 
         c.execute("""CREATE TABLE task( task_id INTEGER,
@@ -59,12 +58,19 @@ def populateDatabase():
         c.execute("""INSERT INTO columns(proj,coll) VALUES ('testProj2','doing')""")
         c.execute("""INSERT INTO columns(proj,coll) VALUES ('testProj2','done')""")
 
-        c.execute("""INSERT INTO task(title,description,phase) VALUES('testTask1','onetwothree','todo')""")
-        c.execute("""INSERT INTO task(title,description,phase) VALUES('testTask2','fourfive','todo')""")
-        c.execute("""INSERT INTO task(title,description,phase) VALUES('testTask3','sixseven','todo')""")
-        c.execute("""INSERT INTO task(title,description,phase) VALUES('testTask4','eightnine','todo')""")
-        c.execute("""INSERT INTO task(title,description,phase) VALUES('testTask5','teneleven','todo')""")
-        c.execute("""INSERT INTO task(title,description,phase) VALUES('testTask6','twelvethirteen','todo')""")
+        c.execute("""INSERT INTO task(title,description,phase) VALUES('testTask1','onetwothree')""")
+        c.execute("""INSERT INTO task(title,description,phase) VALUES('testTask2','fourfive')""")
+        c.execute("""INSERT INTO task(title,description,phase) VALUES('testTask3','sixseven')""")
+        c.execute("""INSERT INTO task(title,description,phase) VALUES('testTask4','eightnine')""")
+        c.execute("""INSERT INTO task(title,description,phase) VALUES('testTask5','teneleven')""")
+        c.execute("""INSERT INTO task(title,description,phase) VALUES('testTask6','twelvethirteen')""")
+        
+        c.execute("""INSERT INTO columns(proj,coll) VALUES ('testProj2','todo','1')""")
+        c.execute("""INSERT INTO columns(proj,coll) VALUES ('testProj2','todo','2')""")
+        c.execute("""INSERT INTO columns(proj,coll) VALUES ('testProj2','doing','3')""")
+        c.execute("""INSERT INTO columns(proj,coll) VALUES ('testProj2','done','4')""")
+        c.execute("""INSERT INTO columns(proj,coll) VALUES ('testProj2','doing','5')""")
+        c.execute("""INSERT INTO columns(proj,coll) VALUES ('testProj2','done','6')""")
 
         conn.commit()
 
