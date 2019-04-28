@@ -522,6 +522,13 @@ li {
 		
 			<div class ="container2">
 						<h4>{{ col }}</h4>
+						{% for task in tasks %}
+						HELLO
+							<li><a href="/{{ task | safe }}">{{ task | safe }}</a></li>
+
+						{% endfor %}
+
+
 				</script>
 					</div>
 				</div>
