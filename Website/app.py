@@ -61,6 +61,24 @@ def update_py(task="",proj=""):
         #p = [row[0] for row in c.execute("""SELECT DISTINCT commits FROM task, columns WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.title = (?)""",(proj,task)).fetchall()]
         return render_template("task.html",title = t, disc = d, date = m, user = u, bugf = bf)#, bugd = bd, bugl = bl)
 
+@app.route('/myproj', methods=['GET','POST','PUT'])
+def myproj(proj=""):
+        c = getDB()
+        p = [row[0] for row in c.execute("""SELECT DISTINCT proj FROM user WHERE uname = (?)""",(session['username'],)).fetchall()]
+        k = [row[0] for row in c.execute("""SELECT DISTINCT coll FROM columns""").fetchall()]#WHERE proj = (?)""",(current)).fetchall()]
+        #if request.method == 'POST':
+            #print('here2')
+            #currentProject()
+        #if 'projec' in session
+            #k = retCol()
+            #t = retTask()
+        if request.method == 'POST':
+             addProj()
+             addTask()
+             addCol()
+
+        return render_template('project.html',projects = p)
+
 @app.route('/myproj/<proj>', methods=['GET','POST','PUT'])
 def myproj(proj=""):
         c = getDB()
