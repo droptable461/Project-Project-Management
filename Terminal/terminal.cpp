@@ -172,7 +172,6 @@ string mainMenu()
 
 string parseChoice(string choice, Project curr)
 {
-	Conn* c = new Conn("http://127.0.0.1:5000");
 	string rv = "Continue";
 	if(choice == "Select")
 	{
@@ -196,6 +195,11 @@ string parseChoice(string choice, Project curr)
 		cout << "Description: " << endl;
 		string disc = "";
 		getline(cin,disc);
+		string phase;
+		if(loc == 1){
+			cout<< "Phase: " << endl;
+			getline(cin,phase);
+		}
 		
 		switch(loc)
 		{
@@ -210,10 +214,22 @@ string parseChoice(string choice, Project curr)
 			}
 			case 1:
 			{
+				
 				Task t(title, disc);
-				projects[curr.title].phases[0].tasks.insert(pair<string,Task>(title,t));
-				c->post_request(t,curr.title);
-				break;
+				if(phase == ""){
+					projects[curr.title].phases[0].tasks.insert(pair<string,Task>(title,t));
+					c->post_request(t,curr.title, (string)"DEFAULT");
+					break;
+				}
+				else{
+					for(Phase p : projects[curr.title].phases)
+						if(p.title == phase){
+							c->post_request(t,curr.title, p.title);
+							break;
+						}
+					cerr<<"Error: Invalid Phase!" << endl;	
+					break;
+				}
 			}
 		}
 		check(40000);
@@ -312,7 +328,7 @@ bool putData(vector<Project> data){
 
 int main(int argc, char** argv)
 {
-	c = new Conn("https://127.0.0.1:5000");
+	c = new Conn("http://127.0.0.1:5000");
 	check(0);
 	projects = getData();
 	if(argc > 1)

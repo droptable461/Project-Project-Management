@@ -57,7 +57,7 @@ void Conn::set_host(const string host){
 
 }*/
 
-bool Conn::post_request(const Task t, string p_title)
+bool Conn::post_request(const Task t, string p_title, string ph_title)
 {
 	CURL *curl;
 	CURLcode res;
@@ -71,7 +71,7 @@ bool Conn::post_request(const Task t, string p_title)
 
 		string sub_url = m_host + "/task";
 		string values = "";
-		values.append((string)"t_description=" + t.disc + (string)"&t_title=" + t.title + "&p_title=" + p_title);
+		values.append((string)"t_description=" + t.disc + (string)"&t_title=" + t.title + "&p_title=" + p_title + "&ph_title=" + ph_title);
 
 		//printf("Sending %s to %s\n", values.c_str(), sub_url.c_str());
 
@@ -242,7 +242,7 @@ map<string, Project> parse_response(string res){
 	p1 = p2;
 	p2 = res.find_first_of('*');
 	bug = res.substr(p1+1, (p2-p1)-1);
-	printf("Bugs: %s\n", bug.c_str());
+	//printf("Bugs: %s\n", bug.c_str());
 	p1 = p2;
 	p2 = res.find_first_of('$');
 	usr = res.substr(p1+1, (p2-p1)-1);
@@ -278,16 +278,16 @@ map<string, Project> parse_response(string res){
 		proj_tmp.manager = man;
 		proj_tmp.disc = desc;
 		ret[proj_tmp.title] = proj_tmp;
-		printf("Manager: %s\n", man.c_str());
-		printf("Title: %s\n", title.c_str());
-		printf("Description: %s\n", desc.c_str());
+	//	printf("Manager: %s\n", man.c_str());
+	//	printf("Title: %s\n", title.c_str());
+	//	printf("Description: %s\n", desc.c_str());
 	}
-		printf("Origin: %s\n", proj.c_str());
+	//	printf("Origin: %s\n", proj.c_str());
 	p1 = 0;
 	p2 = 0;
 	end = task.find_last_of('\'');
 	first_loop = true;
-	printf("Origin: %s\n", task.c_str());
+//	printf("Origin: %s\n", task.c_str());
 	while(p2 < end){
 		Task task_tmp;
 		Phase ph_tmp;
@@ -311,7 +311,7 @@ map<string, Project> parse_response(string res){
 		p1 = task.find('\'', p2+1);
 		p2 = task.find('\'', p1+1);
 		pr_title = task.substr(p1+1, (p2-p1)-1);
-		printf("Task:\nTitle: %s\nDescription: %s\nPhase: %s\nProject: %s\n", title.c_str(), desc.c_str(), ph_title.c_str(), pr_title.c_str());	
+//		printf("Task:\nTitle: %s\nDescription: %s\nPhase: %s\nProject: %s\n", title.c_str(), desc.c_str(), ph_title.c_str(), pr_title.c_str());	
 		if(p1 == -1 || p2 == -1)
 			break;
 		Project p_tmp = ret[pr_title];
@@ -387,7 +387,7 @@ map<string, Project> parse_response(string res){
 				ret[p_title].phases[i].tasks[t_title].bugs.push_back(tmpb);
 		}	
 
-		printf("Bugs:\nLine: %d\nDescription: %s\nFile: %s\nTask: %s\n", lineNum, desc.c_str(), fname.c_str(), t_title.c_str());	
+//		printf("Bugs:\nLine: %d\nDescription: %s\nFile: %s\nTask: %s\n", lineNum, desc.c_str(), fname.c_str(), t_title.c_str());	
 	}
 	
 
