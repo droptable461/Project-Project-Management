@@ -64,7 +64,7 @@ def hello():
 def update_py(task="",proj=""):
         c = getDB()
 
-        
+
         t = [row[0] for row in c.execute("""SELECT DISTINCT title FROM task, columns WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.title = (?)""",(proj,task)).fetchall()]
         d = [row[0] for row in c.execute("""SELECT DISTINCT task.description FROM task, columns WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.title = (?)""",(proj,task)).fetchall()]
         bf = c.execute("""SELECT DISTINCT fname,line,bug.description FROM task, columns, bug WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.task_id = bug.t_id AND task.title = (?)""",(proj,task)).fetchall()
@@ -299,24 +299,6 @@ def git():
 #https://api.github.com/repos/droptable461/Project-Project-Management/commits?per_page=100&sha=f97103bab8a64a9656fa8139052bc4759aa9b625
 #https://api.github.com/repos/droptable461/Project-Project-Management/commits?since=2019-04-21T19:42:22Z
 #https://api.github.com/repos/droptable461/Project-Project-Management/commits?page=2&per_page=100
-<<<<<<< HEAD
-        c = getDB()
-        one = c.execute("""SELECT max(date) FROM commits""")
-
-    
-    #link = 'https://api.github.com/repos/droptable461/Project-Project-Management/events'
-    #r = requests.get('https://api.github.com/repos/droptable461/Project-Project-Management/commits')
-
-        #t_id = [row[0] for row in c.execute("""SELECT DISTINCT task_id FROM task, user WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.title = (?)""",(proj,task)).fetchall()]
-        #t = c.execute("""INSERT INTO commits F task, columns WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.title = (?)""",(proj,task)).fetchall()]
-    #return b
-     #   for key in item['commit']['committer']:
-      #      one = item['commit']['committer']['name']
-       #     two =item['commit']['committer']['date']
-        #    three = item['commit']['message']
-         #   four = one + print('/n') + two + '/n'
-          #  return four
-=======
 
     link = 'https://api.github.com/repos/droptable461/Project-Project-Management/events'
     r = requests.get('https://api.github.com/repos/droptable461/Project-Project-Management/commits')
@@ -326,14 +308,13 @@ def git():
             one= item['commit']['committer']['name']
             two = item['commit']['committer']['date']
             three = item['commit']['message']
-            
+
             print("\n")
             print(one)
             print(two)
             print(three)
             print("\n")
     return 'suc'
->>>>>>> 566a06f78f25393b6d6cb48043cd59f26699500d
 
 @app.teardown_appcontext
 def closeDB(error):
