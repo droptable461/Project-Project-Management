@@ -34,9 +34,6 @@ def createDatabase():
 
         c.execute("""CREATE TABLE columns(proj TEXT REFERENCES project(title),coll TEXT, task_id REFERENCES task(task_id))""")
         
-        c.execute("""CREATE TABLE commits(commit TEXT,
-                                         date DATE
-                                         task_id REFERENCES task(task_id))""")
 
         conn.commit()
 def populateDatabase():
