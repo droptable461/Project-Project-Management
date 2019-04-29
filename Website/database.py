@@ -41,6 +41,8 @@ def populateDatabase():
         c.execute("""INSERT INTO user (uname,proj,tasks) VALUES ('thomas','testProj1',3)""")
         c.execute("""INSERT INTO user (uname,proj,tasks) VALUES ('thomas','testProj2',5)""")
 
+        c.execute('''INSERT INTO bug (t_id, line, fname, description) VALUES ('2', '10', 'file1', 'blah blah')''')
+
         c.execute("""INSERT INTO user (uname,proj) VALUES ('tejas','testProj2')""")
         c.execute("""INSERT INTO user (uname,proj) VALUES ('allie','testProj2')""")
         c.execute("""INSERT INTO user (uname,proj) VALUES ('breonna','testProj2')""")
