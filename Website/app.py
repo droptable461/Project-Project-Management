@@ -67,12 +67,13 @@ def update_py(task="",proj=""):
         
         t = [row[0] for row in c.execute("""SELECT DISTINCT title FROM task, columns WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.title = (?)""",(proj,task)).fetchall()]
         d = [row[0] for row in c.execute("""SELECT DISTINCT task.description FROM task, columns WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.title = (?)""",(proj,task)).fetchall()]
-        bf = [row[0] for row in c.execute("""SELECT DISTINCT fname,line,bug.description FROM task, columns, bug WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.task_id = bug.t_id AND task.title = (?)""",(proj,task)).fetchall()]
+        bf = c.execute("""SELECT DISTINCT fname,line,bug.description FROM task, columns, bug WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.task_id = bug.t_id AND task.title = (?)""",(proj,task)).fetchall()
         #bl = [row[0] for row in c.execute("""SELECT DISTINCT line FROM task, columns, bug WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.task_id = bug.t_id AND task.title = (?)""",(proj,task)).fetchall()]
         #bd = [row[0] for row in c.execute("""SELECT DISTINCT description FROM task, columns, bug WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.task_id = bug.t_id AND task.title = (?)""",(proj,task)).fetchall()]
         m = [row[0] for row in c.execute("""SELECT DISTINCT dateMade FROM task, columns WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.title = (?)""",(proj,task)).fetchall()]
         u = [row[0] for row in c.execute("""SELECT DISTINCT uname FROM task, columns, user WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.title = (?) AND tasks = task.task_id""",(proj,task)).fetchall()]
-        #p = [row[0] for row in c.execute("""SELECT DISTINCT commits FROM task, columns WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.title = (?)""",(proj,task)).fetchall()]
+       # c = [row[0] for row in c.execute("""SELECT DISTINCT commit FROM task, commits, column WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.title = (?) AND task.task_id = commits.task_id""",(proj,task)).fetchall()]
+        #c.close()
         return render_template("task.html",title = t, disc = d, date = m, user = u, bugf = bf)#, bugd = bd, bugl = bl)
 
 @app.route('/myproj/', methods=['GET','POST','PUT'])
@@ -88,17 +89,18 @@ def proj(proj=""):
             #t = retTask()
         if request.method == 'POST':
              addProj()
-             addTask()
-             addCol()
-
+        #c.close()
         return render_template('project.html',projects = p)
 
-@app.route('/myproj/<proj>/', methods=['GET','POST','PUT'])
-def myproj(proj=""):
+@app.route('/myproj/<proj>/', methods=['GET','PUT','POST'])
+def myproj(proj):
         c = getDB()
         p = [row[0] for row in c.execute("""SELECT DISTINCT proj FROM user WHERE uname = (?)""",(session['username'],)).fetchall()]
-        k = [row[0] for row in c.execute("""SELECT DISTINCT coll FROM columns WHERE proj = (?)""",(str(proj),)).fetchall()]#WHERE proj = (?)""",(current)).fetchall()]
-        t = [row[0] for row in c.execute("""SELECT DISTINCT title FROM task, columns WHERE columns.proj = (?) AND columns.task_id = task.task_id""",(proj,)).fetchall()]#WHERE proj = (?)""",(current)).fetchall()]
+        k = [row[0] for row in c.execute("""SELECT DISTINCT coll FROM columns WHERE proj = (?)""",(proj,)).fetchall()]#WHERE proj = (?)""",(current)).fetchall()]
+        t = [row[0] for row in c.execute("""SELECT DISTINCT task.title FROM columns,task WHERE proj = (?) AND columns.task_id = task.task_id""",(proj,)).fetchall()]#WHERE proj = (?)""",(current)).fetchall()]
+
+
+        #t = [row[0] for row in c.execute("""SELECT DISTINCT title FROM task, columns WHERE columns.proj = (?) AND columns.task_id = task.task_id""",(proj,)).fetchall()]#WHERE proj = (?)""",(current)).fetchall()]
         #if request.method == 'POST':
             #print('here2')
             #currentProject()
@@ -106,11 +108,11 @@ def myproj(proj=""):
             #k = retCol()
             #t = retTask()
         if request.method == 'POST':
-             addProj()
-             addTask(proj)
-             addCol(proj)
-
-        return render_template('myproj.html',projects = p,columns = k, tasks = t)
+            addCol(proj)
+            addProj()
+            addTask(proj)
+        #c.close()
+        return render_template('myproj.html',projects = p,columns = k, tasks = t, curr= proj)
 
 @app.route('/currProj', methods=['GET'])
 def currentProject():
@@ -125,14 +127,18 @@ def currentProject():
 def addCol(proj=""):
     if 'title3' in request.form:
         c = getDB()
-        c.execute("""INSERT INTO columns(proj,coll) VALUES(?,?)""",(proj,request.form['title3'],))
+        Cname = request.form['title3']
+        c.execute("""INSERT INTO columns(proj,coll) VALUES(?,?)""",(proj,Cname,))
         c.commit()
-        c.close()
+        Cname = ""
+        #c.close()
+    #return myproj(proj)
 
 def retCol():
     c = getDB()
     current = request.form['cur']
     k = [row[0] for row in c.execute("""SELECT coll FROM columns WHERE proj = (?)""",(current)).fetchall()]
+    #c.close()
     return k
 
 def retTask():
@@ -142,20 +148,21 @@ def retTask():
             variable = [row[0] for row in c.execute("""SELECT tasks FROM user NATURAL JOIN project WHERE uname = (?) AND title = (?)""",(session['username'],current)).fetchall()]
             for i in range(len(variable)):
                 t[i] = c.execute("""SELECT * FROM task WHERE task_id = ?""", (variable[i],)).fetchall()
-            return t
+        #c.close()
+        return t
 #maybe loop through putting them into a new array? & return the array
 
 def addProj():
-	if 'manager' in request.form:
-            db = getDB()
-            man = request.form['manager']
-            title = request.form['title']
-            des = request.form['description']
-            db.execute("""INSERT INTO project (manager,title,description) VALUES(?,?,?)""",(man,title,des))
-            db.execute("""INSERT INTO user (uname,proj) VALUES(?,?)""",(session['username'],title))
-            db.commit()
-            db.close()
-            return
+    if 'manager' in request.form:
+        db = getDB()
+        man = request.form['manager']
+        title = request.form['title']
+        des = request.form['description']
+        db.execute("""INSERT INTO project (manager,title,description) VALUES(?,?,?)""",(man,title,des))
+        db.execute("""INSERT INTO user (uname,proj) VALUES(?,?)""",(session['username'],title))
+        db.commit()
+        #db.close()
+    return
 
 def addTask(proj=""):
     if 'title2' in request.form:
@@ -175,8 +182,8 @@ def addTask(proj=""):
 
         db1.execute("""INSERT INTO columns (proj,coll,task_id) VALUES(?,?,?)""",(proj,taskPhase,v[0]))
         db1.commit()
-        db1.close()
-        return
+        #db1.close()
+    return
 
 @app.route('/timeline')
 def timeline():
@@ -210,7 +217,7 @@ def task():
         formatted_date = now.strftime('%m-%d-%Y %H:%M:%S')
         c.execute("""INSERT INTO task(title,description,phase,dateMade) VALUES(?,?,?,?)""",(language,two,str(var1),formatted_date))
         c.commit()
-        c.close()
+        #c.close()
         return "suc"
 
 @app.route('/bug', methods=['GET', 'POST'])
@@ -224,7 +231,7 @@ def bug():
         var1 = c.execute("""SELECT task_id FROM task,columns  WHERE task.phase = columns.phase_id  AND columns.proj = (?) AND task.title = (?) LIMIT 1""",(five,four,)).fetchall()
         c.execute("""INSERT INTO bug(task_id,line,fname,description) VALUES(?,?,?,?)""",(str(var1),one,two,three))
         c.commit()
-        c.close()
+        #c.close()
         return
 
 @app.route('/project', methods=['GET', 'POST'])
@@ -235,7 +242,7 @@ def project():
         three = request.form.get('uid')
         c.execute("""INSERT INTO project(manager,title,description) VALUES(?,?,?)""",(three,one,two))
         c.commit()
-        c.close()
+        #c.close()
         return
 
 @app.route('/user', methods=['GET', 'POST'])
@@ -246,18 +253,18 @@ def user():
         formatted_date = now.strftime('%m-%d-%Y %H:%M:%S')
         c.execute("""INSERT INTO user(uname) VALUES (?)""",(one,))
         c.commit()
-        c.close()
+        #c.close()
         return
 
 @app.route('/update', methods=['GET', 'POST'])
 def update():
     c = getDB()
-    proj = c.execute('''SELECT manager, title, description FROM project''').fetchall()
-    task = c.execute('''SELECT title, description, coll, proj  FROM task LEFT JOIN columns''').fetchall()
-    bug = c.execute('''SELECT line, fname, bug.description, task.title, proj FROM  bug LEFT JOIN task INNER JOIN columns on t_id=task.task_id AND task.task_id=columns.task_id''').fetchall()
-    u = c.execute('''SELECT * FROM user''').fetchall()
+    proj = c.execute('''SELECT DISTINCT manager, title, description FROM project''').fetchall()
+    task = c.execute('''SELECT DISTINCT title, description, coll, proj  FROM task LEFT JOIN columns''').fetchall()
+    bug = c.execute('''SELECT DISTINCT line, fname, bug.description, task.title, proj FROM  bug LEFT JOIN task INNER JOIN columns on t_id=task.task_id AND task.task_id=columns.task_id''').fetchall()
+    u = c.execute('''SELECT DISTINCT uname FROM user''').fetchall()
 
-    c.close()
+    #c.close()
     raw = "^"
     for x in proj:
         raw = raw + str(x)
@@ -286,7 +293,7 @@ def phase():
         two = request.form.get('p_title')
         c.execute("""INSERT INTO columns(proj,coll) VALUES(?,?)""",(two,one))
         c.commit()
-        c.close()
+        #c.close()
         return
 
 @app.route('/git', methods=['GET', 'POST'])
@@ -304,11 +311,16 @@ def git():
 
     for item in r.json():
         for key in item['commit']['committer']:
-            one = item['commit']['committer']['name']
-            two =item['commit']['committer']['date']
+            one= item['commit']['committer']['name']
+            two = item['commit']['committer']['date']
             three = item['commit']['message']
-            four = one + print('/n') + two + '/n'
-            return four
+            
+            print("\n")
+            print(one)
+            print(two)
+            print(three)
+            print("\n")
+    return 'suc'
 
 @app.teardown_appcontext
 def closeDB(error):

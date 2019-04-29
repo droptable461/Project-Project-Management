@@ -8,6 +8,7 @@ def clearDatabase():
 	c.execute("""DROP TABLE IF EXISTS bug""")
 	c.execute("""DROP TABLE IF EXISTS user""")
 	c.execute("""DROP TABLE IF EXISTS columns""")
+	c.execute("""DROP TABLE IF EXISTS commits""")
 def createDatabase():
         c = conn.cursor()
         c.execute("""CREATE TABLE project(  manager TEXT,
@@ -32,15 +33,19 @@ def createDatabase():
                                         PRIMARY KEY(uname, tasks))""")
 
         c.execute("""CREATE TABLE columns(proj TEXT REFERENCES project(title),coll TEXT, task_id REFERENCES task(task_id))""")
+        
 
         conn.commit()
 def populateDatabase():
+        
+
         c = conn.cursor()
-        c.execute("""INSERT INTO user (uname,proj,tasks) VALUES ('thomas','testProj1',2)""")
+        
+        c.execute("""INSERT INTO user (uname,proj,tasks) VALUES ('allie','testProj1',2)""")
         c.execute("""INSERT INTO user (uname,proj,tasks) VALUES ('thomas','testProj1',3)""")
         c.execute("""INSERT INTO user (uname,proj,tasks) VALUES ('thomas','testProj2',5)""")
 
-        c.execute('''INSERT INTO bug (t_id, line, fname, description) VALUES ('2', '10', 'file1', 'blah blah')''')
+        c.execute('''INSERT INTO bug (t_id, line, fname, description) VALUES ('2', '10', 'fml', 'blah blah')''')
 
         c.execute("""INSERT INTO user (uname,proj) VALUES ('tejas','testProj2')""")
         c.execute("""INSERT INTO user (uname,proj) VALUES ('allie','testProj2')""")
@@ -56,8 +61,8 @@ def populateDatabase():
         c.execute("""INSERT INTO columns(proj,coll) VALUES ('testProj2','doing')""")
         c.execute("""INSERT INTO columns(proj,coll) VALUES ('testProj2','done')""")
 
-        c.execute("""INSERT INTO task(title,description) VALUES('testTask1','onetwothree')""")
-        c.execute("""INSERT INTO task(title,description) VALUES('testTask2','fourfive')""")
+        c.execute("""INSERT INTO task(title,description) VALUES('testTask1','Updating the myproj page')""")
+        c.execute("""INSERT INTO task(title,description) VALUES('testTask2','Updating the myproj page')""")
         c.execute("""INSERT INTO task(title,description) VALUES('testTask3','sixseven')""")
         c.execute("""INSERT INTO task(title,description) VALUES('testTask4','eightnine')""")
         c.execute("""INSERT INTO task(title,description) VALUES('testTask5','teneleven')""")

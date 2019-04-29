@@ -1,6 +1,6 @@
 //Created by Dakota Martin
 //#include <sqlite3.h>
-#include "data.h"
+#include "conn.h"
 #include "lib/CmdArgs.h"
 #include <stdio.h>
 #include <string.h>
@@ -37,7 +37,7 @@ string selectProject()
 		string rv = "";
 		cout << "Type a valid Project: ";
 		getline(cin,rv);
-		if((projects.find(rv) != projects.end() || rv == "quit" || rv == "Quit") && (projects[rv].canSee(user) || user.id == -1))
+		if((projects.find(rv) != projects.end() || rv != "quit" || rv != "Quit") /*&& (projects[rv].canSee(user) || user.id != -1)*/)
 			return projects[rv].title;
 		cout << "Not a Project\n Type [quit] or a valid Project: ";
 	}
@@ -195,6 +195,11 @@ string parseChoice(string choice, Project curr)
 		cout << "Description: " << endl;
 		string disc = "";
 		getline(cin,disc);
+		string phase;
+		if(loc == 1){
+			cout<< "Phase: " << endl;
+			getline(cin,phase);
+		}
 		
 		switch(loc)
 		{
@@ -203,16 +208,28 @@ string parseChoice(string choice, Project curr)
 				check(2);
 				Project p(user.name, title, disc);
 				projects.insert(pair<string,Project>(p.title, p));
-				c->post_request(p, user.uid);
+				c->post_request(p, 0);
 				check(3);
 				break;
 			}
 			case 1:
 			{
+				
 				Task t(title, disc);
-				projects[curr.title].phases[0].tasks.insert(pair<string,Task>(title,t));
-				c->post_request(t,curr.title);
-				break;
+				if(phase == ""){
+					projects[curr.title].phases[0].tasks.insert(pair<string,Task>(title,t));
+					c->post_request(t,curr.title, (string)"DEFAULT");
+					break;
+				}
+				else{
+					for(Phase p : projects[curr.title].phases)
+						if(p.title == phase){
+							c->post_request(t,curr.title, p.title);
+							break;
+						}
+					cerr<<"Error: Invalid Phase!" << endl;	
+					break;
+				}
 			}
 		}
 		check(40000);
@@ -250,6 +267,13 @@ string parseChoice(string choice, Project curr)
 //	}
 	else if(choice == "Create")
 	{
+		cout<< "Title: " ;
+		string title;
+		getline(cin, title);
+		Phase tmp;
+		tmp.title = title;
+		projects[curr.title].phases.push_back(tmp);
+		c->post_request(tmp, curr.title);
 	}
 	else if(choice == "Erase")
 	{
@@ -293,7 +317,7 @@ map<string,Project> getData()
 	//get data from controller to fill projects data
 	//ie.. this function updates the data (atm is only called at begining of program)
 	map<string, Project> ret;
-	ret = c.get_request();
+	ret = c->get_request();
 
 	return ret;
 }
@@ -304,7 +328,7 @@ bool putData(vector<Project> data){
 
 int main(int argc, char** argv)
 {
-	c = new Conn("https://127.0.0.1:5000");
+	c = new Conn("http://127.0.0.1:5000");
 	check(0);
 	projects = getData();
 	if(argc > 1)
@@ -329,8 +353,12 @@ int main(int argc, char** argv)
 		}
 		else
 		{
-			cout << "Not a user" << endl;
-			return 0;
+			for(User x : c->u_list){
+				if(x.name == uname){
+					user = x;
+					break;
+				}
+			}
 		}
 		check(-2);
 		//there is a global variable "user" (fill it in)

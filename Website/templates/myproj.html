@@ -93,9 +93,9 @@ p {
 }
 
 #button1 {
-	background-color: white;
+	background-color: #846;
 	border: none;
-	color: black;
+	color: white;
 	padding: 16px 22px;
 	text-align: center;
 	font-size: 16px;
@@ -317,29 +317,40 @@ p {
 	margin: 13px 10px 4px 6px;
 }
 
+h4 {
+	text-align:center;
+	display: flex;
+	flex-direction: column;
+	margin: -58px 11px 13px 417px;
+}
+
 li {
 	background-color: rgba(0,0,0);
 	background-color: rgba(0,0,0,0.4);
-
 	text-align: center;
 	color: white;
 	font-size: 11px;
 }
 
-a.class1 {
-	
+a.class1 {	
 	color: white;
 
 }
 
 a.class2 {
-
 	color: white;
 	font-size: 23
 	text-align:center;
-
+	margin: 12px 11px 12px -4px;
 }
 
+.task1 {
+	color: black;	
+	text align: center;
+	width: 150px;
+	display: flex;
+	flex-direction: column;
+}
 
 </style>
 
@@ -352,6 +363,7 @@ a.class2 {
 	<a href="/timeline">Timeline</a>
 	<a href="/howto">How To Use</a>
 	<a href="/logout">Log Out</a>
+
 </div>
 
 <div class="sidenav">
@@ -390,7 +402,7 @@ a.class2 {
 	<div class= "modal-content">
 		<span class="close">&times;</span>
 	
-		<form action="/myproj/" method="POST" id="input1">
+		<form action="/myproj/{{ curr }}/" method="POST" id="input1">
 	
 		<p>Who is the manager of this project?</p>
 			<p>Manager: <input type="text" name="manager" ></p>
@@ -412,7 +424,7 @@ a.class2 {
 	<div class= "modal-content">
 		<span class="close">&times;</span>
 	
-	<form action="/myproj/" method="POST" id="input2">
+	<form action="/myproj/{{ curr }}/" method="POST" id="input2">
 	
 		<p>Task Id</p>
         <!--Task Id: <input type="text" name="task_id">-->
@@ -471,7 +483,7 @@ a.class2 {
 	<div class= "modal-content">
 		<span class="close">&times;</span>
 	
-	<form action="/myproj/" method="POST" id="input3">
+	<form action="/myproj/{{ curr }}/" method="POST" id="input3">
 	
 		<p>What is the name of the column?</p>
 			<h1>Column Title: <input type="text" name="title3" ></h1>
@@ -530,6 +542,7 @@ a.class2 {
 
 <!--cards-->
 
+
 {% for col in columns %}
 
 <div class = "row">
@@ -538,12 +551,13 @@ a.class2 {
 		
 			<div class ="container2">
 						<h4>{{ col }}</h4>
+                            
 						{% for task in tasks %}
-						<p>
-							<a href="{{ task | safe }}" class="class2">{{ task | safe }}</a>
-						</p>
-						{% endfor %}
 
+						<div class="task1">
+							<a href="{{ task | safe }}" class="class2" >{{ task | safe }}</a> 
+						</div>
+						{% endfor %}
 
 				</script>
 					</div>
@@ -551,7 +565,6 @@ a.class2 {
 			</div>
 		</div>
 {% endfor %}
-
 </body>
 </html>
 
