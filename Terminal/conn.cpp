@@ -221,7 +221,7 @@ bool Conn::post_request(const Phase p, const string p_title){
 
 /*
 ^('Tman1', 'testProj1', 'abcdefghijklmnop', 1, None) #(1, 'testTask1', 'onetwothree', 'todo', None, None) &(1, 'tejas', 'roma', 'sima') *('thomas', 'testProj1', 2)*/ 
-map<string, Project> parse_response(string res){
+map<string, Project> parse_response(string res, Conn* curr){
 	map<string, Project> ret;
 	//check(0);
 	//Do da parse
@@ -352,6 +352,7 @@ map<string, Project> parse_response(string res){
 		
 		if(first_loop){
 			p1 = bug.find_first_of('(');
+			first_loop = false;
 		}	
 		else
 			p1 = bug.find('(', p2+1);
@@ -390,7 +391,28 @@ map<string, Project> parse_response(string res){
 //		printf("Bugs:\nLine: %d\nDescription: %s\nFile: %s\nTask: %s\n", lineNum, desc.c_str(), fname.c_str(), t_title.c_str());	
 	}
 	
-
+	p1=0;
+	p2=0;
+	first_loop = true;
+	end = usr.find_last_of('\'');
+	while(p2< end){
+		User tmpu;
+		string uname;
+		if(first_loop){
+			p1 = usr.find_first_of('\'');
+			first_loop = false;
+		}
+		else
+			p1 = usr.find('\'', p2+1);
+		p2 = usr.find('\'', p1+1);
+		uname = usr.substr(p1+1, (p2-p1)-1);
+		if(p1 == -1 || p2 == -1){
+			break;
+		}
+		tmpu.name = uname;
+		tmpu.id = 1;
+		curr->u_list.push_back(tmpu);
+	}
 
 	
 	return ret;
@@ -421,7 +443,7 @@ map<string, Project> Conn::get_request()
 			fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
 			return map<string, Project> {{}};
 		}
-		return parse_response(response);
+		return parse_response(response, this);
 	}
 }
 

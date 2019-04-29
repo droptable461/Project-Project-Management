@@ -255,7 +255,7 @@ def update():
     proj = c.execute('''SELECT DISTINCT manager, title, description FROM project''').fetchall()
     task = c.execute('''SELECT DISTINCT title, description, coll, proj  FROM task LEFT JOIN columns''').fetchall()
     bug = c.execute('''SELECT DISTINCT line, fname, bug.description, task.title, proj FROM  bug LEFT JOIN task INNER JOIN columns on t_id=task.task_id AND task.task_id=columns.task_id''').fetchall()
-    u = c.execute('''SELECT DISTINCT * FROM user''').fetchall()
+    u = c.execute('''SELECT DISTINCT uname FROM user''').fetchall()
 
     c.close()
     raw = "^"
