@@ -253,8 +253,8 @@ def user():
 def update():
     c = getDB()
     proj = c.execute('''SELECT manager, title, description FROM project''').fetchall()
-    task = c.execute('''SELECT title, description, phase, proj  FROM task INNER JOIN columns''').fetchall()
-    bug = c.execute('''SELECT line, fname, description, task.title, project.title FROM  bug ''').fetchall()
+    task = c.execute('''SELECT title, description, coll, proj  FROM task LEFT JOIN columns''').fetchall()
+    bug = c.execute('''SELECT line, fname, bug.description, task.title, proj FROM  bug LEFT JOIN task INNER JOIN columns on t_id=task.task_id AND task.task_id=columns.task_id''').fetchall()
     u = c.execute('''SELECT * FROM user''').fetchall()
 
     c.close()
