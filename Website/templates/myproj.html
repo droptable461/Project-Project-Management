@@ -317,29 +317,40 @@ p {
 	margin: 13px 10px 4px 6px;
 }
 
+h4 {
+	text-align:center;
+	display: flex;
+	flex-direction: column;
+	margin: -58px 11px 13px 417px;
+}
+
 li {
 	background-color: rgba(0,0,0);
 	background-color: rgba(0,0,0,0.4);
-
 	text-align: center;
 	color: white;
 	font-size: 11px;
 }
 
-a.class1 {
-	
+a.class1 {	
 	color: white;
 
 }
 
 a.class2 {
-
 	color: white;
 	font-size: 23
 	text-align:center;
-
+	margin: 12px 11px 12px -4px;
 }
 
+.task1 {
+	color: black;	
+	text align: center;
+	width: 150px;
+	display: flex;
+	flex-direction: column;
+}
 
 </style>
 
@@ -352,6 +363,7 @@ a.class2 {
 	<a href="/timeline">Timeline</a>
 	<a href="/howto">How To Use</a>
 	<a href="/logout">Log Out</a>
+
 </div>
 
 <div class="sidenav">
@@ -542,12 +554,10 @@ a.class2 {
                             
 						{% for task in tasks %}
 
-						<p>
-							<a href="{{ task | safe }}" class="class2" >{{ task | safe }}</a>
-                        
-						</p>
+						<div class="task1">
+							<a href="{{ task | safe }}" class="class2" >{{ task | safe }}</a> 
+						</div>
 						{% endfor %}
-
 
 				</script>
 					</div>
