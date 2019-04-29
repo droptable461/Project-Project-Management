@@ -60,21 +60,22 @@ def logout():
 def hello():
     return render_template("login.html")
 
-@app.route("/<proj>/<task>")
+@app.route("/myproj/<proj>/<task>")
 def update_py(task="",proj=""):
+        c = getDB()
 
         
         t = [row[0] for row in c.execute("""SELECT DISTINCT title FROM task, columns WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.title = (?)""",(proj,task)).fetchall()]
-        d = [row[0] for row in c.execute("""SELECT DISTINCT description FROM task, columns WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.title = (?)""",(proj,task)).fetchall()]
-        bf = [row[0] for row in c.execute("""SELECT DISTINCT fname,line,description FROM task, columns, bug WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.task_id = bug.t_id AND task.title = (?)""",(proj,task)).fetchall()]
+        d = [row[0] for row in c.execute("""SELECT DISTINCT task.description FROM task, columns WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.title = (?)""",(proj,task)).fetchall()]
+        bf = [row[0] for row in c.execute("""SELECT DISTINCT fname,line,bug.description FROM task, columns, bug WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.task_id = bug.t_id AND task.title = (?)""",(proj,task)).fetchall()]
         #bl = [row[0] for row in c.execute("""SELECT DISTINCT line FROM task, columns, bug WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.task_id = bug.t_id AND task.title = (?)""",(proj,task)).fetchall()]
         #bd = [row[0] for row in c.execute("""SELECT DISTINCT description FROM task, columns, bug WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.task_id = bug.t_id AND task.title = (?)""",(proj,task)).fetchall()]
         m = [row[0] for row in c.execute("""SELECT DISTINCT dateMade FROM task, columns WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.title = (?)""",(proj,task)).fetchall()]
-        u = [row[0] for row in c.execute("""SELECT DISTINCT user FROM task, columns WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.title = (?)""",(proj,task)).fetchall()]
+        u = [row[0] for row in c.execute("""SELECT DISTINCT uname FROM task, columns, user WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.title = (?) AND tasks = task.task_id""",(proj,task)).fetchall()]
         #p = [row[0] for row in c.execute("""SELECT DISTINCT commits FROM task, columns WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.title = (?)""",(proj,task)).fetchall()]
         return render_template("task.html",title = t, disc = d, date = m, user = u, bugf = bf)#, bugd = bd, bugl = bl)
 
-@app.route('/myproj', methods=['GET','POST','PUT'])
+@app.route('/myproj/', methods=['GET','POST','PUT'])
 def proj(proj=""):
         c = getDB()
         p = [row[0] for row in c.execute("""SELECT DISTINCT proj FROM user WHERE uname = (?)""",(session['username'],)).fetchall()]
@@ -92,12 +93,12 @@ def proj(proj=""):
 
         return render_template('project.html',projects = p)
 
-@app.route('/myproj/<proj>', methods=['GET','POST','PUT'])
+@app.route('/myproj/<proj>/', methods=['GET','POST','PUT'])
 def myproj(proj=""):
         c = getDB()
         p = [row[0] for row in c.execute("""SELECT DISTINCT proj FROM user WHERE uname = (?)""",(session['username'],)).fetchall()]
-        k = [row[0] for row in c.execute("""SELECT DISTINCT coll FROM columns WHERE proj = (?)""",(proj)).fetchall()]#WHERE proj = (?)""",(current)).fetchall()]
-        t = [row[0] for row in c.execute("""SELECT DISTINCT title FROM task, columns WHERE columns.proj = (?) AND column.task_id = task.task_id""",(proj)).fetchall()]#WHERE proj = (?)""",(current)).fetchall()]
+        k = [row[0] for row in c.execute("""SELECT DISTINCT coll FROM columns WHERE proj = (?)""",(str(proj),)).fetchall()]#WHERE proj = (?)""",(current)).fetchall()]
+        t = [row[0] for row in c.execute("""SELECT DISTINCT title FROM task, columns WHERE columns.proj = (?) AND columns.task_id = task.task_id""",(proj,)).fetchall()]#WHERE proj = (?)""",(current)).fetchall()]
         #if request.method == 'POST':
             #print('here2')
             #currentProject()
@@ -106,8 +107,8 @@ def myproj(proj=""):
             #t = retTask()
         if request.method == 'POST':
              addProj()
-             addTask()
-             addCol()
+             addTask(proj)
+             addCol(proj)
 
         return render_template('myproj.html',projects = p,columns = k, tasks = t)
 
@@ -121,11 +122,10 @@ def currentProject():
     print(session['projec'])
     print('here3')
 
-def addCol():
+def addCol(proj=""):
     if 'title3' in request.form:
         c = getDB()
-        current = session['projec']
-        c.execute("""INSERT INTO columns(proj,coll) VALUES(?,?)""",(current,request.form['title3'],))
+        c.execute("""INSERT INTO columns(proj,coll) VALUES(?,?)""",(proj,request.form['title3'],))
         c.commit()
         c.close()
 
@@ -157,23 +157,26 @@ def addProj():
             db.close()
             return
 
-def addTask():
-	if 'title2' in request.form:
-	    db1 = getDB()
+def addTask(proj=""):
+    if 'title2' in request.form:
+        db1 = getDB()
 	    #taskID = request.form['task_id']
         #something to link task to the current proj, data from button
         #   current = request.form['cur']
-	    taskTitle = request.form['title2']
-	    taskDes = request.form['description2']
-	    taskPhase = request.form['phase']
-	    taskDate = request.form['date']
-	    #taskBug = request.form['bug_id']
-	    db1.execute("""INSERT INTO task (title,description,dateMade,phase) VALUES(?,?,?,?)""",(taskTitle,taskDes,taskDate,taskPhase))
-	    v = db1.execute("""SELECT task_id FROM task WHERE title = (?)""",(taskTitle,)).fetchall()
-	    db1.execute("""INSERT INTO user (uname,tasks) VALUES(?,?)""",(session['username'],v))
-	    db1.commit()
-	    db1.close()
-	return
+        taskTitle = request.form['title2']
+        taskDes = request.form['description2']
+        taskPhase = ""
+        taskPhase = request.form['phase']
+        taskDate = request.form['date']
+#taskBug = request.form['bug_id']
+        db1.execute("""INSERT INTO task (title,description,dateMade,phase) VALUES(?,?,?,?)""",(taskTitle,taskDes,taskDate,taskPhase))
+        v = [row[0] for row in db1.execute("""SELECT task_id FROM task WHERE title = (?)""",(taskTitle,)).fetchall()]
+        #db1.execute("""INSERT INTO user (uname,tasks) VALUES(?,?)""",(session['username'],v))
+
+        db1.execute("""INSERT INTO columns (proj,coll,task_id) VALUES(?,?,?)""",(proj,taskPhase,v[0]))
+        db1.commit()
+        db1.close()
+        return
 
 @app.route('/timeline')
 def timeline():
