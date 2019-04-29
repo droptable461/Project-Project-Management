@@ -106,10 +106,10 @@ def myproj(proj=""):
             #k = retCol()
             #t = retTask()
         if request.method == 'POST':
-             addProj()
-             addTask(proj)
-             addCol(proj)
-
+            addProj()
+            addTask(proj)
+            addCol(proj)
+            
         return render_template('myproj.html',projects = p,columns = k, tasks = t)
 
 @app.route('/currProj', methods=['GET'])
@@ -128,6 +128,7 @@ def addCol(proj=""):
         c.execute("""INSERT INTO columns(proj,coll) VALUES(?,?)""",(proj,request.form['title3'],))
         c.commit()
         c.close()
+    return myproj(proj)
 
 def retCol():
     c = getDB()
@@ -142,20 +143,20 @@ def retTask():
             variable = [row[0] for row in c.execute("""SELECT tasks FROM user NATURAL JOIN project WHERE uname = (?) AND title = (?)""",(session['username'],current)).fetchall()]
             for i in range(len(variable)):
                 t[i] = c.execute("""SELECT * FROM task WHERE task_id = ?""", (variable[i],)).fetchall()
-            return t
+        return t
 #maybe loop through putting them into a new array? & return the array
 
 def addProj():
-	if 'manager' in request.form:
-            db = getDB()
-            man = request.form['manager']
-            title = request.form['title']
-            des = request.form['description']
-            db.execute("""INSERT INTO project (manager,title,description) VALUES(?,?,?)""",(man,title,des))
-            db.execute("""INSERT INTO user (uname,proj) VALUES(?,?)""",(session['username'],title))
-            db.commit()
-            db.close()
-            return
+    if 'manager' in request.form:
+        db = getDB()
+        man = request.form['manager']
+        title = request.form['title']
+        des = request.form['description']
+        db.execute("""INSERT INTO project (manager,title,description) VALUES(?,?,?)""",(man,title,des))
+        db.execute("""INSERT INTO user (uname,proj) VALUES(?,?)""",(session['username'],title))
+        db.commit()
+        db.close()
+    return
 
 def addTask(proj=""):
     if 'title2' in request.form:
@@ -176,7 +177,7 @@ def addTask(proj=""):
         db1.execute("""INSERT INTO columns (proj,coll,task_id) VALUES(?,?,?)""",(proj,taskPhase,v[0]))
         db1.commit()
         db1.close()
-        return
+    return
 
 @app.route('/timeline')
 def timeline():
@@ -205,6 +206,7 @@ def task():
         two = request.form.get('t_title')
         three = request.form.get('p_title')
         four = request.form.get('ph_id')
+        if(four != 'DEFAULT')
         var1 = c.execute("""SELECT phase_id FROM columns WHERE coll = (?) AND proj = (?) LIMIT 1""",(four,three,)).fetchall()
         now = datetime.now()
         formatted_date = now.strftime('%m-%d-%Y %H:%M:%S')
@@ -252,10 +254,10 @@ def user():
 @app.route('/update', methods=['GET', 'POST'])
 def update():
     c = getDB()
-    proj = c.execute('''SELECT manager, title, description FROM project''').fetchall()
-    task = c.execute('''SELECT title, description, coll, proj  FROM task LEFT JOIN columns''').fetchall()
-    bug = c.execute('''SELECT line, fname, bug.description, task.title, proj FROM  bug LEFT JOIN task INNER JOIN columns on t_id=task.task_id AND task.task_id=columns.task_id''').fetchall()
-    u = c.execute('''SELECT * FROM user''').fetchall()
+    proj = c.execute('''SELECT DISTINCT manager, title, description FROM project''').fetchall()
+    task = c.execute('''SELECT DISTINCT title, description, coll, proj  FROM task LEFT JOIN columns''').fetchall()
+    bug = c.execute('''SELECT DISTINCT line, fname, bug.description, task.title, proj FROM  bug LEFT JOIN task INNER JOIN columns on t_id=task.task_id AND task.task_id=columns.task_id''').fetchall()
+    u = c.execute('''SELECT DISTINCT * FROM user''').fetchall()
 
     c.close()
     raw = "^"
