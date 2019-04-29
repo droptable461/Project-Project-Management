@@ -353,8 +353,12 @@ int main(int argc, char** argv)
 		}
 		else
 		{
-			cout << "Not a user" << endl;
-			return 0;
+			for(User x : c->u_list){
+				if(x.name == uname){
+					user = x;
+					break;
+				}
+			}
 		}
 		check(-2);
 		//there is a global variable "user" (fill it in)

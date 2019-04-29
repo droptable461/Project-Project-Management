@@ -14,6 +14,7 @@ class Conn {
 	private:
 		string m_host;
 	public:
+		vector<User> u_list;
 		Conn();
 		Conn(string host );
 
