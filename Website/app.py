@@ -305,7 +305,7 @@ def git():
     for item in r.json():
         for key in item['commit']['committer']:
             one = item['commit']['committer']['name']
-            two =item['commit']['committer']['date']
+            two = item['commit']['committer']['date']
             three = item['commit']['message']
             four = one + print('/n') + two + '/n'
             return four
