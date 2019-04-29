@@ -94,7 +94,7 @@ def proj(proj=""):
         return render_template('project.html',projects = p)
 
 @app.route('/myproj/<proj>/', methods=['GET','POST','PUT'])
-def myproj(proj=""):
+def myproj(proj):
         c = getDB()
         p = [row[0] for row in c.execute("""SELECT DISTINCT proj FROM user WHERE uname = (?)""",(session['username'],)).fetchall()]
         k = [row[0] for row in c.execute("""SELECT DISTINCT coll FROM columns WHERE proj = (?)""",(str(proj),)).fetchall()]#WHERE proj = (?)""",(current)).fetchall()]
@@ -106,10 +106,10 @@ def myproj(proj=""):
             #k = retCol()
             #t = retTask()
         if request.method == 'POST':
-             addProj()
-             addTask(proj)
-             addCol(proj)
-
+            addProj()
+            addTask(proj)
+            addCol(proj)
+            myproj(proj)
         return render_template('myproj.html',projects = p,columns = k, tasks = t)
 
 @app.route('/currProj', methods=['GET'])

@@ -41,6 +41,14 @@ def populateDatabase():
         c.execute("""INSERT INTO user (uname,proj,tasks) VALUES ('thomas','testProj2',5)""")
 
         c.execute('''INSERT INTO bug (t_id, line, fname, description) VALUES ('2', '10', 'file1', 'blah blah')''')
+        c.execute('''INSERT INTO bug (t_id, line, fname, description) VALUES ('1', '10', 'file1', 'blah blah')''')
+        c.execute('''INSERT INTO bug (t_id, line, fname, description) VALUES ('2', '10', 'file1', 'blah blah')''')
+        c.execute('''INSERT INTO bug (t_id, line, fname, description) VALUES ('1', '10', 'file1', 'blah blah')''')
+        c.execute('''INSERT INTO bug (t_id, line, fname, description) VALUES ('2', '10', 'file1', 'blah blah')''')
+        c.execute('''INSERT INTO bug (t_id, line, fname, description) VALUES ('1', '10', 'file1', 'blah blah')''')
+        c.execute('''INSERT INTO bug (t_id, line, fname, description) VALUES ('2', '10', 'file1', 'blah blah')''')
+        c.execute('''INSERT INTO bug (t_id, line, fname, description) VALUES ('1', '10', 'file1', 'blah blah')''')
+        c.execute('''INSERT INTO bug (t_id, line, fname, description) VALUES ('2', '10', 'file1', 'blah blah')''')
 
         c.execute("""INSERT INTO user (uname,proj) VALUES ('tejas','testProj2')""")
         c.execute("""INSERT INTO user (uname,proj) VALUES ('allie','testProj2')""")
@@ -56,7 +64,7 @@ def populateDatabase():
         c.execute("""INSERT INTO columns(proj,coll) VALUES ('testProj2','doing')""")
         c.execute("""INSERT INTO columns(proj,coll) VALUES ('testProj2','done')""")
 
-        c.execute("""INSERT INTO task(title,description) VALUES('testTask1','onetwothree')""")
+        c.execute("""INSERT INTO task(title,description) VALUES('Task1','Fixing bug in myproj page')""")
         c.execute("""INSERT INTO task(title,description) VALUES('testTask2','fourfive')""")
         c.execute("""INSERT INTO task(title,description) VALUES('testTask3','sixseven')""")
         c.execute("""INSERT INTO task(title,description) VALUES('testTask4','eightnine')""")
