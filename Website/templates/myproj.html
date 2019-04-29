@@ -326,13 +326,20 @@ li {
 	font-size: 11px;
 }
 
-a {
+a.class1 {
 	
 	color: white;
-	
-
 
 }
+
+a.class2 {
+
+	color: white;
+	font-size: 23
+	text-align:center;
+
+}
+
 
 </style>
 
@@ -358,7 +365,7 @@ a {
 {% for proj in projects %}
 
 
-<li><a href="/myproj/{{ proj | safe }}/">{{ proj | safe }}</a></li>
+<a href="/myproj/{{ proj | safe }}/" class="class1">{{ proj | safe }}</a>
 
 <!--<input name="proj" type="submit" value= "{{ proj | safe }}" onclick="currentProj({{ proj | safe }})"></input><br>-->
     
@@ -533,7 +540,7 @@ a {
 						<h4>{{ col }}</h4>
 						{% for task in tasks %}
 						<p>
-							<a href="{{ task | safe }}">{{ task | safe }}</a>
+							<a href="{{ task | safe }}" class="class2">{{ task | safe }}</a>
 						</p>
 						{% endfor %}
 
