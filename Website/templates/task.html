@@ -137,6 +137,9 @@ p {
 </div>
 <button class="accordion">Comments</button>
 	<div class="panel">
+{% for com in commits %}
+	<p> {{ com | safe}} </p>
+{% endfor %}
 </div>
 
 <script>

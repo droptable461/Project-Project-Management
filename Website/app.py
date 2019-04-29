@@ -67,12 +67,12 @@ def update_py(task="",proj=""):
         
         t = [row[0] for row in c.execute("""SELECT DISTINCT title FROM task, columns WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.title = (?)""",(proj,task)).fetchall()]
         d = [row[0] for row in c.execute("""SELECT DISTINCT task.description FROM task, columns WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.title = (?)""",(proj,task)).fetchall()]
-        bf = [row[0] for row in c.execute("""SELECT DISTINCT fname,line,bug.description FROM task, columns, bug WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.task_id = bug.t_id AND task.title = (?)""",(proj,task)).fetchall()]
+        bf = c.execute("""SELECT DISTINCT fname,line,bug.description FROM task, columns, bug WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.task_id = bug.t_id AND task.title = (?)""",(proj,task)).fetchall()
         #bl = [row[0] for row in c.execute("""SELECT DISTINCT line FROM task, columns, bug WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.task_id = bug.t_id AND task.title = (?)""",(proj,task)).fetchall()]
         #bd = [row[0] for row in c.execute("""SELECT DISTINCT description FROM task, columns, bug WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.task_id = bug.t_id AND task.title = (?)""",(proj,task)).fetchall()]
         m = [row[0] for row in c.execute("""SELECT DISTINCT dateMade FROM task, columns WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.title = (?)""",(proj,task)).fetchall()]
         u = [row[0] for row in c.execute("""SELECT DISTINCT uname FROM task, columns, user WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.title = (?) AND tasks = task.task_id""",(proj,task)).fetchall()]
-        #p = [row[0] for row in c.execute("""SELECT DISTINCT commits FROM task, columns WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.title = (?)""",(proj,task)).fetchall()]
+        c = [row[0] for row in c.execute("""SELECT DISTINCT commit FROM task, commits, column WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.title = (?) AND task.task_id = commits.task_id""",(proj,task)).fetchall()]
         return render_template("task.html",title = t, disc = d, date = m, user = u, bugf = bf)#, bugd = bd, bugl = bl)
 
 @app.route('/myproj/', methods=['GET','POST','PUT'])
@@ -88,17 +88,18 @@ def proj(proj=""):
             #t = retTask()
         if request.method == 'POST':
              addProj()
-             addTask()
-             addCol()
 
         return render_template('project.html',projects = p)
 
-@app.route('/myproj/<proj>/', methods=['GET','POST','PUT'])
+@app.route('/myproj/<proj>/', methods=['GET','PUT','POST'])
 def myproj(proj):
         c = getDB()
         p = [row[0] for row in c.execute("""SELECT DISTINCT proj FROM user WHERE uname = (?)""",(session['username'],)).fetchall()]
-        k = [row[0] for row in c.execute("""SELECT DISTINCT coll FROM columns WHERE proj = (?)""",(str(proj),)).fetchall()]#WHERE proj = (?)""",(current)).fetchall()]
-        t = [row[0] for row in c.execute("""SELECT DISTINCT title FROM task, columns WHERE columns.proj = (?) AND columns.task_id = task.task_id""",(proj,)).fetchall()]#WHERE proj = (?)""",(current)).fetchall()]
+        k = [row[0] for row in c.execute("""SELECT DISTINCT coll FROM columns WHERE proj = (?)""",(proj,)).fetchall()]#WHERE proj = (?)""",(current)).fetchall()]
+        t = [row[0] for row in c.execute("""SELECT DISTINCT task.title FROM columns,task WHERE proj = (?) AND columns.task_id = task.task_id""",(proj,)).fetchall()]#WHERE proj = (?)""",(current)).fetchall()]
+
+
+        #t = [row[0] for row in c.execute("""SELECT DISTINCT title FROM task, columns WHERE columns.proj = (?) AND columns.task_id = task.task_id""",(proj,)).fetchall()]#WHERE proj = (?)""",(current)).fetchall()]
         #if request.method == 'POST':
             #print('here2')
             #currentProject()
@@ -106,10 +107,10 @@ def myproj(proj):
             #k = retCol()
             #t = retTask()
         if request.method == 'POST':
+            addCol(proj)
             addProj()
             addTask(proj)
-            addCol(proj)
-        return render_template('myproj.html',projects = p,columns = k, tasks = t)
+        return render_template('myproj.html',projects = p,columns = k, tasks = t, curr= proj)
 
 @app.route('/currProj', methods=['GET'])
 def currentProject():
@@ -298,6 +299,24 @@ def git():
 #https://api.github.com/repos/droptable461/Project-Project-Management/commits?per_page=100&sha=f97103bab8a64a9656fa8139052bc4759aa9b625
 #https://api.github.com/repos/droptable461/Project-Project-Management/commits?since=2019-04-21T19:42:22Z
 #https://api.github.com/repos/droptable461/Project-Project-Management/commits?page=2&per_page=100
+<<<<<<< HEAD
+        c = getDB()
+        one = c.execute("""SELECT max(date) FROM commits""")
+
+    
+    #link = 'https://api.github.com/repos/droptable461/Project-Project-Management/events'
+    #r = requests.get('https://api.github.com/repos/droptable461/Project-Project-Management/commits')
+
+        #t_id = [row[0] for row in c.execute("""SELECT DISTINCT task_id FROM task, user WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.title = (?)""",(proj,task)).fetchall()]
+        #t = c.execute("""INSERT INTO commits F task, columns WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.title = (?)""",(proj,task)).fetchall()]
+    #return b
+     #   for key in item['commit']['committer']:
+      #      one = item['commit']['committer']['name']
+       #     two =item['commit']['committer']['date']
+        #    three = item['commit']['message']
+         #   four = one + print('/n') + two + '/n'
+          #  return four
+=======
 
     link = 'https://api.github.com/repos/droptable461/Project-Project-Management/events'
     r = requests.get('https://api.github.com/repos/droptable461/Project-Project-Management/commits')
@@ -307,13 +326,14 @@ def git():
             one= item['commit']['committer']['name']
             two = item['commit']['committer']['date']
             three = item['commit']['message']
-            four = "\n".join([one,two,three])
+            
             print("\n")
             print(one)
             print(two)
             print(three)
             print("\n")
-    return "suc"
+    return 'suc'
+>>>>>>> 566a06f78f25393b6d6cb48043cd59f26699500d
 
 @app.teardown_appcontext
 def closeDB(error):

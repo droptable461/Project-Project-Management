@@ -214,6 +214,11 @@ bool Conn::post_request(const Phase p, const string p_title){
 
 
 }
+void check(int a)
+{
+cout << "[" << a << "]" << endl;
+}
+
 //void check(int a)
 //{
 //cout << "[" << a << "]" << endl;

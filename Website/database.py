@@ -8,6 +8,7 @@ def clearDatabase():
 	c.execute("""DROP TABLE IF EXISTS bug""")
 	c.execute("""DROP TABLE IF EXISTS user""")
 	c.execute("""DROP TABLE IF EXISTS columns""")
+	c.execute("""DROP TABLE IF EXISTS commits""")
 def createDatabase():
         c = conn.cursor()
         c.execute("""CREATE TABLE project(  manager TEXT,
@@ -32,6 +33,10 @@ def createDatabase():
                                         PRIMARY KEY(uname, tasks))""")
 
         c.execute("""CREATE TABLE columns(proj TEXT REFERENCES project(title),coll TEXT, task_id REFERENCES task(task_id))""")
+        
+        c.execute("""CREATE TABLE commits(commit TEXT,
+                                         date DATE
+                                         task_id REFERENCES task(task_id))""")
 
         conn.commit()
 def populateDatabase():
