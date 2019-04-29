@@ -205,7 +205,6 @@ def task():
         two = request.form.get('t_title')
         three = request.form.get('p_title')
         four = request.form.get('ph_id')
-        if(four != 'DEFAULT')
         var1 = c.execute("""SELECT phase_id FROM columns WHERE coll = (?) AND proj = (?) LIMIT 1""",(four,three,)).fetchall()
         now = datetime.now()
         formatted_date = now.strftime('%m-%d-%Y %H:%M:%S')
