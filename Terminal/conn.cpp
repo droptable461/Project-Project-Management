@@ -218,6 +218,7 @@ void check(int a)
 {
 cout << "[" << a << "]" << endl;
 }
+
 map<string, Project> parse_response(string res){
 	map<string, Project> ret;
 	check(0);
