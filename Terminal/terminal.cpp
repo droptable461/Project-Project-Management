@@ -250,6 +250,13 @@ string parseChoice(string choice, Project curr)
 //	}
 	else if(choice == "Create")
 	{
+		cout<< "Title: " ;
+		string title;
+		getline(cin, title);
+		Phase tmp
+		tmp.title = title;
+		projects[curr.title].phases.push_back(tmp);
+		c->post_request(tmp, curr.title);
 	}
 	else if(choice == "Erase")
 	{
