@@ -7,6 +7,7 @@
 using namespace std;
 
 map<string, Project> projects;
+Conn* c;
 User user;
 int loc = 0;
 
@@ -202,6 +203,7 @@ string parseChoice(string choice, Project curr)
 				check(2);
 				Project p(user.name, title, disc);
 				projects.insert(pair<string,Project>(p.title, p));
+				c->post_request(p, user.uid);
 				check(3);
 				break;
 			}
@@ -209,13 +211,14 @@ string parseChoice(string choice, Project curr)
 			{
 				Task t(title, disc);
 				projects[curr.title].phases[0].tasks.insert(pair<string,Task>(title,t));
+				c->post_request(t,curr.title);
 				break;
 			}
 		}
 		check(40000);
 	}
-	else if(choice == "Remove")
-	{
+//	else if(choice == "Remove")
+//	{
 		/*if(projects.size() <= 0)
 		{
 			cout << "There are no projects to remove" << endl;
@@ -244,7 +247,7 @@ string parseChoice(string choice, Project curr)
 			case 2:
 				break;
 		}*/
-	}
+//	}
 	else if(choice == "Create")
 	{
 	}
@@ -289,6 +292,10 @@ map<string,Project> getData()
 		
 	//get data from controller to fill projects data
 	//ie.. this function updates the data (atm is only called at begining of program)
+	map<string, Project> ret;
+	ret = c.get_request();
+
+	return ret;
 }
 bool putData(vector<Project> data){
 	
@@ -297,8 +304,9 @@ bool putData(vector<Project> data){
 
 int main(int argc, char** argv)
 {
+	c = new Conn("https://127.0.0.1:5000");
 	check(0);
-	//projects = getData();
+	projects = getData();
 	if(argc > 1)
 	{
 	//	CmdArgs cmd(argc,argv);
