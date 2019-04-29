@@ -308,8 +308,7 @@ def git():
             one = item['commit']['committer']['name']
             two = item['commit']['committer']['date']
             three = item['commit']['message']
-            four = one + print('/n') + two + '/n'
-            return four
+    return one
 
 @app.teardown_appcontext
 def closeDB(error):
