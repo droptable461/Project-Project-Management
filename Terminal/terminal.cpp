@@ -1,6 +1,6 @@
 //Created by Dakota Martin
 //#include <sqlite3.h>
-#include "data.h"
+#include "conn.h"
 #include "lib/CmdArgs.h"
 #include <stdio.h>
 #include <string.h>
@@ -37,7 +37,7 @@ string selectProject()
 		string rv = "";
 		cout << "Type a valid Project: ";
 		getline(cin,rv);
-		if((projects.find(rv) != projects.end() || rv == "quit" || rv == "Quit") && (projects[rv].canSee(user) || user.id == -1))
+		if((projects.find(rv) != projects.end() || rv != "quit" || rv != "Quit") /*&& (projects[rv].canSee(user) || user.id != -1)*/)
 			return projects[rv].title;
 		cout << "Not a Project\n Type [quit] or a valid Project: ";
 	}
@@ -172,6 +172,7 @@ string mainMenu()
 
 string parseChoice(string choice, Project curr)
 {
+	Conn* c = new Conn("http://127.0.0.1:5000");
 	string rv = "Continue";
 	if(choice == "Select")
 	{
@@ -203,7 +204,7 @@ string parseChoice(string choice, Project curr)
 				check(2);
 				Project p(user.name, title, disc);
 				projects.insert(pair<string,Project>(p.title, p));
-				c->post_request(p, user.uid);
+				c->post_request(p, 0);
 				check(3);
 				break;
 			}
@@ -253,7 +254,7 @@ string parseChoice(string choice, Project curr)
 		cout<< "Title: " ;
 		string title;
 		getline(cin, title);
-		Phase tmp
+		Phase tmp;
 		tmp.title = title;
 		projects[curr.title].phases.push_back(tmp);
 		c->post_request(tmp, curr.title);
@@ -300,7 +301,7 @@ map<string,Project> getData()
 	//get data from controller to fill projects data
 	//ie.. this function updates the data (atm is only called at begining of program)
 	map<string, Project> ret;
-	ret = c.get_request();
+	ret = c->get_request();
 
 	return ret;
 }

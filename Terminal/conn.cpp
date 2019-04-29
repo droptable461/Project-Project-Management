@@ -214,16 +214,16 @@ bool Conn::post_request(const Phase p, const string p_title){
 
 
 }
-void check(int a)
-{
-cout << "[" << a << "]" << endl;
-}
+//void check(int a)
+//{
+//cout << "[" << a << "]" << endl;
+//}
 
 /*
 ^('Tman1', 'testProj1', 'abcdefghijklmnop', 1, None) #(1, 'testTask1', 'onetwothree', 'todo', None, None) &(1, 'tejas', 'roma', 'sima') *('thomas', 'testProj1', 2)*/ 
 map<string, Project> parse_response(string res){
 	map<string, Project> ret;
-	check(0);
+	//check(0);
 	//Do da parse
 	string proj, task, bug, usr; 
 	int p1, p2;
