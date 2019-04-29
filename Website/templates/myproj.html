@@ -93,9 +93,9 @@ p {
 }
 
 #button1 {
-	background-color: white;
+	background-color: #846;
 	border: none;
-	color: black;
+	color: white;
 	padding: 16px 22px;
 	text-align: center;
 	font-size: 16px;
@@ -530,28 +530,31 @@ a.class2 {
 
 <!--cards-->
 
+
 {% for col in columns %}
 
 <div class = "row">
 	<div class = "column">
 		<div class = "card">
-			<a href="{{ task | safe }}" class="class2">{{ task | safe }}</a>
-
-<div class ="container2">
-
-	<h4>{{ col }}</h4>
-		{% for task in tasks %}
-		<p>
-		<a href="{{ task | safe }}" class="class2">{{ task | safe }}</a>
-			</p>
-		{% endfor %}
-		</script>
-	</div>
-</div>
-</div>
-</div>
-{% endfor %}
 		
+			<div class ="container2">
+						<h4>{{ col }}</h4>
+                            
+						{% for task in tasks %}
+
+						<p>
+							<a href="{{ task | safe }}" class="class2" >{{ task | safe }}</a>
+                        
+						</p>
+						{% endfor %}
+
+
+				</script>
+					</div>
+				</div>
+			</div>
+		</div>
+{% endfor %}
 </body>
 </html>
 
