@@ -128,6 +128,7 @@ def addCol(proj=""):
         c.execute("""INSERT INTO columns(proj,coll) VALUES(?,?)""",(proj,request.form['title3'],))
         c.commit()
         c.close()
+    return myproj(proj)
 
 def retCol():
     c = getDB()
@@ -142,20 +143,20 @@ def retTask():
             variable = [row[0] for row in c.execute("""SELECT tasks FROM user NATURAL JOIN project WHERE uname = (?) AND title = (?)""",(session['username'],current)).fetchall()]
             for i in range(len(variable)):
                 t[i] = c.execute("""SELECT * FROM task WHERE task_id = ?""", (variable[i],)).fetchall()
-            return t
+        return t
 #maybe loop through putting them into a new array? & return the array
 
 def addProj():
-	if 'manager' in request.form:
-            db = getDB()
-            man = request.form['manager']
-            title = request.form['title']
-            des = request.form['description']
-            db.execute("""INSERT INTO project (manager,title,description) VALUES(?,?,?)""",(man,title,des))
-            db.execute("""INSERT INTO user (uname,proj) VALUES(?,?)""",(session['username'],title))
-            db.commit()
-            db.close()
-            return
+    if 'manager' in request.form:
+        db = getDB()
+        man = request.form['manager']
+        title = request.form['title']
+        des = request.form['description']
+        db.execute("""INSERT INTO project (manager,title,description) VALUES(?,?,?)""",(man,title,des))
+        db.execute("""INSERT INTO user (uname,proj) VALUES(?,?)""",(session['username'],title))
+        db.commit()
+        db.close()
+    return
 
 def addTask(proj=""):
     if 'title2' in request.form:
@@ -176,7 +177,7 @@ def addTask(proj=""):
         db1.execute("""INSERT INTO columns (proj,coll,task_id) VALUES(?,?,?)""",(proj,taskPhase,v[0]))
         db1.commit()
         db1.close()
-        return
+    return
 
 @app.route('/timeline')
 def timeline():
@@ -252,10 +253,10 @@ def user():
 @app.route('/update', methods=['GET', 'POST'])
 def update():
     c = getDB()
-    proj = c.execute('''SELECT manager, title, description FROM project''').fetchall()
-    task = c.execute('''SELECT title, description, coll, proj  FROM task LEFT JOIN columns''').fetchall()
-    bug = c.execute('''SELECT line, fname, bug.description, task.title, proj FROM  bug LEFT JOIN task INNER JOIN columns on t_id=task.task_id AND task.task_id=columns.task_id''').fetchall()
-    u = c.execute('''SELECT * FROM user''').fetchall()
+    proj = c.execute('''SELECT DISTINCT manager, title, description FROM project''').fetchall()
+    task = c.execute('''SELECT DISTINCT title, description, coll, proj  FROM task LEFT JOIN columns''').fetchall()
+    bug = c.execute('''SELECT DISTINCT line, fname, bug.description, task.title, proj FROM  bug LEFT JOIN task INNER JOIN columns on t_id=task.task_id AND task.task_id=columns.task_id''').fetchall()
+    u = c.execute('''SELECT DISTINCT uname FROM user''').fetchall()
 
     c.close()
     raw = "^"
@@ -298,6 +299,7 @@ def git():
 #https://api.github.com/repos/droptable461/Project-Project-Management/commits?per_page=100&sha=f97103bab8a64a9656fa8139052bc4759aa9b625
 #https://api.github.com/repos/droptable461/Project-Project-Management/commits?since=2019-04-21T19:42:22Z
 #https://api.github.com/repos/droptable461/Project-Project-Management/commits?page=2&per_page=100
+<<<<<<< HEAD
         c = getDB()
         one = c.execute("""SELECT max(date) FROM commits""")
 
@@ -314,6 +316,24 @@ def git():
         #    three = item['commit']['message']
          #   four = one + print('/n') + two + '/n'
           #  return four
+=======
+
+    link = 'https://api.github.com/repos/droptable461/Project-Project-Management/events'
+    r = requests.get('https://api.github.com/repos/droptable461/Project-Project-Management/commits')
+
+    for item in r.json():
+        for key in item['commit']['committer']:
+            one= item['commit']['committer']['name']
+            two = item['commit']['committer']['date']
+            three = item['commit']['message']
+            
+            print("\n")
+            print(one)
+            print(two)
+            print(three)
+            print("\n")
+    return 'suc'
+>>>>>>> 566a06f78f25393b6d6cb48043cd59f26699500d
 
 @app.teardown_appcontext
 def closeDB(error):

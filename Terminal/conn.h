@@ -14,6 +14,7 @@ class Conn {
 	private:
 		string m_host;
 	public:
+		vector<User> u_list;
 		Conn();
 		Conn(string host );
 
@@ -29,7 +30,7 @@ class Conn {
 		bool auth(User u, string pword);
 	//	bool connect_server(const char* hname, const int port);
 		//POSTS
-		bool post_request(const Task t, const string p_title);
+		bool post_request(const Task t, const string p_title, string ph_title);
 		bool post_request(const Bug b, const string t_title);
 		bool post_request(const Project p, const int uid);
 		bool post_request(const User u, int uid=0);
