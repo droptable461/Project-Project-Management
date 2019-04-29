@@ -1,12 +1,13 @@
 //Created by Dakota Martin
 //#include <sqlite3.h>
-#include "data.h"
+#include "conn.h"
 #include "lib/CmdArgs.h"
 #include <stdio.h>
 #include <string.h>
 using namespace std;
 
 map<string, Project> projects;
+Conn* c;
 User user;
 int loc = 0;
 
@@ -36,7 +37,7 @@ string selectProject()
 		string rv = "";
 		cout << "Type a valid Project: ";
 		getline(cin,rv);
-		if((projects.find(rv) != projects.end() || rv == "quit" || rv == "Quit") && (projects[rv].canSee(user) || user.id == -1))
+		if((projects.find(rv) != projects.end() || rv != "quit" || rv != "Quit") /*&& (projects[rv].canSee(user) || user.id != -1)*/)
 			return projects[rv].title;
 		cout << "Not a Project\n Type [quit] or a valid Project: ";
 	}
@@ -171,6 +172,7 @@ string mainMenu()
 
 string parseChoice(string choice, Project curr)
 {
+	Conn* c = new Conn("http://127.0.0.1:5000");
 	string rv = "Continue";
 	if(choice == "Select")
 	{
@@ -202,6 +204,7 @@ string parseChoice(string choice, Project curr)
 				check(2);
 				Project p(user.name, title, disc);
 				projects.insert(pair<string,Project>(p.title, p));
+				c->post_request(p, 0);
 				check(3);
 				break;
 			}
@@ -209,13 +212,14 @@ string parseChoice(string choice, Project curr)
 			{
 				Task t(title, disc);
 				projects[curr.title].phases[0].tasks.insert(pair<string,Task>(title,t));
+				c->post_request(t,curr.title);
 				break;
 			}
 		}
 		check(40000);
 	}
-	else if(choice == "Remove")
-	{
+//	else if(choice == "Remove")
+//	{
 		/*if(projects.size() <= 0)
 		{
 			cout << "There are no projects to remove" << endl;
@@ -244,9 +248,16 @@ string parseChoice(string choice, Project curr)
 			case 2:
 				break;
 		}*/
-	}
+//	}
 	else if(choice == "Create")
 	{
+		cout<< "Title: " ;
+		string title;
+		getline(cin, title);
+		Phase tmp;
+		tmp.title = title;
+		projects[curr.title].phases.push_back(tmp);
+		c->post_request(tmp, curr.title);
 	}
 	else if(choice == "Erase")
 	{
@@ -289,6 +300,10 @@ map<string,Project> getData()
 		
 	//get data from controller to fill projects data
 	//ie.. this function updates the data (atm is only called at begining of program)
+	map<string, Project> ret;
+	ret = c->get_request();
+
+	return ret;
 }
 bool putData(vector<Project> data){
 	
@@ -297,8 +312,9 @@ bool putData(vector<Project> data){
 
 int main(int argc, char** argv)
 {
+	c = new Conn("https://127.0.0.1:5000");
 	check(0);
-	//projects = getData();
+	projects = getData();
 	if(argc > 1)
 	{
 	//	CmdArgs cmd(argc,argv);

@@ -4,11 +4,32 @@
 <head>
 	<meta name="viewport"content="width=device-width, initial-scale=1">
 	<title>DROPTABLE 461</title>
+
 <style>
 
 * {
 	box-sizing: border-box;
 }
+
+body{
+	margin: 0;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+h2{
+	text-align: center;
+}
+
+h3 {
+	text-align: center;
+}
+
+p {
+	font-weight: bold;
+	font-size: 16px;
+	text-align: center;
+}
+
 .topnav {
 	overflow: hidden;	
 	background-color: #513;
@@ -56,9 +77,259 @@
 .sidenav a:hover {
 	color: #846;
 }
-li {
+
+@media screen and (max-height: 400px) .sidenav {
+	padding-top: 15px;
+}
+@media screen and (max-height: 400px) .sidenav a {
+	font-size: 18px;
+}
+
+.container1 {
+	display: flex; justify-content: center;
+}
+.container2 {
+	display: flex; justify-content: center;
+}
+
+#button1 {
+	background-color: #846;
+	border: none;
 	color: white;
-	font-size: 12px
+	padding: 16px 22px;
+	text-align: center;
+	font-size: 16px;
+	margin: 4px 2px;
+	transition: 0.3s;
+	display: inline-block;
+	cursor: pointer;
+}
+	
+#button2 {
+	background-color: #846;
+	border: none;
+	color: white;
+	padding: 24px 28px;
+	text-align: center;
+	font-size: 20px;
+	margin: 20px 1px 0px 117px;
+	transition: 0.3s;
+	display: inline-block;
+	cursor: pointer;
+	width: 70%;
+}
+
+#button3 {
+	background-color: #846;
+	border: none;
+	color: white;
+	padding: 24px 28px;
+	text-align: center;
+	font-size: 20px;
+	margin: 20px 1px 0px 250px;
+	transition: 0.3s;
+	display: inline-block;
+	cursor: pointer;
+	width: 70%;
+
+}
+
+.column {
+	float: left;
+	width: 25%;
+	padding: 0 10px;
+}
+
+.row {
+	margin: 70px 11px 1px 200px;
+}
+
+
+/*.row:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+*/	
+
+.card {
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+	padding: 78px;
+	text-align: center;
+	background-color: #846;	
+	margin: 12px 11px 13px 111px;
+}
+
+/*
+div.a {
+	position: relative;
+	top: auto;
+}
+
+.left {
+	width: 30%;
+}
+
+.middle {
+	width: 30%;
+
+}
+.right {
+	width: 30%;
+}
+*/
+
+.modal1 {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	padding-top: 100px;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0,0,0);
+	background-color: rgba(0,0,0,0.4);
+}
+.modal2 {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	padding-top: 100px;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0,0,0);
+	background-color: rgba(0,0,0,0.4);
+}
+
+.modal3 {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	padding-top: 100px;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0,0,0);
+	background-color: rgba(0,0,0,0.4);
+}
+.modal4 {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	padding-top: 100px;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0,0,0);
+	background-color: rgba(0,0,0,0.4);
+}
+.modal5 {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	padding-top: 100px;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0,0,0);
+	background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+	background-color: #846;
+	margin: auto;
+	padding: 20px;
+	border: 1px solid #846;
+	width: 50%;
+}
+
+.close {
+	color: #846;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover, .close:focus {
+	color: #846;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+textarea {
+	margin: 0px;
+	height: 100px;
+	width: 300px;
+	background-color: #846;
+	color: white;
+	border: #846;
+	outline: none;
+	position: relative;
+	left: 27px;
+	top: 4px;
+	right: 9px;
+	bottom: 5px;
+	margin: -6px 10px 4px 145px;
+}
+
+textarea#box1 {
+
+	margin: 0px;
+	height: 100px;
+	width: 300px;
+	background-color: #846;
+	color: wh117pxite;
+	border: #846;
+	outline: none;
+	position: relative;
+	left: 150px;
+	top: 4px;
+	right: 9px;
+	bottom: 5px;
+
+}
+
+h1 {
+	font-size: 16px;
+	text-align: center;
+	margin: 6px 10px 4px 20px;
+}
+	
+h2 {
+	font-size: 16px;
+	text-align: center;
+	margin: 13px 10px 4px 6px;
+}
+
+p {
+	text-align: center;
+	margin: 13px 10px 4px 6px;
+}
+
+li {
+	background-color: rgba(0,0,0);
+	background-color: rgba(0,0,0,0.4);
+
+	text-align: center;
+	color: white;
+	font-size: 11px;
+}
+
+a.class1 {
+	
+	color: white;
+
 }
 
 </style>
@@ -70,6 +341,7 @@ li {
 	<a class="active"href="/myproj/">My Projects</a>
 	<a href="/timeline">Timeline</a>
 	<a href="/howto">How to Use</a>
+	<a href="/logout">Logout</a>
 </div>
 
 <div class="sidenav">
@@ -82,7 +354,7 @@ li {
 	<form action="/currProj" method="GET" >
 {% for proj in projects %}
 
-	<p><a href="/myproj/{{ proj | safe }}/">{{ proj | safe }}</a></p>
+	<p><a href="/myproj/{{ proj | safe }}/" class="class1">{{ proj | safe }}</a></p>
 <!--	<input name="proj" type="submit" value= "{{ proj | safe }}" onclick="currentProj({{ proj | safe }})"></input><br> -->
     
 {% endfor %}
@@ -91,11 +363,78 @@ li {
 	function currentProj(proj)
 		var current = proj
 </script>
+
+
 </div>
 
 </header>
 <body>
+<div id ="Modal1" class ="modal1">
 
+	<div class= "modal-content">
+		<span class="close">&times;</span>
+	
+		<form action="/myproj/" method="POST" id="input1">
+	
+		<p>Who is the manager of this project?</p>
+			<p>Manager: <input type="text" name="manager" ></p>
+		
+		<p>What is the title of the project?</p>
+			<p>Project Title: <input type="text" name="title"></p>
+
+		<p>What is the description of the project?</p>
+		<textarea id="box1" rows="4" cols="50" name ="description" form="input1">enter a description of the project here.</textarea>
+		<h1><input type = "submit" ></h1>
+		</form>
+		</div>
+</div>
+
+<script>
+	//get modal
+	var modal1 = document.getElementById('Modal1');
+	var modal2 = document.getElementById('Modal2');
+	var modal3 = document.getElementById('Modal3');
+	//get button that opens the modal
+	var butt1 = document.getElementById('button1');
+	var butt2 = document.getElementById('button2');
+	var butt3 = document.getElementById('button3');
+	//get the span that closes the modal
+	var span1 = document.getElementsByClassName("close")[0];
+	var span2 = document.getElementsByClassName("close")[1];
+	var span3 = document.getElementsByClassName("close")[2];
+	//when user clicks button, open modal
+	butt1.onclick = function() {
+		modal1.style.display = "block";
+	}
+	butt2.onclick = function() {
+		modal2.style.display = "block";
+	}
+	butt3.onclick = function() {
+		modal3.style.display = "block";
+	}
+	//when user clicks <span> (x), close modal
+	span1.onclick = function() {
+		modal1.style.display = "none";
+	}
+	span2.onclick = function() {
+		modal2.style.display = "none";
+	}
+	span3.onclick = function() {
+		modal3.style.display = "none";
+	}
+	//when user click anywhere outside of modal, close it
+	window.onclick = function(event) {
+		if(event.target == modal1){
+			modal1.style.display = "none";
+		}
+		if(event.target == modal2){
+			modal2.style.display = "none";
+		}
+		if(event.target == modal3){
+			modal3.style.display = "none";
+		}
+	}
+</script>
 </body>
 </html>
 

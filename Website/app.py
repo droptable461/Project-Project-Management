@@ -94,7 +94,7 @@ def proj(proj=""):
         return render_template('project.html',projects = p)
 
 @app.route('/myproj/<proj>/', methods=['GET','POST','PUT'])
-def myproj(proj=""):
+def myproj(proj):
         c = getDB()
         p = [row[0] for row in c.execute("""SELECT DISTINCT proj FROM user WHERE uname = (?)""",(session['username'],)).fetchall()]
         k = [row[0] for row in c.execute("""SELECT DISTINCT coll FROM columns WHERE proj = (?)""",(str(proj),)).fetchall()]#WHERE proj = (?)""",(current)).fetchall()]
@@ -106,10 +106,10 @@ def myproj(proj=""):
             #k = retCol()
             #t = retTask()
         if request.method == 'POST':
-             addProj()
-             addTask(proj)
-             addCol(proj)
-
+            addProj()
+            addTask(proj)
+            addCol(proj)
+            myproj(proj)
         return render_template('myproj.html',projects = p,columns = k, tasks = t)
 
 @app.route('/currProj', methods=['GET'])
@@ -253,8 +253,8 @@ def user():
 def update():
     c = getDB()
     proj = c.execute('''SELECT manager, title, description FROM project''').fetchall()
-    task = c.execute('''SELECT * FROM task''').fetchall()
-    bug = c.execute('''SELECT * FROM  bug''').fetchall()
+    task = c.execute('''SELECT title, description, coll, proj  FROM task LEFT JOIN columns''').fetchall()
+    bug = c.execute('''SELECT line, fname, bug.description, task.title, proj FROM  bug LEFT JOIN task INNER JOIN columns on t_id=task.task_id AND task.task_id=columns.task_id''').fetchall()
     u = c.execute('''SELECT * FROM user''').fetchall()
 
     c.close()
@@ -305,19 +305,15 @@ def git():
     link = 'https://api.github.com/repos/droptable461/Project-Project-Management/events'
     r = requests.get('https://api.github.com/repos/droptable461/Project-Project-Management/commits')
 
-    b
-    a = 0
-    for item in r.json():
-        a+=1
-        for key in item['commit']['commiter']:
-            b[a][0] = item['commit']['committer']['name']
-            b[a][1] = item['commit']['committer']['date']
-            b[a][2] = item['commit']['message']
-    
-
         #t_id = [row[0] for row in c.execute("""SELECT DISTINCT task_id FROM task, user WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.title = (?)""",(proj,task)).fetchall()]
         #t = c.execute("""INSERT INTO commits F task, columns WHERE columns.proj = (?) AND columns.task_id = task.task_id AND task.title = (?)""",(proj,task)).fetchall()]
     return b
+        for key in item['commit']['committer']:
+            one = item['commit']['committer']['name']
+            two =item['commit']['committer']['date']
+            three = item['commit']['message']
+            four = one + print('/n') + two + '/n'
+            return four
 
 @app.teardown_appcontext
 def closeDB(error):

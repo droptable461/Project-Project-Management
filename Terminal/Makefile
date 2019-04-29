@@ -2,7 +2,7 @@ CC=g++
 CFLAGS=-c -std=c++17 -I./lib/ -lcurl
 LDFLAGS=-L./lib/
 LIB_SOURCES=conn.cpp data.cpp ./lib/CmdArgs.cpp
-SOURCES=$(LIB_SOURCES) terminal.cpp
+SOURCES=terminal.cpp $(LIB_SOURCES) 
 SOURCES2=$(LIB_SOURCES) main.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=term
@@ -12,12 +12,7 @@ all: $(SOURCES) $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
 	$(CC) -o $@ $^ $(LDFLAGS) $(LIBS)
-.PHONY= test clean
-test:
-	g++ main.cpp conn.cpp data.cpp -lcurl -Wfatal-errors -g -o test 
 
-$(EXECUTABLE2): $(OBJECTS)
-	$(CC) -o $@ $^ $(LDFLAGS) $(LIBS)
 .cpp.o:
 	$(CC) $(CFLAGS) $< -o $@
 

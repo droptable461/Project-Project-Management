@@ -93,9 +93,9 @@ p {
 }
 
 #button1 {
-	background-color: white;
+	background-color: #846;
 	border: none;
-	color: black;
+	color: white;
 	padding: 16px 22px;
 	text-align: center;
 	font-size: 16px;
@@ -325,6 +325,22 @@ li {
 	color: white;
 	font-size: 11px;
 }
+
+a.class1 {
+	
+	color: white;
+
+}
+
+a.class2 {
+
+	color: white;
+	font-size: 23
+	text-align:center;
+
+}
+
+
 </style>
 
 </head>
@@ -334,7 +350,7 @@ li {
 	<a href="/index">Home</a>
 	<a class="active"href="/myproj/">My Projects</a>
 	<a href="/timeline">Timeline</a>
-	<a href="/howto">How to Use</a>
+	<a href="/howto">How To Use</a>
 	<a href="/logout">Log Out</a>
 </div>
 
@@ -349,7 +365,7 @@ li {
 {% for proj in projects %}
 
 
-<li><a href="/{{ proj | safe }}/">{{ proj | safe }}</a></li>
+<a href="/myproj/{{ proj | safe }}/" class="class1">{{ proj | safe }}</a>
 
 <!--<input name="proj" type="submit" value= "{{ proj | safe }}" onclick="currentProj({{ proj | safe }})"></input><br>-->
     
@@ -514,6 +530,7 @@ li {
 
 <!--cards-->
 
+
 {% for col in columns %}
 
 <div class = "row">
@@ -522,9 +539,12 @@ li {
 		
 			<div class ="container2">
 						<h4>{{ col }}</h4>
+                            
 						{% for task in tasks %}
+
 						<p>
-							<a href="{{ task | safe }}">{{ task | safe }}</a>
+							<a href="{{ task | safe }}" class="class2" >{{ task | safe }}</a>
+                        
 						</p>
 						{% endfor %}
 
@@ -535,7 +555,6 @@ li {
 			</div>
 		</div>
 {% endfor %}
-
 </body>
 </html>
 

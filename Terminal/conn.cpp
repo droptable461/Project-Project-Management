@@ -219,97 +219,185 @@ void check(int a)
 cout << "[" << a << "]" << endl;
 }
 
+//void check(int a)
+//{
+//cout << "[" << a << "]" << endl;
+//}
+
+/*
+^('Tman1', 'testProj1', 'abcdefghijklmnop', 1, None) #(1, 'testTask1', 'onetwothree', 'todo', None, None) &(1, 'tejas', 'roma', 'sima') *('thomas', 'testProj1', 2)*/ 
 map<string, Project> parse_response(string res){
 	map<string, Project> ret;
-	check(0);
+	//check(0);
 	//Do da parse
-	char val;
-	int cursor = 0;
-	bool in_proj, in_task, in_bug, in_user = false;
-	for(int i = 0; i < res.length(); ++i){
-	//	check(555);
-		if(res[i] == '$')
-			break;
-		if(res[i] == '^'){
-			check(11);
-			while( res[i] != '#' || res[i] != '&' || res[i]!='$'){
-				i++;
-				Project tmpp;
-		//		check(12);
-				if(res[i] == '#')
-					break;
-				if(res[i] == '('){
-		//			check(13);
-					i += 2;
-					string tmp = "";
-					while(res[i] != '\''){
-						tmp = tmp + res[i];
-		//				cout<< res[i] << endl;
-						i++;
-						if(res[i] == '#')
-							break;
-					}
-					cout<< tmp << endl;
-					check(i);
-		//			check(14);
-					++i;
-					while(res[i] != '\''){
-						i++;
-		//				cout<<res[i] << endl;
-						if(res[i] == '#')
-							break;
-					}
-					if(tmp.length() > 0)
-						tmpp.manager = tmp;
-					tmp = "";
-					while(res[i] != '\''){
-						tmp = tmp + res[i];
-						i++;
-						if(res[i] == '#')
-							break;
-					}
-					cout<< tmp << endl;
-					check(i);
-		//			check(15);
-					++i;
-					while(res[i] != '\''){
-						 i++;
-						if(res[i] == '#')
-							break;
-					}
-					if(tmp.length() > 0)
-						tmpp.disc = tmp;
-					tmp = "";
-					while(res[i] != '\''){
-						tmp = tmp + res[i];
-						i++;
-						if(res[i] == '#')
-							break;
-					}
-					cout << tmp << endl;
-					if(tmp.length() > 0)
-						tmpp.disc = tmp;
-					ret[tmpp.title] = tmpp;
-					
-						
-		//			 check(16);
-					
-				}
-			}
-			//while( val!= '&' || val != '$'){
-			//	cursor++;
-			//	val = res[cursor];
-			//	Task tempt;
-			//	if(val == '('){
-			//	}
-			//}
-			
-		}
-	//	cout<< i << endl;
-
+	string proj, task, bug, usr; 
+	int p1, p2;
+	p1 = res.find_first_of('^');
+	if(p1 < 0){
+		fprintf(stderr, "Update Message Error");
+		return map<string, Project>();
 	}
-	for( pair<string, Project> x : ret)
-		cout<< x.first << ": " << x.second.title << endl;
+	p2 = res.find_first_of('#');
+	proj = res.substr(p1+1, (p2 - p1) - 1);
+//	printf("Projects: %s\n", proj.c_str());
+	p1 = p2;
+	p2 = res.find_first_of('&');
+	task = res.substr(p1+1, (p2-p1)-1);
+//	printf("Tasks: %s\n", task.c_str());
+	p1 = p2;
+	p2 = res.find_first_of('*');
+	bug = res.substr(p1+1, (p2-p1)-1);
+	printf("Bugs: %s\n", bug.c_str());
+	p1 = p2;
+	p2 = res.find_first_of('$');
+	usr = res.substr(p1+1, (p2-p1)-1);
+//	printf("Users: %s\n", usr.c_str());
+
+	//Project Parsing
+	p1 = 0;
+	p2 = 0;
+	int end = proj.find_last_of('\'');
+	bool first_loop = true;
+	while(p2 < end){
+		Project proj_tmp;
+		string proj_mod;
+		string man, desc, title;
+		if(first_loop){
+			p1 = proj.find('\'');
+			first_loop = false;
+		}
+		else
+		
+		p1 = proj.find('\'', p2+1);
+		p2 = proj.find('\'', p1+1);
+		man = proj.substr(p1+1, (p2-p1)-1);
+		p1 = proj.find('\'', p2+1);
+		p2 = proj.find('\'', p1+1);
+		title = proj.substr(p1+1, (p2-p1)-1);
+		p1 = proj.find('\'', p2+1);
+		p2 = proj.find('\'', p1+1);
+		desc = proj.substr(p1+1, (p2-p1)-1);
+		if(p1 == -1 || p2 == -1)
+			break;
+		proj_tmp.title = title;
+		proj_tmp.manager = man;
+		proj_tmp.disc = desc;
+		ret[proj_tmp.title] = proj_tmp;
+		printf("Manager: %s\n", man.c_str());
+		printf("Title: %s\n", title.c_str());
+		printf("Description: %s\n", desc.c_str());
+	}
+		printf("Origin: %s\n", proj.c_str());
+	p1 = 0;
+	p2 = 0;
+	end = task.find_last_of('\'');
+	first_loop = true;
+	printf("Origin: %s\n", task.c_str());
+	while(p2 < end){
+		Task task_tmp;
+		Phase ph_tmp;
+		ph_tmp.title = "bohemith";
+		string ph_title, title, desc, pr_title;
+		if(first_loop){
+			p1 = task.find('\'');
+			first_loop = false;
+		}
+		else
+			p1 = task.find('\'', p2+1);
+		p2 = task.find('\'', p1+1); 
+		title = task.substr(p1+1, (p2-p1)-1);
+		p1 = task.find('\'', p2+1);
+		p2 = task.find('\'', p1+1);
+		desc = task.substr(p1+1, (p2-p1)-1);
+		p1 = task.find('\'', p2+1);
+		p2 = task.find('\'', p1+1);
+		ph_title = task.substr(p1+1, (p2-p1)-1);
+
+		p1 = task.find('\'', p2+1);
+		p2 = task.find('\'', p1+1);
+		pr_title = task.substr(p1+1, (p2-p1)-1);
+		printf("Task:\nTitle: %s\nDescription: %s\nPhase: %s\nProject: %s\n", title.c_str(), desc.c_str(), ph_title.c_str(), pr_title.c_str());	
+		if(p1 == -1 || p2 == -1)
+			break;
+		Project p_tmp = ret[pr_title];
+		int count = 0;
+		if(p_tmp.phases.empty()){
+			ph_tmp.title = ph_title;
+			p_tmp.phases.push_back(ph_tmp);
+		}
+		else{
+			for(int i = 0; i < p_tmp.phases.size(); ++i)
+				if(p_tmp.phases[i].title == ph_title){
+					count = i;
+					break;
+				}
+			if(ph_tmp.title == "bohemith"){
+				ph_tmp.title = ph_title;
+				p_tmp.phases.push_back(ph_tmp);
+				count = p_tmp.phases.size()-1;
+			}
+		}
+		task_tmp.title = title;
+		task_tmp.disc = desc;
+		p_tmp.phases[count].tasks[title] = task_tmp;
+
+		ret[p_tmp.title] = p_tmp; 
+		
+				
+
+	} 
+	p1 = 0;
+	p2 = 0;
+	first_loop = true;
+	end = bug.find_last_of('\'');
+	while(p2 < end){
+		Bug tmpb;
+		int lineNum;
+		string fname, desc, t_title, p_title;
+		
+		if(first_loop){
+			p1 = bug.find_first_of('(');
+		}	
+		else
+			p1 = bug.find('(', p2+1);
+		p2 = bug.find(',',p1+1);
+		lineNum = atoi(bug.substr(p1+1, (p2-p1)-1).c_str());
+		
+		p1 = bug.find('\'', p2);
+		p2 = bug.find('\'', p1+1);
+		fname = bug.substr(p1+1, (p2-p1)-1);
+		
+		p1 = bug.find('\'', p2+1);
+		p2 = bug.find('\'', p1+1);
+		desc = bug.substr(p1+1, (p2-p1)-1);
+	
+		p1 = bug.find('\'', p2+1);
+		p2 = bug.find('\'', p1+1);
+		t_title = bug.substr(p1+1, (p2-p1)-1);
+
+		p1 = bug.find('\'', p2+1);
+		p2 = bug.find('\'', p1+1);
+		p_title = bug.substr(p1+1, (p2-p1)-1);
+
+		if(p1 == -1 || p2 == -1){
+			break;
+		}
+
+		tmpb.lineNum = lineNum;
+		tmpb.file = fname;
+		tmpb.disc = desc;
+		
+		for(int i = 0; i < ret[p_title].phases.size(); ++i){
+			if(ret[p_title].phases[i].tasks.count(t_title))
+				ret[p_title].phases[i].tasks[t_title].bugs.push_back(tmpb);
+		}	
+
+		printf("Bugs:\nLine: %d\nDescription: %s\nFile: %s\nTask: %s\n", lineNum, desc.c_str(), fname.c_str(), t_title.c_str());	
+	}
+	
+
+
+	
 	return ret;
 }
 map<string, Project> Conn::get_request()
