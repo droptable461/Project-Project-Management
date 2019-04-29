@@ -304,10 +304,11 @@ def git():
 
     for item in r.json():
         for key in item['commit']['committer']:
-            print(item['commit']['committer']['name'])
-            print(item['commit']['committer']['date'])
-            print(item['commit']['message'])
-    return 'suc'
+            one = item['commit']['committer']['name']
+            two =item['commit']['committer']['date']
+            three = item['commit']['message']
+            four = one + print('/n') + two + '/n'
+            return four
 
 @app.teardown_appcontext
 def closeDB(error):
